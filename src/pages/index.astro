@@ -43,10 +43,23 @@ const websiteSchema = {
        HERO — PHARMA PREMIUM
   ═══════════════════════════════════════════ -->
   <section class="hero-section">
-  <div class="container">
-    <div class="hero-layout">
 
-      <!-- LEFT: copy -->
+    <!-- Full-bleed background image -->
+    <img
+      src="/images/hero-retatrutide-lab.webp"
+      alt=""
+      aria-hidden="true"
+      class="hero-bg"
+      loading="eager"
+      width="6336"
+      height="2688"
+      fetchpriority="high"
+    />
+
+    <!-- White gradient over left side so text stays readable -->
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="container" style="position:relative;z-index:2;">
       <div class="hero-copy">
         <p class="hero-eyebrow reveal">EU Warehouse · Third-Party Tested</p>
         <h1 class="hero-h1 reveal">
@@ -58,10 +71,22 @@ const websiteSchema = {
         </p>
 
         <ul class="hero-checklist reveal">
-          <li><svg width="16" height="16" fill="none" stroke="#0056b3" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> EU Warehouse — zero customs seizures</li>
-          <li><svg width="16" height="16" fill="none" stroke="#0056b3" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 3–5 day tracked delivery across Europe</li>
-          <li><svg width="16" height="16" fill="none" stroke="#0056b3" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Certificate of Analysis (CoA) available</li>
-          <li><svg width="16" height="16" fill="none" stroke="#0056b3" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> &gt;99% purity, lyophilised &amp; sealed</li>
+          <li>
+            <span class="chk-icon"><svg width="11" height="11" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            EU Warehouse — zero customs seizures
+          </li>
+          <li>
+            <span class="chk-icon"><svg width="11" height="11" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            3–5 day tracked delivery across Europe
+          </li>
+          <li>
+            <span class="chk-icon"><svg width="11" height="11" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            Certificate of Analysis (CoA) available
+          </li>
+          <li>
+            <span class="chk-icon"><svg width="11" height="11" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            &gt;99% purity, lyophilised &amp; sealed
+          </li>
         </ul>
 
         <div class="hero-search reveal">
@@ -90,22 +115,36 @@ const websiteSchema = {
           <img src="/logos/sepa.svg"             alt="SEPA"       height="16" loading="eager" />
         </div>
       </div>
-
-      <!-- RIGHT: sculptural vial on white -->
-      <div class="hero-vial reveal">
-        <img
-          src="/images/products/retatrutide.webp"
-          alt="Retatrutide — pharmaceutical grade research peptide"
-          width="360"
-          height="400"
-          loading="eager"
-          class="hero-vial__img"
-        />
-      </div>
-
     </div>
-  </div>
-</section>
+
+    <!-- Reassurance strip — anchored at bottom of hero -->
+    <div class="hero-trust-strip" style="position:relative;z-index:2;">
+      <div class="container">
+        <div class="hts-inner">
+          <div class="hts-item">
+            <svg width="18" height="18" fill="none" stroke="#0056b3" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div class="hts-text"><strong>Zero Customs</strong><span>EU warehouse · EU delivery</span></div>
+          </div>
+          <div class="hts-div"></div>
+          <div class="hts-item">
+            <svg width="18" height="18" fill="none" stroke="#0056b3" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <div class="hts-text"><strong>4.9 / 5 Rating</strong><span>2,400+ verified orders</span></div>
+          </div>
+          <div class="hts-div"></div>
+          <div class="hts-item">
+            <svg width="18" height="18" fill="none" stroke="#0056b3" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div class="hts-text"><strong>&gt;99% Purity</strong><span>CoA every batch</span></div>
+          </div>
+          <div class="hts-div"></div>
+          <div class="hts-item">
+            <svg width="18" height="18" fill="none" stroke="#0056b3" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <div class="hts-text"><strong>3–5 Day Delivery</strong><span>Tracked across Europe</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
 
   <!-- ═══════════════════════════════════════════
        CATALOGUE CAROUSEL — tight below hero
@@ -688,20 +727,42 @@ const websiteSchema = {
   </section>
 
   <style>
-    /* ── HERO — white corporate pharma ── */
+    /* ── HERO — full-bleed lab photo ── */
     .hero-section {
-      background: #ffffff;
-      padding: 5rem 0 4rem;
-      min-height: clamp(480px, 55vw, 660px);
+      position: relative;
+      overflow: hidden;
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: clamp(520px, 58vw, 700px);
       border-bottom: 1px solid #E5E7EB;
     }
-    .hero-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(
+        to right,
+        rgba(255,255,255,0.96) 0%,
+        rgba(255,255,255,0.88) 35%,
+        rgba(255,255,255,0.4) 60%,
+        transparent 80%
+      );
+    }
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      max-width: 560px;
+      padding: 4.5rem 0 2rem;
     }
     .hero-eyebrow {
       font-size: 0.72rem;
@@ -734,15 +795,25 @@ const websiteSchema = {
       margin: 0 0 1.75rem 0;
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
+      gap: 0.6rem;
     }
     .hero-checklist li {
       display: flex;
       align-items: center;
       gap: 0.65rem;
       font-size: 0.88rem;
-      color: #374151;
+      color: #1F2937;
       font-weight: 500;
+    }
+    .chk-icon {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      background: #0056b3;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .hero-ctas {
       display: flex;
@@ -791,12 +862,13 @@ const websiteSchema = {
     .hero-search-form {
       display: flex;
       align-items: center;
-      background: #F9FAFB;
+      background: rgba(255,255,255,0.92);
       border: 1.5px solid #E5E7EB;
       border-radius: 10px;
       overflow: hidden;
       max-width: 420px;
-      transition: border-color 0.2s, background 0.2s;
+      backdrop-filter: blur(4px);
+      transition: border-color 0.2s;
     }
     .hero-search-form:focus-within {
       border-color: #0056b3;
@@ -831,17 +903,53 @@ const websiteSchema = {
       flex-wrap: wrap;
     }
     .hero-pay img { height: 20px; width: auto; filter: grayscale(1) opacity(0.5); }
-    .hero-vial {
+
+    /* ── HERO TRUST STRIP ── */
+    .hero-trust-strip {
+      background: rgba(255,255,255,0.96);
+      border-top: 1px solid #E5E7EB;
+      backdrop-filter: blur(8px);
+      padding: 0.9rem 0;
+    }
+    .hts-inner {
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
     }
-    .hero-vial__img {
-      width: 100%;
-      max-width: 340px;
-      height: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 8px 40px rgba(0,86,179,0.12)) drop-shadow(0 2px 8px rgba(0,0,0,0.06));
+    .hts-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.4rem 2rem 0.4rem 0;
+      flex: 1;
+      min-width: 160px;
+    }
+    .hts-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.05rem;
+    }
+    .hts-text strong {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #0d1117;
+    }
+    .hts-text span {
+      font-size: 0.72rem;
+      color: #6B7280;
+    }
+    .hts-div {
+      width: 1px;
+      height: 32px;
+      background: #E5E7EB;
+      margin: 0 1.5rem 0 0;
+      flex-shrink: 0;
+    }
+    @media (max-width: 680px) {
+      .hts-inner { gap: 0.5rem; }
+      .hts-item { min-width: 140px; padding-right: 0; }
+      .hts-div { display: none; }
     }
 
     /* ── COMPARE SECTION ── */
@@ -1312,9 +1420,15 @@ const websiteSchema = {
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .hero-layout { grid-template-columns: 1fr; gap: 2rem; }
-      .hero-vial { order: -1; }
-      .hero-vial__img { max-width: 220px; }
+      .hero-copy { padding: 3rem 0 1.5rem; max-width: 100%; }
+      .hero-overlay {
+        background: linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.95) 0%,
+          rgba(255,255,255,0.88) 70%,
+          rgba(255,255,255,0.5) 100%
+        );
+      }
       .blog-featured { grid-template-columns: 1fr; }
       .blog-featured__img-wrap { min-height: 200px; }
       .blog-featured__body { padding: 1.5rem; }
