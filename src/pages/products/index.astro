@@ -3,7 +3,6 @@ import Base from '../../layouts/Base.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import { products } from '../../lib/products';
 
-const categories = ['All', ...Array.from(new Set(products.map((p) => p.category)))];
 ---
 
 <Base
@@ -29,29 +28,12 @@ const categories = ['All', ...Array.from(new Set(products.map((p) => p.category)
     </div>
   </section>
 
-  <!-- Category filters -->
-  <div style="background:var(--white);border-bottom:1px solid var(--border);padding:1rem 0;position:sticky;top:66px;z-index:50;">
-    <div class="container">
-      <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-        {categories.map((cat) => (
-          <button
-            class="filter-btn"
-            data-category={cat}
-            style={`padding:0.4rem 1rem;border-radius:999px;border:1.5px solid ${cat === 'All' ? 'var(--accent)' : 'var(--border)'};background:${cat === 'All' ? 'rgba(59,159,212,0.08)' : 'transparent'};color:${cat === 'All' ? 'var(--accent)' : 'var(--text-muted)'};font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.15s;font-family:var(--font-body);`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-    </div>
-  </div>
-
   <!-- Products grid -->
   <section class="section" style="background:var(--bg);">
     <div class="container">
       <div class="grid-3" id="productsGrid">
         {products.map((product) => (
-          <div class="product-item reveal" data-category={product.category}>
+          <div class="reveal">
             <ProductCard product={product} />
           </div>
         ))}
@@ -72,32 +54,4 @@ const categories = ['All', ...Array.from(new Set(products.map((p) => p.category)
     </div>
   </section>
 
-  <script is:inline>
-    var filterBtns = document.querySelectorAll('.filter-btn');
-    var productItems = document.querySelectorAll('.product-item');
-
-    filterBtns.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var cat = btn.getAttribute('data-category');
-
-        // Update button styles
-        filterBtns.forEach(function(b) {
-          var isActive = b.getAttribute('data-category') === cat;
-          b.style.borderColor = isActive ? 'var(--accent)' : 'var(--border)';
-          b.style.background = isActive ? 'rgba(59,159,212,0.08)' : 'transparent';
-          b.style.color = isActive ? 'var(--accent)' : 'var(--text-muted)';
-        });
-
-        // Filter products
-        productItems.forEach(function(item) {
-          var itemCat = item.getAttribute('data-category');
-          if (cat === 'All' || itemCat === cat) {
-            item.style.display = '';
-          } else {
-            item.style.display = 'none';
-          }
-        });
-      });
-    });
-  </script>
 </Base>
