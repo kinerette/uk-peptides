@@ -8,16 +8,6 @@ interface Props {
 const { product } = Astro.props;
 const lowestPrice = Math.min(...product.variants.map((v) => v.priceEur));
 const highestPrice = Math.max(...product.variants.map((v) => v.priceEur));
-
-const categoryColour: Record<string, string> = {
-  'Weight Management': 'badge-blue',
-  'Recovery & Repair': 'badge-green',
-  'Cognition': 'badge-gold',
-  'Longevity': 'badge-dark',
-  'Skin & Hair': 'badge-gold',
-  'Solvent': 'badge-dark',
-};
-const badgeClass = categoryColour[product.category] ?? 'badge-blue';
 ---
 
 <article class="card" style="display:flex;flex-direction:column;">
@@ -45,17 +35,11 @@ const badgeClass = categoryColour[product.category] ?? 'badge-blue';
         <span style="width:5px;height:5px;background:#16A34A;border-radius:50%;display:inline-block;"></span>
         In Stock
       </span>
-      {product.featured && (
-        <span style="position:absolute;top:0.75rem;left:0.75rem;" class="badge badge-blue">
-          Featured
-        </span>
-      )}
     </div>
   </a>
 
   <div style="padding:1.25rem;display:flex;flex-direction:column;flex:1;gap:0.5rem;">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:0.5rem;flex-wrap:wrap;">
-      <span class={`badge ${badgeClass}`}>{product.category}</span>
+    <div style="display:flex;align-items:center;justify-content:flex-end;">
       <span style="font-size:0.75rem;font-weight:700;color:var(--text-muted);">&gt;99% Purity</span>
     </div>
 
