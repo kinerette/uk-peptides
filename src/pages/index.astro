@@ -476,13 +476,19 @@ const websiteSchema = {
     if (badCard && goodCard && grid) {
       gsap.set(badCard,  { transformPerspective: 900, rotateX: 22, y: 24, opacity: 0 });
       gsap.set(goodCard, { transformPerspective: 900, rotateX: 22, y: 24, opacity: 0 });
-      const cObs = new IntersectionObserver((entries) => {
-        if (!entries[0].isIntersecting) return;
-        cObs.disconnect();
-        gsap.to(badCard,  { rotateX: 0, y: 0, opacity: 0.82, duration: 0.9, ease: 'power3.out' });
-        gsap.to(goodCard, { rotateX: 0, y: 0, opacity: 1,    duration: 0.9, ease: 'power3.out', delay: 0.1 });
-      }, { threshold: 0.2 });
-      cObs.observe(grid);
+      let fired = false;
+      function playCompare() {
+        if (fired) return;
+        const r = grid.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.88) {
+          fired = true;
+          window.removeEventListener('scroll', playCompare, true);
+          gsap.to(badCard,  { rotateX: 0, y: 0, opacity: 0.82, duration: 0.9, ease: 'power3.out' });
+          gsap.to(goodCard, { rotateX: 0, y: 0, opacity: 1,    duration: 0.9, ease: 'power3.out', delay: 0.1 });
+        }
+      }
+      window.addEventListener('scroll', playCompare, { passive: true, capture: true });
+      playCompare(); // fire immediately if already in view
     }
   </script>
 
