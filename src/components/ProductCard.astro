@@ -39,6 +39,10 @@ const badgeClass = categoryColour[product.category] ?? 'badge-blue';
           <polyline points="9 3 9 9 15 9"/>
         </svg>
       </div>
+      <span style="position:absolute;top:0.75rem;right:0.75rem;display:inline-flex;align-items:center;gap:0.3rem;background:#DCFCE7;color:#15803D;font-size:0.68rem;font-weight:700;padding:0.2rem 0.55rem;border-radius:999px;letter-spacing:0.02em;">
+        <span style="width:5px;height:5px;background:#16A34A;border-radius:50%;display:inline-block;"></span>
+        In Stock
+      </span>
       {product.featured && (
         <span style="position:absolute;top:0.75rem;left:0.75rem;" class="badge badge-blue">
           Featured
