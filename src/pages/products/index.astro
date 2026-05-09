@@ -1,0 +1,103 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { products } from '../../lib/products';
+
+const categories = ['All', ...Array.from(new Set(products.map((p) => p.category)))];
+---
+
+<Base
+  title="Buy Research Peptides UK — Full Product Range | UK Peptides"
+  description="Browse all research peptides available in the UK: retatrutide, BPC-157, TB-500, GHK-Cu, MOTS-c, NAD+, selank, semax and bacteriostatic water. >99% purity, EU warehouse."
+>
+  <!-- Header -->
+  <section style="background:var(--dark);padding:4rem 0 3rem;text-align:center;">
+    <div class="container">
+      <span class="section-label" style="color:#3B9FD4;">Research Catalogue</span>
+      <h1 style="color:#fff;margin:0.5rem 0 1rem;max-width:640px;margin-left:auto;margin-right:auto;">
+        Research Peptides UK — Complete Range
+      </h1>
+      <p style="color:rgba(255,255,255,0.6);max-width:560px;margin:0 auto 2rem;font-size:0.95rem;">
+        All peptides are supplied as lyophilised powder, &gt;99% analytical purity, from EU warehouse stock.
+        Secure checkout via Peptide-Pay. Discreet tracked shipping.
+      </p>
+      <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0.75rem;">
+        {['EU Warehouse', '>99% Purity', 'Discreet Shipping', 'Secure Payment'].map((tag) => (
+          <span style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:999px;padding:0.3rem 0.9rem;font-size:0.78rem;font-weight:600;color:rgba(255,255,255,0.7);">{tag}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Category filters -->
+  <div style="background:var(--white);border-bottom:1px solid var(--border);padding:1rem 0;position:sticky;top:66px;z-index:50;">
+    <div class="container">
+      <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+        {categories.map((cat) => (
+          <button
+            class="filter-btn"
+            data-category={cat}
+            style={`padding:0.4rem 1rem;border-radius:999px;border:1.5px solid ${cat === 'All' ? 'var(--accent)' : 'var(--border)'};background:${cat === 'All' ? 'rgba(59,159,212,0.08)' : 'transparent'};color:${cat === 'All' ? 'var(--accent)' : 'var(--text-muted)'};font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.15s;font-family:var(--font-body);`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Products grid -->
+  <section class="section" style="background:var(--bg);">
+    <div class="container">
+      <div class="grid-3" id="productsGrid">
+        {products.map((product) => (
+          <div class="product-item reveal" data-category={product.category}>
+            <ProductCard product={product} />
+          </div>
+        ))}
+      </div>
+
+      <div style="margin-top:4rem;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem;text-align:center;">
+        <h2 style="font-size:1.25rem;margin-bottom:0.5rem;">Pure Peptides UK — Why Quality Matters</h2>
+        <p style="color:var(--text-muted);max-width:640px;margin:0 auto 1.25rem;font-size:0.9rem;line-height:1.7;">
+          Research-grade purity is not a marketing claim — it determines whether your experimental results
+          are reproducible and valid. All UK Peptides products are lyophilised to &gt;99% analytical standard,
+          ensuring your research data holds up to scrutiny. We source exclusively from GMP-compliant
+          synthesis facilities with full batch traceability.
+        </p>
+        <a href="/blog/uk-peptides-review-how-to-spot-quality" class="btn btn-outline">
+          How to Spot Quality Peptides &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    var filterBtns = document.querySelectorAll('.filter-btn');
+    var productItems = document.querySelectorAll('.product-item');
+
+    filterBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var cat = btn.getAttribute('data-category');
+
+        // Update button styles
+        filterBtns.forEach(function(b) {
+          var isActive = b.getAttribute('data-category') === cat;
+          b.style.borderColor = isActive ? 'var(--accent)' : 'var(--border)';
+          b.style.background = isActive ? 'rgba(59,159,212,0.08)' : 'transparent';
+          b.style.color = isActive ? 'var(--accent)' : 'var(--text-muted)';
+        });
+
+        // Filter products
+        productItems.forEach(function(item) {
+          var itemCat = item.getAttribute('data-category');
+          if (cat === 'All' || itemCat === cat) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</Base>

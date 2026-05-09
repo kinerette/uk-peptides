@@ -1,0 +1,213 @@
+---
+import Base from '../layouts/Base.astro';
+import { products, ALL_VARIANTS } from '../lib/products';
+
+export const prerender = false;
+
+const variantId = Astro.url.searchParams.get('variant') ?? ALL_VARIANTS[0].id;
+const cancelled = Astro.url.searchParams.get('cancelled') === '1';
+
+// Find the pre-selected variant
+const selectedVariant = ALL_VARIANTS.find((v) => v.id === variantId) ?? ALL_VARIANTS[0];
+const selectedProduct = products.find((p) => p.variants.some((v) => v.id === selectedVariant.id));
+---
+
+<Base
+  title="Secure Checkout — UK Peptides"
+  description="Complete your research peptide order. Secure payment via Peptide-Pay. Visa, Mastercard, Apple Pay, Google Pay, SEPA."
+  robots="noindex, nofollow"
+>
+  <section style="background:var(--bg-alt);min-height:90vh;padding:5rem 0;">
+    <div class="container--narrow">
+
+      <div style="margin-bottom:2rem;">
+        <h1 style="font-size:1.75rem;margin-bottom:0.4rem;">Secure Checkout</h1>
+        <p style="color:var(--text-muted);">100% secure payment via Peptide-Pay &mdash; Visa, Mastercard, Apple Pay, Google Pay, SEPA, or crypto.</p>
+      </div>
+
+      {cancelled && (
+        <div style="background:#fff9ed;border:1px solid #f59e0b;border-radius:var(--radius-sm);padding:0.9rem 1.25rem;margin-bottom:1.5rem;color:#92400e;font-size:0.9rem;">
+          Payment cancelled. You can try again below &mdash; your selection has been kept.
+        </div>
+      )}
+
+      <form id="checkoutForm" style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;box-shadow:var(--shadow);">
+
+        <!-- Product & variant -->
+        <div class="form-group" style="margin-bottom:1.25rem;">
+          <label class="form-label" for="variantSelect">Product &amp; Quantity</label>
+          <select
+            id="variantSelect"
+            name="variantId"
+            class="form-select"
+            required
+            data-variants={JSON.stringify(ALL_VARIANTS.map((v) => ({ id: v.id, label: v.label, price: v.priceEur })))}
+          >
+            {products.map((product) => (
+              <optgroup label={product.name}>
+                {product.variants.map((v) => (
+                  <option value={v.id} selected={v.id === selectedVariant.id} data-price={v.priceEur}>
+                    {v.label} &mdash; &euro;{v.priceEur}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
+
+          <p id="priceDisplay" style="margin-top:0.6rem;font-family:var(--font-head);font-weight:700;font-size:1.4rem;color:var(--gold);">
+            &euro;{selectedVariant.priceEur}
+          </p>
+        </div>
+
+        <!-- Name row -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem;">
+          <div class="form-group">
+            <label class="form-label" for="firstName">First Name</label>
+            <input id="firstName" name="firstName" type="text" class="form-input" required autocomplete="given-name" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="lastName">Last Name</label>
+            <input id="lastName" name="lastName" type="text" class="form-input" required autocomplete="family-name" />
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group" style="margin-bottom:1.25rem;">
+          <label class="form-label" for="email">Email Address</label>
+          <input id="email" name="email" type="email" class="form-input" required autocomplete="email" placeholder="your@email.com" />
+          <p class="form-hint">Order confirmation will be sent here.</p>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group" style="margin-bottom:1.25rem;">
+          <label class="form-label" for="address">Shipping Address</label>
+          <input id="address" name="address" type="text" class="form-input" required autocomplete="street-address" />
+        </div>
+
+        <!-- Postal + City -->
+        <div style="display:grid;grid-template-columns:1fr 2fr;gap:1rem;margin-bottom:1.25rem;">
+          <div class="form-group">
+            <label class="form-label" for="postalCode">Postcode</label>
+            <input id="postalCode" name="postalCode" type="text" class="form-input" required autocomplete="postal-code" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="city">City</label>
+            <input id="city" name="city" type="text" class="form-input" required autocomplete="address-level2" />
+          </div>
+        </div>
+
+        <!-- Country -->
+        <div class="form-group" style="margin-bottom:1.75rem;">
+          <label class="form-label" for="country">Country</label>
+          <select id="country" name="country" class="form-select" required>
+            <option value="GB" selected>United Kingdom</option>
+            <option value="DE">Germany</option>
+            <option value="FR">France</option>
+            <option value="NL">Netherlands</option>
+            <option value="BE">Belgium</option>
+            <option value="ES">Spain</option>
+            <option value="IT">Italy</option>
+            <option value="PL">Poland</option>
+            <option value="AT">Austria</option>
+            <option value="SE">Sweden</option>
+            <option value="DK">Denmark</option>
+            <option value="NO">Norway</option>
+            <option value="CH">Switzerland</option>
+            <option value="IE">Ireland</option>
+            <option value="PT">Portugal</option>
+          </select>
+        </div>
+
+        <!-- Trust reassurance -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;margin-bottom:1.75rem;text-align:center;">
+          {[
+            { icon: '&#128666;', line1: 'Tracked', line2: 'Shipping' },
+            { icon: '&#128274;', line1: 'SSL', line2: '3D-Secure' },
+            { icon: '&#128337;', line1: 'Fast', line2: 'Dispatch' },
+            { icon: '&#128274;', line1: 'Discreet', line2: 'Packaging' },
+          ].map((item) => (
+            <div style="background:var(--bg-alt);border-radius:var(--radius-sm);padding:0.65rem 0.5rem;">
+              <div style="font-size:1.2rem;margin-bottom:0.2rem;" set:html={item.icon}></div>
+              <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);line-height:1.3;">{item.line1}<br/>{item.line2}</div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" id="submitBtn" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">
+          Pay Securely &rarr;
+        </button>
+
+        <div id="formError" style="display:none;margin-top:1rem;background:#fef2f2;border:1px solid #fecaca;border-radius:var(--radius-sm);padding:0.75rem 1rem;color:#b91c1c;font-size:0.875rem;"></div>
+
+        <p style="font-size:0.78rem;color:var(--text-faint);text-align:center;margin-top:0.75rem;">
+          Clicking "Pay Securely" redirects you to our secure processor (Peptide-Pay).
+          We accept Visa, Mastercard, Apple Pay, Google Pay, SEPA, and crypto.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <script is:inline>
+    // Pre-warm serverless functions while the user fills the form.
+    fetch('/api/warmup').catch(function(){});
+    fetch('https://www.peptide-pay.com/api/v1/warmup').catch(function(){});
+
+    (function() {
+      var form = document.getElementById('checkoutForm');
+      var btn = document.getElementById('submitBtn');
+      var errorEl = document.getElementById('formError');
+      var priceDisplay = document.getElementById('priceDisplay');
+      var variantSelect = document.getElementById('variantSelect');
+
+      if (!form) return;
+
+      // Update price display on variant change
+      if (variantSelect && priceDisplay) {
+        variantSelect.addEventListener('change', function() {
+          var opt = variantSelect.options[variantSelect.selectedIndex];
+          var price = opt ? opt.getAttribute('data-price') : null;
+          if (price) priceDisplay.textContent = '€' + price;
+        });
+      }
+
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        if (!btn || !errorEl) return;
+
+        errorEl.style.display = 'none';
+        btn.disabled = true;
+        btn.textContent = 'Processing…';
+
+        var payload = {
+          variantId: document.getElementById('variantSelect').value,
+          email: document.getElementById('email').value,
+          firstName: document.getElementById('firstName').value,
+          lastName: document.getElementById('lastName').value,
+          address: document.getElementById('address').value,
+          postalCode: document.getElementById('postalCode').value,
+          city: document.getElementById('city').value,
+          country: document.getElementById('country').value,
+        };
+
+        try {
+          var res = await fetch('/api/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          var data = await res.json();
+          if (!res.ok || !data.checkoutUrl) {
+            throw new Error(data.error || 'Unable to start checkout');
+          }
+          window.location.href = data.checkoutUrl;
+        } catch (err) {
+          errorEl.textContent = (err && err.message) || 'An unexpected error occurred. Please try again in a few moments.';
+          errorEl.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = 'Pay Securely →';
+        }
+      });
+    })();
+  </script>
+</Base>

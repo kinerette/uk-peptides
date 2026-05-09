@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime());
+---
+
+<Base
+  title="UK Peptides Research Blog — Legality, Quality &amp; Science"
+  description="Research articles for UK peptide researchers. Covering legality, quality assessment, compound science, and supplier reviews. Best peptides UK 2026."
+>
+  <!-- Hero -->
+  <section style="background:var(--dark);padding:4rem 0 3rem;text-align:center;">
+    <div class="container">
+      <span class="section-label" style="color:#3B9FD4;">Research Blog</span>
+      <h1 style="color:#fff;margin:0.5rem 0 1rem;max-width:640px;margin-left:auto;margin-right:auto;">
+        UK Peptides Research Blog
+      </h1>
+      <p style="color:rgba(255,255,255,0.6);max-width:540px;margin:0 auto;font-size:0.95rem;">
+        In-depth, evidence-based content for UK researchers. Covering legality, quality standards, compound science, and UK supplier reviews.
+      </p>
+    </div>
+  </section>
+
+  <!-- Posts -->
+  <section class="section" style="background:var(--bg);">
+    <div class="container">
+      <div class="grid-3">
+        {posts.map((post) => (
+          <div class="reveal">
+            <BlogCard
+              title={post.data.title}
+              description={post.data.description}
+              slug={post.slug}
+              publishedAt={post.data.publishedAt}
+              keyword={post.data.keyword}
+              heroImage={post.data.heroImage}
+            />
+          </div>
+        ))}
+      </div>
+
+      {posts.length === 0 && (
+        <div style="text-align:center;padding:4rem 0;color:var(--text-muted);">
+          <p>No articles published yet. Check back soon.</p>
+        </div>
+      )}
+    </div>
+  </section>
+</Base>

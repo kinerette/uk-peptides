@@ -1,0 +1,126 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faqs = [
+  {
+    q: 'Are research peptides legal in the UK?',
+    a: 'Yes. Research-grade peptides are legal to purchase, possess, and use for legitimate scientific research in the UK. They are not controlled under the Misuse of Drugs Act 1971 when supplied and used as Research Use Only (RUO) compounds for scientific study. They are not medicines and do not require a prescription when used in a research context.',
+  },
+  {
+    q: 'Are peptides legal in the UK for personal use?',
+    a: 'The RUO (Research Use Only) designation means peptides are sold for laboratory research. "Personal use" in a scientific research context — such as an independent researcher studying a compound — falls within the lawful framework. Using research peptides as if they were medicines or supplements, or selling them as such, is not permitted.',
+  },
+  {
+    q: 'Is retatrutide legal in the UK?',
+    a: 'Yes. Retatrutide is not a controlled substance in the UK under the Misuse of Drugs Act 1971 or the Medicines Act 1968. It is a research compound currently in Phase III clinical trials and is lawfully available for scientific research purposes.',
+  },
+  {
+    q: 'Is BPC-157 legal in the UK?',
+    a: 'Yes. BPC-157 is not controlled under UK law. It is a synthetic research peptide with over 100 peer-reviewed publications. It is lawfully available as an RUO research compound.',
+  },
+  {
+    q: 'What does "Research Use Only" (RUO) mean?',
+    a: 'Research Use Only (RUO) is a regulatory designation indicating that a product is intended exclusively for in vitro laboratory research and scientific study. RUO products are not for diagnostic, therapeutic, or prophylactic use in humans or animals, and are not food supplements or cosmetic products. This is the standard under which research peptides are legitimately sold.',
+  },
+  {
+    q: 'Do I need a prescription to buy research peptides in the UK?',
+    a: 'No. Research peptides sold under the RUO designation are not medicinal products and do not require a prescription. They are sold to researchers and scientists for laboratory use.',
+  },
+  {
+    q: 'What is the difference between semaglutide and retatrutide?',
+    a: 'Semaglutide is an approved GLP-1 receptor monoagonist medicine (Ozempic/Wegovy). Retatrutide is a research compound — a triple agonist at GLP-1, GIP, and glucagon receptors — currently in Phase III trials. Semaglutide is a prescription medicine; retatrutide is a research chemical. We do not sell semaglutide.',
+  },
+  {
+    q: 'How should I store my peptide vials?',
+    a: 'Store lyophilised (powder) vials at -20°C in a freezer. Keep them away from moisture and direct light. Once reconstituted with bacteriostatic water, store the solution at 2–8°C (refrigerator) and use within 28 days. Always bring sealed vials to room temperature before opening to avoid condensation.',
+  },
+  {
+    q: 'What is bacteriostatic water and why do I need it?',
+    a: 'Bacteriostatic water is sterile water containing 0.9% w/v benzyl alcohol. The benzyl alcohol prevents microbial growth in multi-dose vials, extending the stability of a reconstituted peptide solution to approximately 28 days at 2–8°C. It is the standard reconstitution solvent for lyophilised research peptides.',
+  },
+  {
+    q: 'How long does shipping to the UK take?',
+    a: 'Orders ship from our EU warehouse. Typical delivery to the UK is 5–10 business days. All orders include tracking. Packaging is discreet — no identifying labels on the outer parcel.',
+  },
+  {
+    q: 'Will there be customs issues importing peptides into the UK?',
+    a: 'For quantities consistent with personal research use, EU-to-UK imports of research chemicals are routinely cleared without issue. Goods should be declared accurately as "research chemicals" on customs documentation. Some delays at UK customs should be anticipated, though most orders clear normally.',
+  },
+  {
+    q: 'What payment methods do you accept?',
+    a: 'We accept Visa, Mastercard, Apple Pay, Google Pay, SEPA bank transfer, and cryptocurrency. Payment is processed securely via Peptide-Pay. No card data is stored on this site.',
+  },
+  {
+    q: 'What purity standard are your peptides?',
+    a: 'All peptides are supplied at >99% analytical purity by HPLC. This is the research-grade standard. Lower purity material (95%, 98%) is insufficient for reproducible research results, which is why we do not offer it.',
+  },
+  {
+    q: 'Do you provide a Certificate of Analysis (COA)?',
+    a: 'Yes. Certificates of Analysis with HPLC purity data and mass spectrometry confirmation are available for all products. Contact us with your lot number for batch-specific COA documentation.',
+  },
+  {
+    q: 'Can I use research peptides on animals?',
+    a: 'Research peptides are used extensively in animal model research (rodent models, zebrafish, etc.) under appropriate institutional ethics approvals and Home Office licensing where required. All standard requirements for animal research apply — the RUO status of the compound does not supersede your obligations under the Animals (Scientific Procedures) Act 1986 in the UK.',
+  },
+  {
+    q: 'What is the shelf life of your peptides?',
+    a: 'Lyophilised peptides stored at -20°C are typically stable for 18–36 months depending on the compound. Reconstituted solutions in bacteriostatic water are stable for approximately 28 days at 2–8°C. See individual product pages for compound-specific storage and shelf life information.',
+  },
+];
+---
+
+<Base
+  title="FAQ — Are Peptides Legal in the UK? Research Peptide Questions Answered"
+  description="Frequently asked questions about research peptides in the UK. Covering legality (are peptides legal in the UK?), storage, shipping, purity, and how RUO designation works."
+>
+  <!-- Hero -->
+  <section style="background:var(--dark);padding:4rem 0 3rem;text-align:center;">
+    <div class="container">
+      <span class="section-label" style="color:#3B9FD4;">FAQ</span>
+      <h1 style="color:#fff;margin:0.5rem 0 1rem;">Research Peptides UK — Frequently Asked Questions</h1>
+      <p style="color:rgba(255,255,255,0.6);max-width:560px;margin:0 auto;font-size:0.95rem;">
+        Covering legality, storage, shipping, purity standards, and everything else UK researchers ask.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ content -->
+  <section class="section" style="background:var(--bg);">
+    <div class="container--narrow">
+
+      <div style="background:rgba(59,159,212,0.06);border:1px solid rgba(59,159,212,0.18);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin-bottom:2.5rem;">
+        <strong style="color:var(--accent);">Are peptides legal in the UK?</strong>
+        <p style="margin-top:0.4rem;color:var(--text-muted);font-size:0.9rem;">
+          Yes. Research peptides are legal in the UK when purchased and used as Research Use Only (RUO) compounds for legitimate scientific study. They are not controlled under the Misuse of Drugs Act 1971.
+          <a href="/blog/are-peptides-legal-in-the-uk" style="color:var(--accent);font-weight:600;">Read our full legal guide &rarr;</a>
+        </p>
+      </div>
+
+      <div>
+        {faqs.map((faq, i) => (
+          <div class="faq-item reveal">
+            <button class="faq-question" aria-expanded="false" id={`faq-${i}`}>
+              {faq.q}
+              <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+            </button>
+            <div class="faq-answer">{faq.a}</div>
+          </div>
+        ))}
+      </div>
+
+      <div style="margin-top:3rem;text-align:center;padding:2rem;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);">
+        <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">Still have questions?</h3>
+        <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:1.25rem;">
+          Our team can answer specific research enquiries.
+        </p>
+        <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+          <a href="/contact" class="btn btn-primary">Contact Us</a>
+          <a href="/blog/are-peptides-legal-in-the-uk" class="btn btn-outline">Legal Guide</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

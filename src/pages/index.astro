@@ -1,0 +1,330 @@
+---
+import Base from '../layouts/Base.astro';
+import ProductCard from '../components/ProductCard.astro';
+import BlogCard from '../components/BlogCard.astro';
+import { featuredProducts } from '../lib/products';
+import { getCollection } from 'astro:content';
+
+const blogPosts = (await getCollection('blog'))
+  .sort((a, b) => new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime())
+  .slice(0, 3);
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'UK Peptides',
+  url: 'https://uk-peptides.eu',
+  logo: 'https://uk-peptides.eu/images/products/retatrutide.webp',
+  description: 'Research-grade peptides shipped across Europe. >99% purity. EU warehouse. Discreet packaging.',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer support',
+    email: 'contact@uk-peptides.eu',
+  },
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'UK Peptides',
+  url: 'https://uk-peptides.eu',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://uk-peptides.eu/products?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+};
+---
+
+<Base
+  title="Peptides UK — Buy Research Peptides | UK Peptides"
+  description="Premium research peptides UK — retatrutide, BPC-157, TB-500, GHK-Cu and more. >99% purity, EU warehouse, discreet shipping. The trusted source for research peptides in the UK."
+  schema={[orgSchema, websiteSchema]}
+>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero-dark" style="padding:5rem 0 4rem;position:relative;overflow:hidden;">
+    <!-- Background grid pattern -->
+    <div style="
+      position:absolute;inset:0;
+      background-image:linear-gradient(rgba(59,159,212,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(59,159,212,0.04) 1px,transparent 1px);
+      background-size:60px 60px;
+      pointer-events:none;
+    "></div>
+    <!-- Glow -->
+    <div style="
+      position:absolute;top:-200px;left:50%;transform:translateX(-50%);
+      width:700px;height:700px;
+      background:radial-gradient(circle,rgba(59,159,212,0.12) 0%,transparent 70%);
+      pointer-events:none;
+    "></div>
+
+    <div class="container" style="position:relative;text-align:center;">
+      <div style="margin-bottom:1.25rem;display:inline-flex;align-items:center;gap:0.5rem;background:rgba(59,159,212,0.1);border:1px solid rgba(59,159,212,0.2);border-radius:999px;padding:0.35rem 1rem;">
+        <span style="width:6px;height:6px;background:#3B9FD4;border-radius:50%;display:inline-block;animation:pulse 2s infinite;"></span>
+        <span style="font-size:0.78rem;font-weight:600;color:#3B9FD4;letter-spacing:0.06em;">Research-Grade &mdash; EU Warehouse</span>
+      </div>
+
+      <h1 style="color:#fff;max-width:800px;margin:0 auto 1.25rem;font-size:clamp(2rem,5.5vw,3.75rem);line-height:1.1;">
+        Premium Research Peptides<br />
+        <span style="color:#3B9FD4;">Shipped Across Europe</span>
+      </h1>
+
+      <p style="font-size:clamp(1rem,2vw,1.2rem);color:rgba(255,255,255,0.65);max-width:600px;margin:0 auto 2rem;line-height:1.65;">
+        The trusted source for <strong style="color:#fff;">peptides UK</strong> researchers rely on.
+        Analytical-grade purity &gt;99%, fast EU dispatch, and discreet packaging on every order.
+      </p>
+
+      <div style="display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;">
+        <a href="/products" class="btn btn-primary btn-lg">
+          Browse All Products &rarr;
+        </a>
+        <a href="/blog/are-peptides-legal-in-the-uk" class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,0.25);color:rgba(255,255,255,0.8);">
+          Are Peptides Legal in the UK?
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TRUST BAR ========== -->
+  <div class="trust-bar" style="background:var(--white);">
+    <div class="trust-bar__item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span>&gt;99% Purity Analytical Standard</span>
+    </div>
+    <div class="trust-bar__item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      <span>Express UK-compatible Delivery</span>
+    </div>
+    <div class="trust-bar__item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span>Discreet Packaging</span>
+    </div>
+    <div class="trust-bar__item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+      <span>Research Use Only</span>
+    </div>
+    <div class="trust-bar__item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>EU Warehouse Stock</span>
+    </div>
+  </div>
+
+  <!-- ========== FEATURED PRODUCTS ========== -->
+  <section class="section" style="background:var(--bg);">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:3rem;" class="reveal">
+        <span class="section-label">Our Products</span>
+        <h2 class="section-title" style="margin-bottom:0.75rem;">
+          Featured Research Peptides
+        </h2>
+        <p style="color:var(--text-muted);max-width:540px;margin:0 auto;font-size:0.95rem;">
+          Every vial is lyophilised to &gt;99% purity. EU warehouse. Discreet, tracked shipping to the UK and across Europe.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        {featuredProducts.map((product) => (
+          <div class="reveal">
+            <ProductCard product={product} />
+          </div>
+        ))}
+      </div>
+
+      <div style="text-align:center;margin-top:2.5rem;" class="reveal">
+        <a href="/products" class="btn btn-outline">
+          View All 10 Products &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== WHY SECTION ========== -->
+  <section class="section" style="background:var(--dark);color:#fff;">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:3rem;" class="reveal">
+        <span class="section-label" style="color:#3B9FD4;">Why Choose Us</span>
+        <h2 class="section-title" style="color:#fff;margin-bottom:0.75rem;">
+          Why UK Researchers Choose UK Peptides
+        </h2>
+        <p style="color:rgba(255,255,255,0.55);max-width:540px;margin:0 auto;font-size:0.95rem;">
+          We combine analytical rigour with practical reliability — so your research never stalls.
+        </p>
+      </div>
+
+      <div class="grid-4">
+        {[
+          {
+            icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B9FD4" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>`,
+            title: '>99% Purity',
+            body: 'Analytical-grade lyophilised peptides. HPLC-tested batch quality — no compromise.',
+          },
+          {
+            icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B9FD4" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+            title: 'EU Warehouse',
+            body: 'Stock held within the EU for fast, reliable dispatch. No customs surprises on European orders.',
+          },
+          {
+            icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B9FD4" stroke-width="2" stroke-linecap="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`,
+            title: 'Tracked Shipping',
+            body: 'Every order ships with tracking. Discreet outer packaging — no identifying labels.',
+          },
+          {
+            icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B9FD4" stroke-width="2" stroke-linecap="round"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+            title: 'Research Grade',
+            body: 'Supplied exclusively for laboratory and scientific research. Properly labelled RUO.',
+          },
+        ].map((item) => (
+          <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-lg);padding:1.75rem;display:flex;flex-direction:column;gap:1rem;">
+            <div set:html={item.icon}></div>
+            <h3 style="font-size:1rem;font-weight:700;color:#fff;">{item.title}</h3>
+            <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.6;">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RETATRUTIDE SPOTLIGHT ========== -->
+  <section class="section" style="background:var(--bg-alt);">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:3rem;align-items:center;" class="reveal">
+        <div>
+          <span class="section-label">Top Research Compound</span>
+          <h2 class="section-title" style="margin-bottom:1rem;">
+            Retatrutide UK — Triple GLP-1/GIP/Glucagon
+          </h2>
+          <p style="color:var(--text-muted);margin-bottom:1rem;line-height:1.7;">
+            Retatrutide is the most powerful metabolic research peptide currently in Phase III trials.
+            Published in the <em>New England Journal of Medicine</em> (2023), it demonstrated
+            <strong>-24.2% mean body weight reduction</strong> at 48 weeks — the highest efficacy
+            signal ever recorded for a single peptide in clinical research.
+          </p>
+          <p style="color:var(--text-muted);margin-bottom:1.75rem;line-height:1.7;">
+            As a <strong>triple agonist</strong> at GLP-1, GIP, and glucagon receptors, retatrutide UK
+            researchers are studying mechanisms unavailable with dual-agonist compounds. EU warehouse
+            stock means fast, reliable delivery.
+          </p>
+          <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+            <a href="/products/retatrutide" class="btn btn-primary">
+              Buy Retatrutide UK &rarr;
+            </a>
+            <a href="/blog/retatrutide-uk-triple-receptor-guide" class="btn btn-outline">
+              Research Guide
+            </a>
+          </div>
+        </div>
+        <div>
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem;box-shadow:var(--shadow);">
+            <img
+              src="/images/products/retatrutide.webp"
+              alt="Retatrutide vial — research grade peptide UK"
+              width="320"
+              height="320"
+              loading="lazy"
+              style="max-width:100%;height:auto;display:block;margin:0 auto;"
+              onerror="this.style.display='none'"
+            />
+            <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:0.6rem;">
+              {[
+                '-24.2% body weight in 48 weeks (NEJM 2023)',
+                'Triple GLP-1/GIP/Glucagon receptor agonist',
+                '>99% purity, EU warehouse stock',
+                'From €94 / 10 mg',
+              ].map((fact) => (
+                <div style="display:flex;align-items:flex-start;gap:0.6rem;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B9FD4" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:3px;"><path d="M20 6L9 17l-5-5"/></svg>
+                  <span style="font-size:0.85rem;color:var(--text-muted);">{fact}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BLOG ========== -->
+  <section class="section" style="background:var(--bg);">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:3rem;" class="reveal">
+        <span class="section-label">Research Blog</span>
+        <h2 class="section-title" style="margin-bottom:0.75rem;">
+          UK Peptides: Latest Research Articles
+        </h2>
+        <p style="color:var(--text-muted);max-width:540px;margin:0 auto;font-size:0.95rem;">
+          Educational content for UK researchers. Covering legality, quality assessment, and research compound science.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        {blogPosts.map((post) => (
+          <div class="reveal">
+            <BlogCard
+              title={post.data.title}
+              description={post.data.description}
+              slug={post.slug}
+              publishedAt={post.data.publishedAt}
+              keyword={post.data.keyword}
+              heroImage={post.data.heroImage}
+            />
+          </div>
+        ))}
+      </div>
+
+      <div style="text-align:center;margin-top:2.5rem;" class="reveal">
+        <a href="/blog" class="btn btn-outline">All Research Articles &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FAQ TEASER ========== -->
+  <section class="section" style="background:var(--dark);">
+    <div class="container" style="max-width:760px;">
+      <div style="text-align:center;margin-bottom:2.5rem;" class="reveal">
+        <span class="section-label" style="color:#3B9FD4;">Legal FAQ</span>
+        <h2 class="section-title" style="color:#fff;margin-bottom:0.75rem;">
+          Are Peptides Legal in the UK?
+        </h2>
+        <p style="color:rgba(255,255,255,0.55);font-size:0.95rem;">
+          Common questions from UK researchers about the legal status of research peptides.
+        </p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:1rem;" class="reveal">
+        {[
+          {
+            q: 'Are research peptides legal in the UK?',
+            a: 'Yes. Research-grade peptides are legal to purchase, possess, and use for legitimate scientific research in the UK. They are not controlled under the Misuse of Drugs Act 1971 or the Medicines Act 1968 when clearly labelled for research use only and not for human consumption.',
+          },
+          {
+            q: 'What is "research use only" (RUO)?',
+            a: 'Research Use Only (RUO) designates that a product is intended exclusively for in vitro laboratory research and scientific study. It may not be used for diagnostic, therapeutic, or food/cosmetic purposes. This is the regulatory framework under which research peptides are legitimately sold in the UK.',
+          },
+          {
+            q: 'Is retatrutide legal in the UK?',
+            a: 'Yes. Retatrutide is not a controlled substance in the UK. It is not approved as a medicine, but as a research chemical it can be purchased and studied legally for scientific purposes.',
+          },
+        ].map((item) => (
+          <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;">
+            <h3 style="font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:0.5rem;">{item.q}</h3>
+            <p style="font-size:0.875rem;color:rgba(255,255,255,0.5);line-height:1.65;">{item.a}</p>
+          </div>
+        ))}
+      </div>
+
+      <div style="text-align:center;margin-top:2rem;" class="reveal">
+        <a href="/faq" class="btn btn-outline" style="border-color:rgba(255,255,255,0.25);color:rgba(255,255,255,0.8);">
+          View Full FAQ (15+ Questions) &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+  </style>
+</Base>

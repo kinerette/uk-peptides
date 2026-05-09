@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Contact UK Peptides — Research Enquiries"
+  description="Contact UK Peptides for research enquiries, order support, or Certificate of Analysis requests. Email or Telegram."
+>
+  <section style="background:var(--dark);padding:4rem 0 3rem;text-align:center;">
+    <div class="container">
+      <span class="section-label" style="color:#3B9FD4;">Get in Touch</span>
+      <h1 style="color:#fff;margin:0.5rem 0 1rem;">Contact UK Peptides</h1>
+      <p style="color:rgba(255,255,255,0.6);max-width:500px;margin:0 auto;font-size:0.95rem;">
+        Research enquiries, order support, or COA requests. We respond within 24 hours on business days.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--bg);">
+    <div class="container--narrow">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-bottom:3rem;">
+
+        <div class="card" style="padding:1.75rem;">
+          <div style="width:44px;height:44px;background:rgba(59,159,212,0.1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B9FD4" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <h3 style="font-size:1rem;margin-bottom:0.4rem;">Email</h3>
+          <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:0.75rem;">For research enquiries, order questions, and COA requests.</p>
+          <a href="mailto:contact@uk-peptides.eu" style="color:var(--accent);font-weight:600;font-size:0.9rem;text-decoration:none;">contact@uk-peptides.eu</a>
+        </div>
+
+        <div class="card" style="padding:1.75rem;">
+          <div style="width:44px;height:44px;background:rgba(59,159,212,0.1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B9FD4" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <h3 style="font-size:1rem;margin-bottom:0.4rem;">Telegram</h3>
+          <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:0.75rem;">Faster responses for urgent enquiries. Join our research community channel.</p>
+          <a href="https://t.me/peptides_fr" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600;font-size:0.9rem;text-decoration:none;">@peptides_fr</a>
+        </div>
+
+        <div class="card" style="padding:1.75rem;">
+          <div style="width:44px;height:44px;background:rgba(59,159,212,0.1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B9FD4" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <h3 style="font-size:1rem;margin-bottom:0.4rem;">Response Time</h3>
+          <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:0.75rem;">We respond to all research and order enquiries within 24 hours on business days (Monday to Friday).</p>
+          <span style="font-size:0.875rem;color:var(--text);font-weight:600;">24 hours</span>
+        </div>
+      </div>
+
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem;">
+        <h2 style="font-size:1.25rem;margin-bottom:1rem;">Frequently Requested</h2>
+        <div style="display:flex;flex-direction:column;gap:0.6rem;">
+          {[
+            { label: 'Certificate of Analysis (COA) request', note: 'Include your order number and lot number' },
+            { label: 'Bulk order enquiry', note: 'For quantities >10 vials, email us for pricing' },
+            { label: 'Technical research question', note: 'We can assist with reconstitution and storage queries' },
+            { label: 'Order status / tracking', note: 'Include your order reference number' },
+            { label: 'Legal / compliance question', note: 'We can confirm RUO status and documentation' },
+          ].map((item) => (
+            <div style="display:flex;align-items:flex-start;gap:0.75rem;padding:0.75rem;background:var(--bg-alt);border-radius:var(--radius-sm);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B9FD4" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:3px;"><path d="M20 6L9 17l-5-5"/></svg>
+              <div>
+                <span style="font-weight:600;font-size:0.875rem;">{item.label}</span>
+                <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.15rem;">{item.note}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

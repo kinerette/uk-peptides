@@ -1,0 +1,129 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const formattedDate = new Date(post.data.publishedAt).toLocaleDateString('en-GB', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.publishedAt,
+  author: {
+    '@type': 'Organization',
+    name: post.data.author ?? 'UK Peptides Research Team',
+    url: 'https://uk-peptides.eu',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'UK Peptides',
+    url: 'https://uk-peptides.eu',
+  },
+  image: post.data.heroImage ? `https://uk-peptides.eu${post.data.heroImage}` : 'https://uk-peptides.eu/images/products/retatrutide.webp',
+  mainEntityOfPage: `https://uk-peptides.eu/blog/${post.slug}`,
+};
+---
+
+<Base
+  title={`${post.data.title} | UK Peptides`}
+  description={post.data.description}
+  ogImage={post.data.heroImage}
+  schema={articleSchema}
+  pageType="article"
+>
+  <!-- Article header -->
+  <section style="background:var(--dark);padding:4rem 0 3rem;">
+    <div class="container--narrow">
+      <nav style="font-size:0.8rem;color:rgba(255,255,255,0.4);margin-bottom:1.5rem;">
+        <a href="/" style="color:rgba(255,255,255,0.4);text-decoration:none;">Home</a>
+        <span style="margin:0 0.4rem;">/</span>
+        <a href="/blog" style="color:rgba(255,255,255,0.4);text-decoration:none;">Blog</a>
+        <span style="margin:0 0.4rem;">/</span>
+        <span style="color:rgba(255,255,255,0.7);">{post.data.title.slice(0, 40)}&hellip;</span>
+      </nav>
+
+      {post.data.keyword && (
+        <span class="badge badge-blue" style="margin-bottom:1rem;">{post.data.keyword}</span>
+      )}
+
+      <h1 style="color:#fff;font-size:clamp(1.6rem,4vw,2.5rem);line-height:1.2;margin-bottom:1rem;">
+        {post.data.title}
+      </h1>
+
+      <p style="color:rgba(255,255,255,0.6);font-size:0.95rem;line-height:1.6;margin-bottom:1.5rem;">
+        {post.data.description}
+      </p>
+
+      <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+        <time datetime={post.data.publishedAt} style="font-size:0.8rem;color:rgba(255,255,255,0.4);">
+          Published {formattedDate}
+        </time>
+        <span style="font-size:0.8rem;color:rgba(255,255,255,0.4);">By {post.data.author}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hero image -->
+  {post.data.heroImage && (
+    <div style="background:var(--bg-alt);">
+      <div class="container--narrow" style="padding:0;">
+        <img
+          src={post.data.heroImage}
+          alt={post.data.title}
+          width="760"
+          height="400"
+          loading="eager"
+          style="width:100%;height:auto;max-height:400px;object-fit:cover;"
+          onerror="this.parentElement.style.display='none'"
+        />
+      </div>
+    </div>
+  )}
+
+  <!-- Article content -->
+  <section style="padding:3.5rem 0;background:var(--bg);">
+    <div class="container--narrow">
+      <article class="prose">
+        <Content />
+      </article>
+
+      <!-- CTA box -->
+      <div style="margin-top:3rem;background:var(--dark);border-radius:var(--radius-xl);padding:2rem;text-align:center;">
+        <h3 style="color:#fff;font-size:1.15rem;margin-bottom:0.6rem;">Research-Grade Peptides UK</h3>
+        <p style="color:rgba(255,255,255,0.55);font-size:0.875rem;margin-bottom:1.25rem;">
+          All compounds discussed in our research articles are available from stock. &gt;99% purity, EU warehouse, discreet tracked shipping.
+        </p>
+        <a href="/products" class="btn btn-primary">Browse Research Peptides &rarr;</a>
+      </div>
+
+      <!-- Back to blog -->
+      <div style="margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);">
+        <a href="/blog" style="font-size:0.875rem;color:var(--accent);text-decoration:none;font-weight:600;">
+          &larr; Back to Research Blog
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style is:global>
+  /* Extra prose styling for rendered markdown */
+  .prose h2 { scroll-margin-top: 80px; }
+  .prose h3 { scroll-margin-top: 80px; }
+</style>

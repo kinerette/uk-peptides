@@ -1,0 +1,81 @@
+---
+---
+
+<div class="ruo-strip">
+  For Research Use Only &mdash; Not for Human Consumption
+</div>
+
+<header style="
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,250,250,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+">
+  <div class="container">
+    <nav style="display:flex;align-items:center;justify-content:space-between;height:64px;gap:1rem;">
+      <!-- Logo -->
+      <a href="/" aria-label="UK Peptides — Home" style="text-decoration:none;display:flex;align-items:center;gap:0.5rem;flex-shrink:0;">
+        <span style="
+          font-family:var(--font-head);
+          font-weight:700;
+          font-size:1.15rem;
+          color:var(--dark);
+          letter-spacing:-0.03em;
+        ">UK <span style="color:var(--accent);">Peptides</span></span>
+        <span style="
+          font-size:0.65rem;
+          font-weight:700;
+          letter-spacing:0.08em;
+          text-transform:uppercase;
+          color:var(--text-faint);
+          padding:0.2rem 0.4rem;
+          border:1px solid var(--border);
+          border-radius:4px;
+          line-height:1;
+        ">.eu</span>
+      </a>
+
+      <!-- Desktop nav -->
+      <div style="display:flex;align-items:center;gap:1.75rem;" class="hide-mobile">
+        <a href="/products" style="font-size:0.875rem;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Products</a>
+        <a href="/blog" style="font-size:0.875rem;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Research Blog</a>
+        <a href="/faq" style="font-size:0.875rem;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">FAQ</a>
+        <a href="/contact" style="font-size:0.875rem;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Contact</a>
+        <a href="/checkout" class="btn btn-primary btn-sm">
+          Order Now
+        </a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button id="menuBtn" class="hide-desktop" aria-label="Open navigation" style="
+        background:none;
+        border:none;
+        cursor:pointer;
+        padding:0.5rem;
+        color:var(--text);
+      ">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="19" y2="6" />
+          <line x1="3" y1="11" x2="19" y2="11" />
+          <line x1="3" y1="16" x2="19" y2="16" />
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Mobile panel -->
+    <div id="mobilePanel" style="
+      display:none;
+      flex-direction:column;
+      gap:0.25rem;
+      padding-bottom:1rem;
+    ">
+      <a href="/products" style="font-size:0.9rem;font-weight:500;color:var(--text);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid var(--border);">Products</a>
+      <a href="/blog" style="font-size:0.9rem;font-weight:500;color:var(--text);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid var(--border);">Research Blog</a>
+      <a href="/faq" style="font-size:0.9rem;font-weight:500;color:var(--text);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid var(--border);">FAQ</a>
+      <a href="/contact" style="font-size:0.9rem;font-weight:500;color:var(--text);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid var(--border);">Contact</a>
+      <a href="/checkout" class="btn btn-primary" style="margin-top:0.75rem;justify-content:center;">Order Now</a>
+    </div>
+  </div>
+</header>

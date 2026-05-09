@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+export const prerender = false;
+
+const orderId = Astro.url.searchParams.get('order') ?? '';
+---
+
+<Base
+  title="Order Confirmed — UK Peptides"
+  description="Your research peptide order has been confirmed."
+  robots="noindex, nofollow"
+>
+  <section style="min-height:80vh;display:flex;align-items:center;justify-content:center;padding:4rem 1.25rem;background:var(--bg);">
+    <div style="max-width:520px;width:100%;text-align:center;">
+      <div style="width:72px;height:72px;background:rgba(34,197,94,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+
+      <h1 style="font-size:1.75rem;margin-bottom:0.75rem;color:var(--dark);">Order Confirmed</h1>
+
+      <p style="color:var(--text-muted);font-size:0.95rem;line-height:1.7;margin-bottom:1.25rem;">
+        Thank you for your order. A confirmation email will be sent shortly.
+        Your research peptides will be dispatched from our EU warehouse.
+      </p>
+
+      {orderId && (
+        <p style="font-size:0.8rem;color:var(--text-faint);margin-bottom:2rem;">
+          Order reference: <code style="background:var(--bg-alt);padding:0.2rem 0.5rem;border-radius:4px;font-size:0.8rem;">{orderId}</code>
+        </p>
+      )}
+
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:2rem;text-align:left;">
+        <h3 style="font-size:0.9rem;font-weight:700;margin-bottom:1rem;">What happens next?</h3>
+        <ol style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;">
+          {[
+            'Payment confirmation email sent to your inbox',
+            'Order processed and picked from EU warehouse stock',
+            'Dispatched with tracked shipping (3–7 business days to UK)',
+            'Tracking number sent by email once shipped',
+          ].map((step, i) => (
+            <li style="display:flex;gap:0.75rem;align-items:flex-start;font-size:0.875rem;color:var(--text-muted);">
+              <span style="font-family:var(--font-head);font-weight:700;font-size:0.8rem;color:var(--accent);background:rgba(59,159,212,0.1);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">{i + 1}</span>
+              {step}
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+        <a href="/products" class="btn btn-primary">Browse More Products</a>
+        <a href="/blog" class="btn btn-outline">Research Articles</a>
+      </div>
+    </div>
+  </section>
+</Base>

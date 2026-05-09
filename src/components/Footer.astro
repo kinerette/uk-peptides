@@ -1,0 +1,110 @@
+---
+---
+
+<footer style="background:var(--dark);color:rgba(255,255,255,0.65);margin-top:auto;">
+  <!-- Payment trust bar -->
+  <div style="border-bottom:1px solid rgba(255,255,255,0.08);padding:1.75rem 0;">
+    <div class="container">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3B9FD4" stroke-width="2.2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span style="font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#3B9FD4;">Secure Payment</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0.75rem;">
+          {['Visa', 'Mastercard', 'Apple Pay', 'Google Pay', 'SEPA', 'Crypto'].map((method) => (
+            <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:0.35rem 0.75rem;font-size:0.75rem;font-weight:600;color:rgba(255,255,255,0.8);">{method}</span>
+          ))}
+        </div>
+        <p style="font-size:0.72rem;color:rgba(255,255,255,0.35);text-align:center;">
+          via Peptide-Pay &middot; 3D-Secure &middot; No card data stored on this site
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer grid -->
+  <div class="container" style="padding-top:3rem;padding-bottom:3rem;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2.5rem;">
+
+      <!-- Brand -->
+      <div>
+        <div style="font-family:var(--font-head);font-weight:700;font-size:1.1rem;color:#fff;margin-bottom:0.75rem;letter-spacing:-0.02em;">
+          UK <span style="color:var(--accent);">Peptides</span>
+        </div>
+        <p style="font-size:0.82rem;line-height:1.65;color:rgba(255,255,255,0.45);margin-bottom:1rem;">
+          Research-grade peptides shipped across Europe. EU warehouse. Discreet packaging.
+          &gt;99% purity analytical standard.
+        </p>
+        <div style="display:flex;flex-direction:column;gap:0.3rem;">
+          <a href="mailto:contact@uk-peptides.eu" style="font-size:0.82rem;color:var(--accent);text-decoration:none;">contact@uk-peptides.eu</a>
+          <a href="https://t.me/peptides_fr" target="_blank" rel="noopener" style="font-size:0.82rem;color:rgba(255,255,255,0.45);text-decoration:none;">Telegram Support</a>
+        </div>
+      </div>
+
+      <!-- Products -->
+      <div>
+        <h4 style="font-family:var(--font-head);font-weight:600;font-size:0.85rem;color:#fff;margin-bottom:1rem;letter-spacing:0.05em;text-transform:uppercase;">Products</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.45rem;">
+          {[
+            ['Retatrutide', '/products/retatrutide'],
+            ['BPC-157', '/products/bpc-157'],
+            ['TB-500', '/products/tb-500'],
+            ['GHK-Cu', '/products/ghk-cu'],
+            ['MOTS-c', '/products/mots-c'],
+            ['NAD+', '/products/nad'],
+            ['Selank', '/products/selank'],
+            ['Semax', '/products/semax'],
+            ['Bacteriostatic Water', '/products/bacteriostatic-water'],
+          ].map(([name, href]) => (
+            <li><a href={href} style="font-size:0.82rem;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">{name}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Research -->
+      <div>
+        <h4 style="font-family:var(--font-head);font-weight:600;font-size:0.85rem;color:#fff;margin-bottom:1rem;letter-spacing:0.05em;text-transform:uppercase;">Research</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.45rem;">
+          {[
+            ['Research Blog', '/blog'],
+            ['Are Peptides Legal in the UK?', '/blog/are-peptides-legal-in-the-uk'],
+            ['UK Peptides Review', '/blog/uk-peptides-review-how-to-spot-quality'],
+            ['Best Peptides UK 2026', '/blog/best-peptides-to-buy-uk-2026'],
+            ['FAQ', '/faq'],
+            ['Contact', '/contact'],
+          ].map(([name, href]) => (
+            <li><a href={href} style="font-size:0.82rem;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">{name}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div>
+        <h4 style="font-family:var(--font-head);font-weight:600;font-size:0.85rem;color:#fff;margin-bottom:1rem;letter-spacing:0.05em;text-transform:uppercase;">Legal</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.45rem;margin-bottom:1.25rem;">
+          {[
+            ['Privacy Policy', '/legal/privacy'],
+            ['Terms of Use', '/legal/terms'],
+            ['Shipping Policy', '/legal/shipping'],
+          ].map(([name, href]) => (
+            <li><a href={href} style="font-size:0.82rem;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">{name}</a></li>
+          ))}
+        </ul>
+        <p style="font-size:0.75rem;color:rgba(255,255,255,0.25);line-height:1.6;">
+          All peptides are research-grade reagents. Not approved for human consumption.
+          For laboratory and scientific use only. 18+ only.
+        </p>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div style="border-top:1px solid rgba(255,255,255,0.08);margin-top:2.5rem;padding-top:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;">
+      <p style="font-size:0.75rem;color:rgba(255,255,255,0.3);">
+        &copy; {new Date().getFullYear()} UK Peptides &mdash; uk-peptides.eu. All rights reserved.
+      </p>
+      <p style="font-size:0.75rem;color:rgba(255,255,255,0.3);">
+        For Research Use Only &middot; Not for Human Consumption
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,181 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  schema?: object | object[];
+  robots?: string;
+  pageType?: 'website' | 'article';
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage = '/images/products/retatrutide.webp',
+  schema,
+  robots = 'index, follow, max-image-preview:large',
+  pageType = 'website',
+} = Astro.props;
+
+const canonicalUrl = canonical || new URL(Astro.url.pathname, Astro.site).href;
+const schemaArray = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+---
+
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content={Astro.generator} />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalUrl} />
+  <meta name="robots" content={robots} />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL(ogImage, Astro.site).href} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:type" content={pageType} />
+  <meta property="og:locale" content="en_GB" />
+  <meta property="og:site_name" content="UK Peptides" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />
+
+  <!-- Fonts: Space Grotesk + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Schema.org -->
+  {schemaArray.map((s) => (
+    <script type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+
+  <slot name="head" />
+</head>
+<body>
+  <!-- Research gate — bottom banner, non-blocking -->
+  <div id="researchGate" class="age-gate" role="dialog" aria-label="Research Use Confirmation">
+    <div class="age-gate__copy">
+      <strong class="age-gate__title">For Research Use Only</strong>
+      <span class="age-gate__sub">
+        All peptides on this site are research-grade reagents intended exclusively for laboratory and scientific use.
+        By clicking <em>I Confirm</em>, you confirm you are 18+ and accept our
+        <a href="/legal/terms">Terms of Use</a> and <a href="/legal/privacy">Privacy Policy</a>.
+      </span>
+    </div>
+    <button id="researchGateBtn" type="button" class="age-gate__btn">
+      I Confirm — Research Use
+    </button>
+  </div>
+
+  <Header />
+
+  <main style="flex: 1;">
+    <slot />
+  </main>
+
+  <Footer />
+
+  <!-- Sticky mobile CTA -->
+  <div class="sticky-cta" id="stickyCta">
+    <div class="sticky-cta__info">
+      <span class="sticky-cta__name">Retatrutide 10 mg</span>
+      <span class="sticky-cta__price">From 94 EUR</span>
+    </div>
+    <a href="/products/retatrutide" class="btn btn-primary btn-sm">Shop Now</a>
+  </div>
+
+  <script is:inline>
+    // Research gate
+    (function () {
+      var KEY = 'ukpep_research_confirmed';
+      var gate = document.getElementById('researchGate');
+      var btn = document.getElementById('researchGateBtn');
+      if (!gate || !btn) return;
+
+      try {
+        var params = new URLSearchParams(location.search);
+        if (params.get('gate') === 'skip') localStorage.setItem(KEY, '1');
+      } catch (e) {}
+
+      if (localStorage.getItem(KEY) === '1') {
+        gate.remove();
+      } else {
+        gate.style.display = 'flex';
+        btn.addEventListener('click', function () {
+          localStorage.setItem(KEY, '1');
+          gate.classList.add('age-gate--leaving');
+          setTimeout(function () { gate.remove(); }, 350);
+        });
+      }
+
+      // Mobile menu toggle
+      var menuBtn = document.getElementById('menuBtn');
+      var mobilePanel = document.getElementById('mobilePanel');
+      if (menuBtn && mobilePanel) {
+        menuBtn.addEventListener('click', function () {
+          var isOpen = mobilePanel.style.display !== 'none';
+          mobilePanel.style.display = isOpen ? 'none' : 'flex';
+        });
+      }
+
+      // Sticky CTA
+      var stickyCta = document.getElementById('stickyCta');
+      if (stickyCta) {
+        window.addEventListener('scroll', function () {
+          stickyCta.classList.toggle('visible', window.scrollY > 500);
+        }, { passive: true });
+      }
+
+      // Scroll reveal
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+      document.querySelectorAll('.reveal').forEach(function (el) {
+        observer.observe(el);
+      });
+
+      // FAQ accordion
+      document.querySelectorAll('.faq-question').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var item = btn.closest('.faq-item');
+          if (!item) return;
+          var isOpen = item.classList.contains('open');
+          document.querySelectorAll('.faq-item.open').forEach(function (i) {
+            i.classList.remove('open');
+          });
+          if (!isOpen) item.classList.add('open');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

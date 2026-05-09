@@ -1,0 +1,57 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  slug: string;
+  publishedAt: string;
+  keyword?: string;
+  heroImage?: string;
+}
+
+const { title, description, slug, publishedAt, keyword, heroImage } = Astro.props;
+
+const formattedDate = new Date(publishedAt).toLocaleDateString('en-GB', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<article class="card" style="display:flex;flex-direction:column;">
+  {heroImage && (
+    <a href={`/blog/${slug}`} style="text-decoration:none;">
+      <div style="background:var(--bg-alt);height:180px;overflow:hidden;">
+        <img
+          src={heroImage}
+          alt={title}
+          width="400"
+          height="180"
+          loading="lazy"
+          style="width:100%;height:100%;object-fit:cover;"
+          onerror="this.parentElement.style.display='none'"
+        />
+      </div>
+    </a>
+  )}
+
+  <div style="padding:1.25rem;flex:1;display:flex;flex-direction:column;gap:0.5rem;">
+    {keyword && (
+      <span class="badge badge-blue" style="align-self:flex-start;">{keyword}</span>
+    )}
+
+    <a href={`/blog/${slug}`} style="text-decoration:none;color:inherit;">
+      <h3 style="font-size:1rem;font-weight:700;line-height:1.3;margin:0.25rem 0;">{title}</h3>
+    </a>
+
+    <p style="font-size:0.83rem;color:var(--text-muted);line-height:1.55;flex:1;">
+      {description.length > 120 ? description.slice(0, 117) + '...' : description}
+    </p>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.75rem;">
+      <time datetime={publishedAt} style="font-size:0.75rem;color:var(--text-faint);">{formattedDate}</time>
+      <a href={`/blog/${slug}`} style="font-size:0.82rem;font-weight:600;color:var(--accent);text-decoration:none;">
+        Read &rarr;
+      </a>
+    </div>
+  </div>
+</article>

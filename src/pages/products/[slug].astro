@@ -1,0 +1,267 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { products, getProductBySlug } from '../../lib/products';
+
+export async function getStaticPaths() {
+  return products.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const product = getProductBySlug(slug!);
+if (!product) return Astro.redirect('/products');
+
+const relatedProducts = product.relatedSlugs
+  .map((s) => products.find((p) => p.slug === s))
+  .filter(Boolean) as typeof products;
+
+const lowestVariant = product.variants.reduce((a, b) => a.priceEur < b.priceEur ? a : b);
+
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: `${product.name} — Research Peptide UK`,
+  description: product.description.slice(0, 300),
+  image: `https://uk-peptides.eu${product.image}`,
+  brand: {
+    '@type': 'Brand',
+    name: 'UK Peptides',
+  },
+  offers: product.variants.map((v) => ({
+    '@type': 'Offer',
+    price: v.priceEur,
+    priceCurrency: 'EUR',
+    availability: 'https://schema.org/InStock',
+    name: v.label,
+    url: `https://uk-peptides.eu/checkout?variant=${v.id}`,
+  })),
+};
+
+// Per-product SEO
+const seoMeta: Record<string, { title: string; description: string }> = {
+  'retatrutide': {
+    title: 'Buy Retatrutide UK — Triple GLP-1/GIP/Glucagon Peptide | UK Peptides',
+    description: 'Buy retatrutide UK. Triple GLP-1/GIP/glucagon agonist. -24.2% body weight (NEJM 2023). >99% purity, EU warehouse, discreet UK delivery. From €94.',
+  },
+  'bpc-157': {
+    title: 'BPC-157 UK — Research Peptide | UK Peptides',
+    description: 'Buy BPC-157 UK. Tissue repair peptide, 100+ peer-reviewed publications. >99% purity, EU warehouse, discreet shipping. From €50.',
+  },
+  'tb-500': {
+    title: 'TB-500 UK — Thymosin Beta-4 Fragment | UK Peptides',
+    description: 'Buy TB-500 UK. Thymosin Beta-4 fragment for muscle recovery and tissue regeneration research. >99% purity, EU warehouse. From €135.',
+  },
+};
+const meta = seoMeta[product.slug] ?? {
+  title: `${product.name} UK — Research Peptide | UK Peptides`,
+  description: `Buy ${product.name} UK. ${product.shortBenefit.slice(0, 120)}. >99% purity, EU warehouse, discreet shipping.`,
+};
+---
+
+<Base
+  title={meta.title}
+  description={meta.description}
+  ogImage={product.image}
+  schema={productSchema}
+>
+  <!-- Breadcrumb -->
+  <div style="background:var(--bg-alt);border-bottom:1px solid var(--border);padding:0.75rem 0;">
+    <div class="container">
+      <nav aria-label="Breadcrumb" style="font-size:0.8rem;color:var(--text-muted);">
+        <a href="/" style="color:var(--text-muted);text-decoration:none;">Home</a>
+        <span style="margin:0 0.4rem;">/</span>
+        <a href="/products" style="color:var(--text-muted);text-decoration:none;">Products</a>
+        <span style="margin:0 0.4rem;">/</span>
+        <span style="color:var(--text);">{product.name}</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Product hero -->
+  <section style="padding:3rem 0;background:var(--bg);">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:3rem;align-items:start;">
+
+        <!-- Image -->
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem;display:flex;align-items:center;justify-content:center;min-height:320px;">
+          <img
+            src={product.image}
+            alt={`${product.name} research peptide vial UK`}
+            width="280"
+            height="280"
+            loading="eager"
+            style="max-width:100%;height:auto;object-fit:contain;"
+            onerror="this.style.display='none'"
+          />
+        </div>
+
+        <!-- Details -->
+        <div>
+          <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.75rem;flex-wrap:wrap;">
+            <span class="badge badge-blue">{product.category}</span>
+            <span class="badge badge-green">&gt;99% Purity</span>
+            <span class="badge badge-dark">EU Warehouse</span>
+          </div>
+
+          <h1 style="font-size:2.25rem;margin-bottom:0.5rem;">{product.name}</h1>
+
+          <p style="color:var(--text-muted);font-size:0.95rem;line-height:1.6;margin-bottom:1.5rem;">
+            {product.shortBenefit}
+          </p>
+
+          <!-- Variant selector + buy -->
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.5rem;">
+            <p style="font-weight:600;font-size:0.875rem;margin-bottom:0.75rem;">Select Quantity</p>
+
+            <div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.25rem;" id="variantList">
+              {product.variants.map((v, i) => (
+                <label style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:border-color 0.15s;" class={`variant-option ${i === 0 ? 'selected' : ''}`} data-variant-id={v.id} data-price={v.priceEur}>
+                  <span style="display:flex;align-items:center;gap:0.5rem;">
+                    <input type="radio" name="variant" value={v.id} checked={i === 0} style="accent-color:var(--accent);" />
+                    <span style="font-weight:600;font-size:0.9rem;">{v.quantity}</span>
+                  </span>
+                  <span style="font-family:var(--font-head);font-weight:700;color:var(--dark);">€{v.priceEur}</span>
+                </label>
+              ))}
+            </div>
+
+            <a
+              href={`/checkout?variant=${lowestVariant.id}`}
+              id="buyNowBtn"
+              class="btn btn-primary btn-lg"
+              style="width:100%;justify-content:center;"
+            >
+              Order Now — Research Use Only &rarr;
+            </a>
+
+            <p style="font-size:0.75rem;color:var(--text-faint);text-align:center;margin-top:0.75rem;">
+              Secure checkout via Peptide-Pay &middot; Visa, Mastercard, Apple Pay, SEPA
+            </p>
+          </div>
+
+          <!-- Storage info -->
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            {[
+              { icon: '&#9829;', label: 'Temperature', value: product.storage.temperature },
+              { icon: '&#9673;', label: 'Conditions', value: product.storage.conditions },
+              { icon: '&#8987;', label: 'Shelf Life', value: product.storage.shelfLife },
+            ].map((item) => (
+              <div style="display:flex;align-items:flex-start;gap:0.75rem;font-size:0.83rem;">
+                <span style="font-weight:700;color:var(--text-muted);flex-shrink:0;min-width:90px;">{item.label}:</span>
+                <span style="color:var(--text);">{item.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key findings -->
+  <section style="padding:3rem 0;background:var(--white);border-top:1px solid var(--border);">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:3rem;">
+
+        <!-- Description + research context -->
+        <div>
+          <h2 style="font-size:1.4rem;margin-bottom:1rem;">Research Profile</h2>
+          <div class="prose" style="max-width:none;">
+            <p>{product.description}</p>
+
+            {product.reconstitution && (
+              <div style="background:rgba(59,159,212,0.06);border:1px solid rgba(59,159,212,0.18);border-radius:var(--radius);padding:1.25rem;margin-top:1.5rem;">
+                <h3 style="font-size:1rem;margin-bottom:0.5rem;">Reconstitution</h3>
+                <p style="font-size:0.875rem;"><strong>Solvent:</strong> {product.reconstitution.solvent}</p>
+                <p style="font-size:0.875rem;"><strong>Volume:</strong> {product.reconstitution.volume}</p>
+                <p style="font-size:0.875rem;"><strong>Concentration:</strong> {product.reconstitution.concentration}</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <!-- Key findings -->
+        <div>
+          <h2 style="font-size:1.4rem;margin-bottom:1rem;">Key Research Findings</h2>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:0.7rem;">
+            {product.keyFindings.map((finding) => (
+              <li style="display:flex;align-items:flex-start;gap:0.75rem;font-size:0.875rem;line-height:1.6;color:var(--text-muted);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B9FD4" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:3px;"><path d="M20 6L9 17l-5-5"/></svg>
+                {finding}
+              </li>
+            ))}
+          </ul>
+
+          {product.researchContext && (
+            <div style="margin-top:1.5rem;padding:1rem 1.25rem;background:var(--bg-alt);border-radius:var(--radius);border-left:3px solid var(--accent);">
+              <p style="font-size:0.8rem;color:var(--text-muted);line-height:1.65;font-style:italic;">
+                {product.researchContext.slice(0, 400)}{product.researchContext.length > 400 ? '...' : ''}
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  {product.faqs && product.faqs.length > 0 && (
+    <section style="padding:3rem 0;background:var(--bg-alt);border-top:1px solid var(--border);">
+      <div class="container" style="max-width:760px;">
+        <h2 style="font-size:1.4rem;margin-bottom:2rem;">Frequently Asked Questions</h2>
+        <div>
+          {product.faqs.map((faq) => (
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                {faq.question}
+                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+              <div class="faq-answer">{faq.answer}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Related products -->
+  {relatedProducts.length > 0 && (
+    <section style="padding:3rem 0;background:var(--bg);">
+      <div class="container">
+        <h2 style="font-size:1.4rem;margin-bottom:2rem;">Related Research Compounds</h2>
+        <div class="grid-3">
+          {relatedProducts.map((p) => (
+            <ProductCard product={p} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <script is:inline>
+    // Variant selector: update buy link when radio changes
+    var variantOptions = document.querySelectorAll('.variant-option');
+    var buyBtn = document.getElementById('buyNowBtn');
+
+    variantOptions.forEach(function(opt) {
+      var radio = opt.querySelector('input[type="radio"]');
+      if (!radio) return;
+
+      radio.addEventListener('change', function() {
+        variantOptions.forEach(function(o) {
+          o.style.borderColor = 'var(--border)';
+        });
+        opt.style.borderColor = 'var(--accent)';
+
+        var vid = opt.getAttribute('data-variant-id');
+        if (buyBtn && vid) {
+          buyBtn.setAttribute('href', '/checkout?variant=' + vid);
+        }
+      });
+    });
+
+    // Highlight first on load
+    if (variantOptions.length > 0) {
+      variantOptions[0].style.borderColor = 'var(--accent)';
+    }
+  </script>
+</Base>
