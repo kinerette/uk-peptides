@@ -183,7 +183,7 @@ const websiteSchema = {
         <p class="compare-sub">Most peptide suppliers ship from outside Europe. Here is what that means for your order.</p>
       </div>
 
-      <div class="compare-grid reveal">
+      <div class="compare-grid" id="compareGrid">
 
         <!-- LEFT: others -->
         <div class="compare-card compare-card--bad">
@@ -468,6 +468,22 @@ const websiteSchema = {
         }
       }, 150);
     }, { passive: true });
+
+    // ── Compare cards 3D entrance ──
+    const badCard  = document.querySelector('.compare-card--bad')  as HTMLElement | null;
+    const goodCard = document.querySelector('.compare-card--good') as HTMLElement | null;
+    const grid     = document.getElementById('compareGrid');
+    if (badCard && goodCard && grid) {
+      gsap.set(badCard,  { transformPerspective: 1200, rotateY: -18, x: -28, opacity: 0 });
+      gsap.set(goodCard, { transformPerspective: 1200, rotateY:  18, x:  28, opacity: 0, scale: 0.97 });
+      const cObs = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        cObs.disconnect();
+        gsap.to(badCard,  { rotateY: 0, x: 0, opacity: 0.82, duration: 0.85, ease: 'power3.out' });
+        gsap.to(goodCard, { rotateY: 0, x: 0, opacity: 1, scale: 1, duration: 0.85, ease: 'power3.out', delay: 0.12 });
+      }, { threshold: 0.25 });
+      cObs.observe(grid);
+    }
   </script>
 
   <!-- ═══════════════════════════════════════════
@@ -908,6 +924,8 @@ const websiteSchema = {
       align-items: stretch;
       max-width: 900px;
       margin: 0 auto;
+      perspective: 1400px;
+      transform-style: preserve-3d;
     }
     .compare-card {
       border-radius: 16px;
