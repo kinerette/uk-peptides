@@ -64,9 +64,12 @@ const websiteSchema = {
           Pharmaceutical-grade lyophilised peptides held in EU stock.
           No customs. No delays. 3–5 day tracked delivery.
         </p>
+        <div class="hero-social-proof reveal">
+          <span class="hero-stars" aria-hidden="true">★★★★★</span>
+          <span class="hero-reviews">Trusted by 2,400+ researchers &nbsp;&middot;&nbsp; 4.9/5</span>
+        </div>
         <div class="hero-ctas reveal">
-          <a href="/products" class="btn btn-primary btn-lg">Shop All Peptides &rarr;</a>
-          <a href="/checkout" class="btn btn-outline-light btn-lg">Order Now</a>
+          <a href="/products" class="btn btn-hero-cta btn-lg">Shop All Peptides &rarr;</a>
         </div>
         <div class="hero-pay reveal">
           <img src="/logos/visa.svg"             alt="Visa"       height="16" loading="eager" style="filter:brightness(0) invert(1);" />
@@ -692,26 +695,54 @@ const websiteSchema = {
       max-width: 440px;
       margin-bottom: 2rem;
     }
+    /* Social proof stars */
+    .hero-social-proof {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .hero-stars {
+      color: #FBBF24;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+    }
+    .hero-reviews {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 500;
+    }
+
     .hero-ctas {
       display: flex;
       gap: 0.75rem;
       flex-wrap: wrap;
       margin-bottom: 1.75rem;
     }
-    .btn-outline-light {
-      background: transparent;
+    /* Orange CTA — stands out on dark blue hero */
+    .btn-hero-cta {
+      background: #F97316;
       color: #fff;
       font-family: var(--font-head);
       font-weight: 700;
-      font-size: 0.95rem;
-      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      padding: 0.85rem 2rem;
       border-radius: var(--radius-sm);
       text-decoration: none;
-      border: 1.5px solid rgba(255,255,255,0.32);
-      transition: all var(--transition);
+      border: none;
+      box-shadow: 0 4px 20px rgba(249,115,22,0.45);
+      transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
     }
-    .btn-outline-light:hover { background: rgba(255,255,255,0.08); color: #fff; }
+    .btn-hero-cta:hover {
+      background: #EA6C0A;
+      box-shadow: 0 6px 28px rgba(249,115,22,0.6);
+      transform: translateY(-1px);
+      color: #fff;
+    }
     .hero-pay {
       display: flex;
       align-items: center;
@@ -735,7 +766,7 @@ const websiteSchema = {
     .hero-product__img {
       position: relative;
       z-index: 1;
-      width: clamp(220px, 28vw, 340px);
+      width: clamp(260px, 36vw, 440px);
       height: auto;
       filter: drop-shadow(0 30px 60px rgba(0,0,0,0.65));
     }
