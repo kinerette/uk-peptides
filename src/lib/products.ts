@@ -333,14 +333,14 @@ export const products: Product[] = [
   {
     slug: 'bacteriostatic-water',
     name: 'Bac Water',
-    shortBenefit: 'Sterile reconstitution solvent — 0.9% benzyl alcohol, pharmaceutical grade',
+    shortBenefit: 'Sterile reconstitution solvent — 0.9% benzyl alcohol, research grade',
     category: 'Solvent',
     image: '/images/products/bacteriostatic-water.webp',
     variants: [
       { id: 'bacwater-10ml', label: 'Bac Water 10 mL', quantity: '10 mL', priceEur: 8 },
     ],
     description:
-      'Bacteriostatic Water for Injection (BW) is sterile water containing 0.9% w/v benzyl alcohol as a bacteriostatic preservative. It is the standard solvent for reconstituting lyophilised research peptides, as the benzyl alcohol prevents microbial growth in multi-dose vials, extending shelf life post-reconstitution to approximately 28 days when stored at 2–8°C. Our bacteriostatic water meets pharmaceutical-grade sterility standards and is supplied in sealed glass vials.',
+      'Bacteriostatic Water for Injection (BW) is sterile water containing 0.9% w/v benzyl alcohol as a bacteriostatic preservative. It is the standard solvent for reconstituting lyophilised research peptides, as the benzyl alcohol prevents microbial growth in multi-dose vials, extending shelf life post-reconstitution to approximately 28 days when stored at 2–8°C. Our bacteriostatic water meets laboratory-grade sterility standards and is supplied in sealed glass vials.',
     researchContext:
       'Standard laboratory solvent for peptide reconstitution per USP guidelines.',
     keyFindings: [

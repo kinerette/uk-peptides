@@ -66,7 +66,7 @@ const websiteSchema = {
       <div class="hero-copy">
         <p class="hero-eyebrow reveal">EU Warehouse · Third-Party Tested</p>
         <h1 class="hero-h1 reveal">
-          Pharmaceutical Grade<br/>Peptides.<br/>
+          Research Grade<br/>Peptides.<br/>
           <span class="hero-h1--accent">European Quality.</span>
         </h1>
         <p class="hero-sub reveal">
@@ -1342,16 +1342,17 @@ const websiteSchema = {
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      /* Mobile: height auto, image fixed 230px at the bottom */
-      .hero-section { min-height: auto; background: #fff; justify-content: flex-start; padding-bottom: 200px; }
-      .hero-bg { top: auto; bottom: 0; height: 230px; object-position: center 35%; }
-      .hero-copy { padding: 2.5rem 0 1.75rem; max-width: 100%; }
+      /* Mobile: no image, content only, carousel glued below */
+      .hero-section { min-height: auto; background: #fff; justify-content: flex-start; padding-bottom: 1.5rem; overflow: hidden; }
+      .hero-section > picture { display: none; }
+      .hero-section > .hero-overlay { display: none; }
+      .hero-bg { display: none; }
+      .hero-copy { padding: 1.75rem 0 0; max-width: 100%; }
       .hero-search, .hero-sub, .hero-social-proof { display: none; }
-      .hero-h1 { font-size: clamp(1.75rem, 8vw, 2.5rem); margin-bottom: 1.1rem; }
-      .hero-ctas { margin-bottom: 1.25rem; }
-      .hero-checklist { margin-bottom: 1.25rem; }
-      /* Very soft seam only — no global overlay */
-      .hero-overlay { background: linear-gradient(to top, rgba(255,255,255,0.45) 0%, transparent 30%); }
+      .hero-h1 { font-size: clamp(1.6rem, 7.5vw, 2.2rem); margin-bottom: 0.9rem; }
+      .hero-ctas { margin-bottom: 1rem; }
+      .hero-checklist { margin-bottom: 1rem; margin-top: 0; }
+      .hero-pay img { height: 18px; }
       .blog-featured { grid-template-columns: 1fr; }
       .blog-featured__img-wrap { min-height: 200px; }
       .blog-featured__body { padding: 1.5rem; }
