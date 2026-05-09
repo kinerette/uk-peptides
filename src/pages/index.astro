@@ -1342,24 +1342,16 @@ const websiteSchema = {
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .hero-section { min-height: 100svh; justify-content: flex-start; background: #fff; }
-      /* Image in lower 45% — content fills the top */
-      .hero-bg { top: 52%; height: auto; object-position: center top; }
+      /* Mobile: height auto, image fixed 230px at the bottom */
+      .hero-section { min-height: auto; background: #fff; justify-content: flex-start; padding-bottom: 200px; }
+      .hero-bg { top: auto; bottom: 0; height: 230px; object-position: center 35%; }
       .hero-copy { padding: 2.5rem 0 1.75rem; max-width: 100%; }
-      /* Keep checklist + payment; hide search/stars/sub */
-      .hero-search,
-      .hero-sub,
-      .hero-social-proof { display: none; }
+      .hero-search, .hero-sub, .hero-social-proof { display: none; }
       .hero-h1 { font-size: clamp(1.75rem, 8vw, 2.5rem); margin-bottom: 1.1rem; }
       .hero-ctas { margin-bottom: 1.25rem; }
       .hero-checklist { margin-bottom: 1.25rem; }
-      .hero-pay { margin-top: 0.25rem; }
-      /* Overlay: white top (text) + white bottom (blend into carousel) */
-      .hero-overlay {
-        background:
-          linear-gradient(to top, #ffffff 0%, rgba(255,255,255,0.97) 18%, rgba(255,255,255,0.2) 35%, transparent 50%),
-          linear-gradient(to bottom, #ffffff 0%, #ffffff 35%, rgba(255,255,255,0.88) 52%, transparent 68%);
-      }
+      /* Very soft seam only — no global overlay */
+      .hero-overlay { background: linear-gradient(to top, rgba(255,255,255,0.45) 0%, transparent 30%); }
       .blog-featured { grid-template-columns: 1fr; }
       .blog-featured__img-wrap { min-height: 200px; }
       .blog-featured__body { padding: 1.5rem; }
