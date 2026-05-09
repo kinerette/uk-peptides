@@ -21,15 +21,17 @@ const badgeClass = categoryColour[product.category] ?? 'badge-blue';
 ---
 
 <article class="card" style="display:flex;flex-direction:column;">
-  <a href={`/products/${product.slug}`} style="text-decoration:none;color:inherit;display:block;">
-    <div style="background:var(--bg-alt);height:220px;display:flex;align-items:center;justify-content:center;padding:1.5rem;position:relative;">
+  <a href={`/products/${product.slug}`} style="text-decoration:none;color:inherit;display:block;overflow:hidden;">
+    <div style="background:var(--bg-alt);height:220px;display:flex;align-items:center;justify-content:center;padding:1.5rem;position:relative;overflow:hidden;">
       <img
         src={product.image}
         alt={`${product.name} vial — research grade`}
         width="160"
         height="160"
         loading="lazy"
-        style="object-fit:contain;height:160px;width:auto;"
+        style="object-fit:contain;height:160px;width:auto;transition:transform 0.3s ease;"
+        onmouseover="this.style.transform='scale(1.07)'"
+        onmouseout="this.style.transform='scale(1)'"
         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
       />
       <!-- Fallback when image is missing -->
