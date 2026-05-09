@@ -69,20 +69,17 @@ const websiteSchema = {
           <a href="/checkout" class="btn btn-outline-light btn-lg">Order Now</a>
         </div>
         <div class="hero-pay reveal">
-          <img src="/logos/visa.svg"             alt="Visa"       height="18" loading="eager" />
-          <img src="/logos/mastercard-color.svg" alt="Mastercard" height="18" loading="eager" />
-          <img src="/logos/apple-pay-color.svg"  alt="Apple Pay"  height="18" loading="eager" />
-          <img src="/logos/google-pay-color.svg" alt="Google Pay" height="18" loading="eager" />
-          <img src="/logos/sepa.svg"             alt="SEPA"       height="18" loading="eager" />
+          <img src="/logos/visa.svg"             alt="Visa"       height="16" loading="eager" style="filter:brightness(0) invert(1);" />
+          <img src="/logos/mastercard-color.svg" alt="Mastercard" height="16" loading="eager" style="filter:brightness(0) invert(1);" />
+          <img src="/logos/apple-pay-color.svg"  alt="Apple Pay"  height="16" loading="eager" style="filter:brightness(0) invert(1);" />
+          <img src="/logos/google-pay-color.svg" alt="Google Pay" height="16" loading="eager" style="filter:brightness(0) invert(1);" />
+          <img src="/logos/sepa.svg"             alt="SEPA"       height="16" loading="eager" style="filter:brightness(0) invert(1);" />
         </div>
-        <p class="hero-pay-label">Secure payment via
-          <img src="/logos/peptide-pay-logo.svg" alt="Peptide-Pay" height="10" style="display:inline;vertical-align:middle;margin-left:3px;opacity:0.65;" />
-        </p>
+        <p class="hero-pay-label">Secure payment via Peptide-Pay</p>
       </div>
 
-      <!-- RIGHT: hero image — replace /images/hero.webp with your Seedream-generated image -->
+      <!-- RIGHT: hero image — remplacer src avec image Seedream générée -->
       <div class="hero-product reveal">
-        <div class="hero-product__ring" aria-hidden="true"></div>
         <img
           src="/images/products/retatrutide.webp"
           alt="Research peptides — EU Warehouse"
@@ -102,6 +99,10 @@ const websiteSchema = {
        CATALOGUE CAROUSEL — tight below hero
   ═══════════════════════════════════════════ -->
   <section class="carousel-section">
+    <div class="carousel-label-bar">
+      <span class="section-label">Our Catalogue</span>
+      <span class="carousel-hint">{products.length} compounds &middot; drag to explore</span>
+    </div>
     <div class="carousel-outer">
       <div class="carousel-fade carousel-fade--l" aria-hidden="true"></div>
       <div class="carousel-fade carousel-fade--r" aria-hidden="true"></div>
@@ -716,13 +717,12 @@ const websiteSchema = {
       align-items: center;
       gap: 0.65rem;
       flex-wrap: wrap;
-      opacity: 0.55;
       margin-bottom: 0.35rem;
     }
-    .hero-pay img { height: 18px; width: auto; }
+    .hero-pay img { height: 16px; width: auto; opacity: 0.7; }
     .hero-pay-label {
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.35);
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.4);
     }
 
     /* Hero product */
@@ -732,27 +732,32 @@ const websiteSchema = {
       align-items: center;
       position: relative;
     }
-    .hero-product__ring {
-      position: absolute;
-      width: 380px;
-      height: 380px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(59,159,212,0.22) 0%, rgba(59,159,212,0.08) 50%, transparent 70%);
-      pointer-events: none;
-    }
     .hero-product__img {
       position: relative;
       z-index: 1;
-      width: clamp(220px, 30vw, 360px);
+      width: clamp(220px, 28vw, 340px);
       height: auto;
-      filter: drop-shadow(0 24px 48px rgba(0,0,0,0.5));
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,0.65));
     }
 
     /* ── CATALOGUE CAROUSEL — tight under hero ── */
     .carousel-section {
       background: var(--white);
-      padding: 1rem 0 0;
+      padding: 0 0 0;
       border-bottom: 1px solid var(--border);
+    }
+    .carousel-label-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem 0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .carousel-hint {
+      font-size: 0.75rem;
+      color: var(--text-faint);
+      font-weight: 500;
     }
     .carousel-outer {
       position: relative;
