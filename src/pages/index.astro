@@ -43,11 +43,18 @@ const websiteSchema = {
        HERO — PHARMA PREMIUM
   ═══════════════════════════════════════════ -->
   <section class="hero-section">
-    <!-- Decorative radial glows -->
-    <div class="hero-glow hero-glow--1" aria-hidden="true"></div>
-    <div class="hero-glow hero-glow--2" aria-hidden="true"></div>
+    <!-- Full-bleed background image -->
+    <img
+      src="/images/hero-retatrutide.webp"
+      alt=""
+      aria-hidden="true"
+      class="hero-bg-img"
+      loading="eager"
+    />
+    <!-- Dark gradient overlay so text stays readable -->
+    <div class="hero-overlay" aria-hidden="true"></div>
 
-  <div class="container">
+  <div class="container" style="position:relative;z-index:1;">
     <div class="hero-layout">
 
       <!-- LEFT: copy -->
@@ -86,16 +93,6 @@ const websiteSchema = {
           <img src="/logos/sepa.svg"             alt="SEPA"       height="18" loading="eager" />
         </div>
         <p class="hero-pay-label">Secure payment via Peptide-Pay</p>
-      </div>
-
-      <!-- RIGHT: hero lab scene -->
-      <div class="hero-product reveal">
-        <img
-          src="/images/hero-retatrutide.webp"
-          alt="Retatrutide EU research peptide — UK Peptides"
-          loading="eager"
-          class="hero-product__img hero-scene"
-        />
       </div>
 
     </div>
@@ -169,14 +166,14 @@ const websiteSchema = {
           <div class="compare-card__header">
             <span class="compare-card__icon">✕</span>
             <span class="compare-card__label">Other suppliers</span>
-            <span class="compare-card__origin">Ships from China / USA</span>
+            <span class="compare-card__origin">Ships from UK / USA / China</span>
           </div>
           <ul class="compare-list">
-            <li><span class="ci-x">✕</span> High probability of customs seizure</li>
-            <li><span class="ci-x">✕</span> Potential fines &amp; legal complications</li>
-            <li><span class="ci-x">✕</span> 3–6 weeks delivery, no guarantees</li>
-            <li><span class="ci-x">✕</span> No parcel tracking once it leaves origin</li>
-            <li><span class="ci-x">✕</span> Cold chain uncertain — quality unverified</li>
+            <li><span class="ci-x">✕</span> Ships outside the EU — high customs seizure risk</li>
+            <li><span class="ci-x">✕</span> Packages regularly stopped at EU/FR border</li>
+            <li><span class="ci-x">✕</span> 3–6 weeks delivery, no guarantee of arrival</li>
+            <li><span class="ci-x">✕</span> No parcel tracking once it crosses the border</li>
+            <li><span class="ci-x">✕</span> Cold chain uncertain — degraded product risk</li>
             <li><span class="ci-x">✕</span> No CoA, no lot traceability</li>
           </ul>
         </div>
@@ -683,33 +680,40 @@ const websiteSchema = {
   </section>
 
   <style>
-    /* ── HERO — dark premium ── */
+    /* ── HERO — full-bleed lab scene ── */
     .hero-section {
       position: relative;
       overflow: hidden;
-      background: linear-gradient(150deg, #071223 0%, #0d1f3c 50%, #162f5a 100%);
-      padding: 3.5rem 0 3rem;
+      padding: 4rem 0 3.5rem;
+      min-height: clamp(420px, 52vw, 640px);
+      display: flex;
+      align-items: center;
     }
-    .hero-glow {
+    .hero-bg-img {
       position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
     }
-    .hero-glow--1 {
-      top: -80px; right: -60px;
-      width: 520px; height: 520px;
-      background: radial-gradient(circle, rgba(59,159,212,0.18) 0%, transparent 70%);
-    }
-    .hero-glow--2 {
-      bottom: -120px; left: 20%;
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(59,159,212,0.10) 0%, transparent 70%);
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(
+        to right,
+        rgba(4,12,24,0.88) 0%,
+        rgba(4,12,24,0.72) 45%,
+        rgba(4,12,24,0.15) 75%,
+        transparent 100%
+      );
     }
     .hero-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
+      grid-template-columns: 1fr;
+      max-width: 580px;
       position: relative;
       z-index: 1;
     }
@@ -852,30 +856,6 @@ const websiteSchema = {
       margin-top: 0.25rem;
     }
 
-    /* Hero product */
-    .hero-product {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      border-radius: 16px;
-    }
-    .hero-product__img {
-      position: relative;
-      z-index: 1;
-      width: clamp(260px, 36vw, 440px);
-      height: auto;
-      filter: drop-shadow(0 30px 60px rgba(0,0,0,0.65));
-    }
-    .hero-scene {
-      width: 100%;
-      height: clamp(260px, 32vw, 420px);
-      object-fit: cover;
-      object-position: center;
-      border-radius: 16px;
-      filter: none;
-    }
 
     /* ── COMPARE SECTION ── */
     .compare-section {
