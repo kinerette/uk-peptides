@@ -42,7 +42,7 @@ const websiteSchema = {
   <!-- ═══════════════════════════════════════════
        HERO — PHARMA PREMIUM
   ═══════════════════════════════════════════ -->
-  <section class="hero-section" id="heroSection" data-mo="a">
+  <section class="hero-section">
 
     <!-- Full-bleed background: landscape on desktop, portrait on mobile -->
     <picture>
@@ -1356,72 +1356,12 @@ const websiteSchema = {
       .cta-banner__inner { flex-direction: column; text-align: center; }
       .section-header { flex-direction: column; align-items: flex-start; }
 
-      /* ── OPTION A: no image, carousel glued (default) ── */
-      .hero-section[data-mo="a"] { min-height: auto; background: #fff; justify-content: flex-start; padding-bottom: 1.5rem; overflow: hidden; }
-      .hero-section[data-mo="a"] > picture { display: none; }
-      .hero-section[data-mo="a"] > .hero-overlay { display: none; }
-
-      /* ── OPTION B: image stacked below content ── */
-      .hero-section[data-mo="b"] { min-height: auto; background: #fff; justify-content: flex-start; padding-bottom: 0; overflow: visible; }
-      .hero-section[data-mo="b"] > picture { order: 2; flex-shrink: 0; width: 100%; display: block; }
-      .hero-section[data-mo="b"] > .container { order: 1; }
-      .hero-section[data-mo="b"] > .hero-overlay { display: none; }
-      .hero-section[data-mo="b"] .hero-bg { position: static; width: 100%; height: 260px; object-fit: cover; object-position: center 30%; display: block; }
-      .hero-section[data-mo="b"] .hero-copy { padding-bottom: 1.5rem; }
-
-      /* ── OPTION C: image as background with left overlay ── */
-      .hero-section[data-mo="c"] { min-height: 480px; background: #fff; justify-content: center; padding-bottom: 0; overflow: hidden; }
-      .hero-section[data-mo="c"] > picture { display: block; }
-      .hero-section[data-mo="c"] .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% center; display: block; }
-      .hero-section[data-mo="c"] > .hero-overlay { display: block; background: linear-gradient(to right, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.3) 80%, transparent 100%); }
-      .hero-section[data-mo="c"] .hero-copy { padding: 2.5rem 0; }
-
-      /* Preview label */
-      .mo-label {
-        position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
-        background: rgba(0,0,0,0.75); color: #fff;
-        font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em;
-        padding: 0.3rem 0.8rem; border-radius: 999px;
-        pointer-events: none; z-index: 9999;
-        white-space: nowrap;
-      }
-      /* Preview switcher button */
-      .mo-btn {
-        position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-        background: #0077C8; color: #fff;
-        font-size: 0.8rem; font-weight: 700;
-        padding: 0.65rem 1.4rem; border-radius: 999px; border: none;
-        box-shadow: 0 4px 20px rgba(0,119,200,0.4);
-        cursor: pointer; z-index: 9999; white-space: nowrap;
-        display: flex; align-items: center; gap: 0.5rem;
-      }
+      /* Mobile: no image, carousel glued directly below */
+      .hero-section { min-height: auto; background: #fff; justify-content: flex-start; padding-bottom: 1.5rem; overflow: hidden; }
+      .hero-section > picture { display: none; }
+      .hero-section > .hero-overlay { display: none; }
     }
   </style>
 
-  <!-- ⚠️ TEMP PREVIEW — remove after choice -->
-  <div class="mo-label" id="moLabel">Option A — Sans image</div>
-  <button class="mo-btn" id="moBtnNext" onclick="switchMobileOption()">
-    ▶ Option suivante
-  </button>
-  <script is:inline>
-    var MO_OPTIONS = [
-      { key: 'a', label: 'Option A — Sans image' },
-      { key: 'b', label: 'Option B — Image en dessous' },
-      { key: 'c', label: 'Option C — Image en fond' },
-    ];
-    var moIdx = 0;
-    function switchMobileOption() {
-      moIdx = (moIdx + 1) % MO_OPTIONS.length;
-      var opt = MO_OPTIONS[moIdx];
-      document.getElementById('heroSection').setAttribute('data-mo', opt.key);
-      document.getElementById('moLabel').textContent = opt.label;
-    }
-    // Only show on mobile
-    (function() {
-      var btn = document.getElementById('moBtnNext');
-      var lbl = document.getElementById('moLabel');
-      if (window.innerWidth > 768) { btn.style.display = 'none'; lbl.style.display = 'none'; }
-    })();
-  </script>
 
 </Base>
