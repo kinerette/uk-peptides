@@ -75,19 +75,19 @@ const websiteSchema = {
 
         <ul class="hero-checklist reveal">
           <li>
-            <span class="chk-icon"><svg width="15" height="15" fill="none" stroke="#0077C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg></span>
+            <span class="chk-icon"><svg width="15" height="15" fill="none" stroke="#3B9FD4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg></span>
             EU Warehouse — zero customs seizures
           </li>
           <li>
-            <span class="chk-icon"><svg width="15" height="15" fill="none" stroke="#0077C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+            <span class="chk-icon"><svg width="15" height="15" fill="none" stroke="#3B9FD4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
             3–5 day tracked delivery across Europe
           </li>
           <li>
-            <span class="chk-icon"><svg width="15" height="15" fill="none" stroke="#0077C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg></span>
+            <span class="chk-icon"><svg width="15" height="15" fill="none" stroke="#3B9FD4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg></span>
             Certificate of Analysis (CoA) available
           </li>
           <li>
-            <span class="chk-icon"><svg width="15" height="15" fill="none" stroke="#0077C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 3h6v8.5L19 18H5l4-6.5V3z"/><line x1="6" y1="3" x2="18" y2="3"/></svg></span>
+            <span class="chk-icon"><svg width="15" height="15" fill="none" stroke="#3B9FD4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 3h6v8.5L19 18H5l4-6.5V3z"/><line x1="6" y1="3" x2="18" y2="3"/></svg></span>
             &gt;99% purity, lyophilised &amp; sealed
           </li>
         </ul>
@@ -112,7 +112,7 @@ const websiteSchema = {
 
         <div class="hero-pay reveal">
           <img src="/logos/visa.svg"             alt="Visa"       height="16" loading="eager" />
-          <img src="/logos/mastercard-color.svg" alt="Mastercard" height="16" loading="eager" />
+          <img src="/logos/mastercard-color.svg" alt="Mastercard" height="20" loading="eager" />
           <img src="/logos/apple-pay-color.svg"  alt="Apple Pay"  height="16" loading="eager" />
           <img src="/logos/google-pay-color.svg" alt="Google Pay" height="16" loading="eager" />
           <img src="/logos/sepa.svg"             alt="SEPA"       height="16" loading="eager" />
@@ -183,52 +183,60 @@ const websiteSchema = {
         <p class="compare-sub">Most peptide suppliers ship from outside Europe. Here is what that means for your order.</p>
       </div>
 
-      <div class="compare-grid" id="compareGrid">
-
-        <!-- LEFT: others -->
-        <div class="compare-card compare-card--bad">
-          <div class="compare-card__header">
-            <span class="compare-card__icon">✕</span>
-            <span class="compare-card__label">Other suppliers</span>
-            <span class="compare-card__origin">Ships from UK / USA / China</span>
+      <!-- Single unified table — scroll-driven unfold -->
+      <div id="compareTable" class="ct-wrap">
+        <!-- Header row -->
+        <div class="ct-head">
+          <div class="ct-col ct-col--bad">
+            <span class="ct-icon ct-icon--bad">✕</span>
+            <span class="ct-name">Other Suppliers</span>
+            <span class="ct-sub">UK / USA / China</span>
           </div>
-          <ul class="compare-list">
-            <li><span class="ci-x">✕</span> Ships outside the EU — high customs seizure risk</li>
-            <li><span class="ci-x">✕</span> Packages regularly stopped at EU/FR border</li>
-            <li><span class="ci-x">✕</span> 3–6 weeks delivery, no guarantee of arrival</li>
-            <li><span class="ci-x">✕</span> No parcel tracking once it crosses the border</li>
-            <li><span class="ci-x">✕</span> Cold chain uncertain — degraded product risk</li>
-            <li><span class="ci-x">✕</span> No CoA, no lot traceability</li>
-          </ul>
+          <div class="ct-sep" aria-hidden="true">VS</div>
+          <div class="ct-col ct-col--good">
+            <span class="ct-icon ct-icon--good">✓</span>
+            <span class="ct-name">UK Peptides</span>
+            <span class="ct-sub ct-sub--good">EU Warehouse</span>
+          </div>
         </div>
-
-        <!-- DIVIDER -->
-        <div class="compare-vs" aria-hidden="true">VS</div>
-
-        <!-- RIGHT: us -->
-        <div class="compare-card compare-card--good">
-          <div class="compare-card__header">
-            <span class="compare-card__icon compare-card__icon--good">✓</span>
-            <span class="compare-card__label">UK Peptides</span>
-            <span class="compare-card__origin compare-card__origin--good">EU Warehouse · Ships within Europe</span>
-          </div>
-          <ul class="compare-list compare-list--good">
-            <li><span class="ci-ok">✓</span> <strong>Zero customs risk</strong> — EU to EU, no border issues</li>
-            <li><span class="ci-ok">✓</span> No seizures, no fines, no surprises</li>
-            <li><span class="ci-ok">✓</span> 3–5 day tracked delivery across all of Europe</li>
-            <li><span class="ci-ok">✓</span> Full tracking from dispatch to doorstep</li>
-            <li><span class="ci-ok">✓</span> Cold-chain maintained, lyophilised &amp; sealed</li>
-            <li><span class="ci-ok">✓</span> CoA available · &gt;99% purity every batch</li>
-          </ul>
+        <!-- Rows -->
+        <div class="ct-row">
+          <div class="ct-cell ct-cell--bad">Ships outside EU — customs seizure risk</div>
+          <div class="ct-cell ct-cell--good"><strong>EU to EU</strong> — zero border risk</div>
+        </div>
+        <div class="ct-row">
+          <div class="ct-cell ct-cell--bad">Packages stopped at EU border regularly</div>
+          <div class="ct-cell ct-cell--good">No seizures, no fines, no surprises</div>
+        </div>
+        <div class="ct-row">
+          <div class="ct-cell ct-cell--bad">3–6 weeks, no arrival guarantee</div>
+          <div class="ct-cell ct-cell--good">3–5 day tracked delivery across Europe</div>
+        </div>
+        <div class="ct-row">
+          <div class="ct-cell ct-cell--bad">No tracking after border crossing</div>
+          <div class="ct-cell ct-cell--good">Full tracking dispatch → doorstep</div>
+        </div>
+        <div class="ct-row">
+          <div class="ct-cell ct-cell--bad">Cold chain uncertain — degraded product</div>
+          <div class="ct-cell ct-cell--good">Cold-chain maintained, lyophilised &amp; sealed</div>
+        </div>
+        <div class="ct-row ct-row--last">
+          <div class="ct-cell ct-cell--bad">No CoA, no lot traceability</div>
+          <div class="ct-cell ct-cell--good">CoA available · &gt;99% purity every batch</div>
+        </div>
+        <!-- Footer CTA -->
+        <div class="ct-footer">
           <a href="/products" class="compare-cta">Shop EU Stock &rarr;</a>
         </div>
-
       </div>
+
     </div>
   </section>
 
   <script>
     import gsap from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+    gsap.registerPlugin(ScrollTrigger);
 
     const track = document.getElementById('carouselTrack') as HTMLElement | null;
     if (!track) throw new Error('No carouselTrack');
@@ -469,26 +477,22 @@ const websiteSchema = {
       }, 150);
     }, { passive: true });
 
-    // ── Compare cards: tilt-back → upright (rotateX perspective) ──
-    const badCard  = document.querySelector('.compare-card--bad')  as HTMLElement | null;
-    const goodCard = document.querySelector('.compare-card--good') as HTMLElement | null;
-    const grid     = document.getElementById('compareGrid');
-    if (badCard && goodCard && grid) {
-      gsap.set(badCard,  { transformPerspective: 900, rotateX: 22, y: 24, opacity: 0 });
-      gsap.set(goodCard, { transformPerspective: 900, rotateX: 22, y: 24, opacity: 0 });
-      let fired = false;
-      function playCompare() {
-        if (fired) return;
-        const r = grid.getBoundingClientRect();
-        if (r.top < window.innerHeight * 0.88) {
-          fired = true;
-          window.removeEventListener('scroll', playCompare, true);
-          gsap.to(badCard,  { rotateX: 0, y: 0, opacity: 0.82, duration: 0.9, ease: 'power3.out' });
-          gsap.to(goodCard, { rotateX: 0, y: 0, opacity: 1,    duration: 0.9, ease: 'power3.out', delay: 0.1 });
+    // ── Compare table: scroll-driven unfold (rotateX scrub) ──
+    const ctWrap = document.getElementById('compareTable') as HTMLElement | null;
+    if (ctWrap) {
+      gsap.fromTo(ctWrap,
+        { transformPerspective: 1100, rotateX: 28, y: 40, opacity: 0 },
+        {
+          rotateX: 0, y: 0, opacity: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: ctWrap,
+            start: 'top 92%',
+            end: 'top 30%',
+            scrub: 1.2,
+          }
         }
-      }
-      window.addEventListener('scroll', playCompare, { passive: true, capture: true });
-      playCompare(); // fire immediately if already in view
+      );
     }
   </script>
 
@@ -629,22 +633,22 @@ const websiteSchema = {
       <div class="grid-4">
         {[
           {
-            icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>`,
+            icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3B9FD4" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>`,
             title: '>99% Purity',
             body: 'Analytical-grade lyophilised peptides. HPLC-tested every batch — no shortcuts.',
           },
           {
-            icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+            icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3B9FD4" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
             title: 'EU Warehouse',
             body: 'Held within the EU for fast, reliable dispatch. No customs issues on European orders.',
           },
           {
-            icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="1.8" stroke-linecap="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`,
+            icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3B9FD4" stroke-width="1.8" stroke-linecap="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`,
             title: 'Tracked Shipping',
             body: 'Every order ships with full tracking. Discreet outer packaging — no identifying labels.',
           },
           {
-            icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="1.8" stroke-linecap="round"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+            icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3B9FD4" stroke-width="1.8" stroke-linecap="round"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
             title: 'Research Compliant',
             body: 'Properly labelled RUO. Supplied exclusively for laboratory and scientific research.',
           },
@@ -763,7 +767,7 @@ const websiteSchema = {
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #0077C8;
+      color: #3B9FD4;
       margin-bottom: 1rem;
     }
     .hero-h1 {
@@ -775,7 +779,7 @@ const websiteSchema = {
       color: #0d1117;
       margin-bottom: 1.25rem;
     }
-    .hero-h1--accent { color: #0077C8; }
+    .hero-h1--accent { color: #3B9FD4; }
     .hero-sub {
       font-size: 0.97rem;
       color: #4B5563;
@@ -814,7 +818,7 @@ const websiteSchema = {
       margin-bottom: 1.5rem;
     }
     .btn-hero-cta {
-      background: #0077C8;
+      background: #3B9FD4;
       color: #fff;
       font-family: var(--font-head);
       font-weight: 700;
@@ -830,7 +834,7 @@ const websiteSchema = {
       white-space: nowrap;
     }
     .btn-hero-cta:hover {
-      background: #004494;
+      background: #2d8abf;
       transform: translateY(-1px);
       color: #fff;
     }
@@ -863,7 +867,7 @@ const websiteSchema = {
       transition: border-color 0.2s;
     }
     .hero-search-form:focus-within {
-      border-color: #0077C8;
+      border-color: #3B9FD4;
       background: #fff;
     }
     .hero-search-input {
@@ -887,7 +891,7 @@ const websiteSchema = {
       align-items: center;
       transition: color 0.2s;
     }
-    .hero-search-btn:hover { color: #0077C8; }
+    .hero-search-btn:hover { color: #3B9FD4; }
     .hero-pay {
       display: flex;
       align-items: center;
@@ -904,7 +908,7 @@ const websiteSchema = {
     }
     .compare-header {
       text-align: center;
-      margin-bottom: 3.5rem;
+      margin-bottom: 3rem;
     }
     .compare-title {
       font-family: var(--font-head);
@@ -915,7 +919,7 @@ const websiteSchema = {
       margin: 0.5rem 0 0.75rem;
       line-height: 1.2;
     }
-    .compare-title em { color: #0077C8; font-style: normal; }
+    .compare-title em { color: #3B9FD4; font-style: normal; }
     .compare-sub {
       font-size: 0.97rem;
       color: #6B7280;
@@ -923,106 +927,69 @@ const websiteSchema = {
       margin: 0 auto;
       line-height: 1.6;
     }
-    .compare-grid {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 0;
-      align-items: stretch;
-      max-width: 900px;
+    /* ── Unified table ── */
+    .ct-wrap {
+      max-width: 820px;
       margin: 0 auto;
-      perspective: 900px;
-    }
-    .compare-card {
-      border-radius: 16px;
-      padding: 2rem 2rem 2.25rem;
-    }
-    .compare-card--bad {
-      background: #ffffff;
+      background: #fff;
       border: 1px solid #E5E7EB;
-      opacity: 0.82;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+      transform-origin: center top;
     }
-    .compare-card--good {
-      background: #ffffff;
-      border: 2px solid #0077C8;
-      box-shadow: 0 0 0 4px rgba(0,86,179,0.06), 0 4px 24px rgba(0,86,179,0.1);
+    .ct-head {
+      display: grid;
+      grid-template-columns: 1fr 48px 1fr;
+      background: #F8F9FA;
+      border-bottom: 2px solid #E5E7EB;
     }
-    .compare-card__header {
+    .ct-col {
+      padding: 1.25rem 1.5rem;
       display: flex;
       flex-direction: column;
       gap: 0.2rem;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #E5E7EB;
     }
-    .compare-card__icon {
-      font-size: 1.4rem;
-      color: #D1D5DB;
-      font-weight: 700;
+    .ct-col--good { border-left: 2px solid #3B9FD4; background: rgba(59,159,212,0.06); }
+    .ct-icon { font-size: 1.2rem; font-weight: 700; }
+    .ct-icon--bad { color: #D1D5DB; }
+    .ct-icon--good { color: #3B9FD4; }
+    .ct-name { font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; color: #0d1117; }
+    .ct-col--bad .ct-name { color: #9CA3AF; }
+    .ct-sub { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #9CA3AF; }
+    .ct-sub--good { color: #3B9FD4; }
+    .ct-sep {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.62rem; font-weight: 800; letter-spacing: 0.1em;
+      color: #D1D5DB; border-left: 1px solid #E5E7EB; border-right: 1px solid #E5E7EB;
     }
-    .compare-card__icon--good { color: #0077C8; }
-    .compare-card__label {
-      font-family: var(--font-head);
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #9CA3AF;
+    .ct-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid #F3F4F6;
     }
-    .compare-card--good .compare-card__label { color: #0d1117; }
-    .compare-card__origin {
-      font-size: 0.75rem;
-      color: #9CA3AF;
-      font-weight: 500;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
+    .ct-row--last { border-bottom: none; }
+    .ct-cell {
+      padding: 0.85rem 1.5rem;
+      font-size: 0.84rem;
+      line-height: 1.45;
     }
-    .compare-card__origin--good { color: #0077C8; }
-    .compare-list {
-      list-style: none;
-      padding: 0; margin: 0;
+    .ct-cell--bad { color: #9CA3AF; border-right: 1px solid #F3F4F6; }
+    .ct-cell--bad::before { content: '✕ '; color: #EF4444; font-weight: 700; }
+    .ct-cell--good { color: #374151; background: rgba(59,159,212,0.04); border-left: 2px solid #3B9FD4; }
+    .ct-cell--good::before { content: '✓ '; color: #3B9FD4; font-weight: 700; }
+    .ct-cell--good strong { color: #0d1117; }
+    .ct-footer {
+      padding: 1.25rem 1.5rem;
+      background: rgba(59,159,212,0.06);
+      border-top: 1px solid #E5E7EB;
       display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-    .compare-list li {
-      font-size: 0.88rem;
-      color: #9CA3AF;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.6rem;
-      line-height: 1.4;
-    }
-    .compare-list--good li {
-      color: #374151;
-    }
-    .compare-list--good li strong { color: #0d1117; }
-    .ci-x {
-      color: #EF4444;
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 0.05rem;
-    }
-    .ci-ok {
-      color: #0077C8;
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 0.05rem;
-    }
-    .compare-vs {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 52px;
-      font-family: var(--font-head);
-      font-size: 0.7rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      color: #D1D5DB;
-      writing-mode: vertical-rl;
+      justify-content: flex-end;
     }
     .compare-cta {
       display: inline-flex;
       align-items: center;
-      margin-top: 1.75rem;
-      background: #0077C8;
+      background: #3B9FD4;
       color: #fff;
       font-family: var(--font-head);
       font-weight: 700;
@@ -1032,17 +999,13 @@ const websiteSchema = {
       text-decoration: none;
       transition: background 0.2s, transform 0.2s;
     }
-    .compare-cta:hover { background: #004494; transform: translateY(-1px); color:#fff; }
-    @media (max-width: 680px) {
-      .compare-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-      .compare-vs { display: none; }
-      .compare-card { padding: 1rem 0.75rem 1.1rem; border-radius: 12px; }
-      .compare-card__header { margin-bottom: 0.85rem; padding-bottom: 0.65rem; }
-      .compare-card__label { font-size: 0.85rem; }
-      .compare-card__origin { font-size: 0.6rem; }
-      .compare-list { gap: 0.5rem; }
-      .compare-list li { font-size: 0.73rem; line-height: 1.35; }
-      .compare-cta { font-size: 0.75rem; padding: 0.45rem 0.75rem; margin-top: 1rem; }
+    .compare-cta:hover { background: #2d8abf; transform: translateY(-1px); color:#fff; }
+    @media (max-width: 640px) {
+      .ct-col { padding: 1rem; }
+      .ct-cell { padding: 0.75rem 1rem; font-size: 0.78rem; }
+      .ct-name { font-size: 0.85rem; }
+      .ct-footer { justify-content: center; }
+      .compare-cta { width: 100%; text-align: center; justify-content: center; }
     }
 
     /* ── CATALOGUE CAROUSEL — tight under hero ── */
@@ -1283,13 +1246,13 @@ const websiteSchema = {
     }
     .why-card:hover {
       background: #EFF6FF;
-      border-color: #0077C8;
-      box-shadow: 0 4px 16px rgba(0,86,179,0.08);
+      border-color: #3B9FD4;
+      box-shadow: 0 4px 16px rgba(59,159,212,0.08);
     }
     .why-card__icon {
       width: 48px;
       height: 48px;
-      background: rgba(0,86,179,0.08);
+      background: rgba(59,159,212,0.08);
       border-radius: var(--radius);
       display: flex;
       align-items: center;
@@ -1325,7 +1288,7 @@ const websiteSchema = {
 
     /* ── FINAL CTA ── */
     .cta-banner {
-      background: linear-gradient(135deg, #1a6fa3 0%, #3B9FD4 100%);
+      background: linear-gradient(135deg, #2d8abf 0%, #3B9FD4 100%);
       padding: 4rem 0;
     }
     .cta-banner__inner {
@@ -1337,7 +1300,7 @@ const websiteSchema = {
     }
     .btn-white {
       background: #fff;
-      color: #1a6fa3;
+      color: #3B9FD4;
       font-family: var(--font-head);
       font-weight: 700;
       font-size: 0.95rem;
@@ -1348,7 +1311,7 @@ const websiteSchema = {
       border: none;
       cursor: pointer;
     }
-    .btn-white:hover { background: #f0f7ff; color: #1a6fa3; transform: translateY(-1px); }
+    .btn-white:hover { background: #f0f7ff; color: #3B9FD4; transform: translateY(-1px); }
     .btn-white-outline {
       background: transparent;
       color: #fff;
