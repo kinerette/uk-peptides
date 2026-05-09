@@ -3,6 +3,7 @@ title: "Peptides in Europe — Why EU Warehouse Delivery Changes Everything"
 description: "Ordering research peptides from outside the EU exposes European researchers to customs seizure, delays, and compliance risk. A complete guide to sourcing peptides safely within Europe."
 publishedAt: "2026-05-07"
 keyword: "peptides europe"
+heroImage: "/images/blog/peptides-europe-customs-guide.jpg"
 author: "UK Peptides Research Team"
 ---
 
