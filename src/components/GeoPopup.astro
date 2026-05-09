@@ -1,0 +1,213 @@
+---
+// GeoPopup — geo-targeted sticky bottom banner
+// Detects visitor country via ipapi.co, shows localized delivery message
+---
+
+<div id="geo-popup" style="display:none;" role="region" aria-label="Delivery information">
+  <div class="gp-inner">
+    <img id="gp-flag" src="" alt="" class="gp-flag" width="28" height="20" />
+    <div class="gp-text">
+      <span id="gp-headline" class="gp-headline"></span>
+      <span id="gp-badges" class="gp-badges"></span>
+    </div>
+    <a href="/products" class="gp-cta">Buy Now →</a>
+    <button id="gp-close" class="gp-close" aria-label="Dismiss">✕</button>
+  </div>
+</div>
+
+<style>
+  #geo-popup {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    padding: 0 1rem 0.75rem;
+    animation: gp-slide-up 0.4s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  @keyframes gp-slide-up {
+    from { transform: translateY(100%); opacity: 0; }
+    to   { transform: translateY(0);   opacity: 1; }
+  }
+  .gp-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #0c1e38 0%, #0f2a4a 100%);
+    border: 1px solid rgba(91,184,224,0.25);
+    border-radius: 14px;
+    box-shadow: 0 -4px 32px rgba(0,0,0,0.35), 0 0 0 1px rgba(91,184,224,0.08);
+    padding: 0.9rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .gp-flag {
+    border-radius: 3px;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  }
+  .gp-text {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .gp-headline {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+  }
+  .gp-badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .gp-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #5BB8E0;
+    background: rgba(91,184,224,0.1);
+    border: 1px solid rgba(91,184,224,0.2);
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+  }
+  .gp-cta {
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: 0 2px 12px rgba(5,150,105,0.4);
+    transition: filter 0.2s, transform 0.2s;
+  }
+  .gp-cta:hover { filter: brightness(1.1); transform: translateY(-1px); color:#fff; }
+  .gp-close {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.35);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    line-height: 1;
+    transition: color 0.15s;
+  }
+  .gp-close:hover { color: rgba(255,255,255,0.8); }
+
+  @media (max-width: 520px) {
+    .gp-inner { gap: 0.75rem; padding: 0.8rem 1rem; }
+    .gp-cta { width: 100%; text-align: center; justify-content: center; display: flex; }
+  }
+</style>
+
+<script>
+  const DISMISS_KEY = 'gp_dismissed';
+  const DISMISS_TTL = 24 * 60 * 60 * 1000; // 24h
+
+  interface CountryData {
+    flag: string;           // ISO 3166-1 alpha-2 lowercase
+    headline: string;
+    days: string;
+  }
+
+  const COUNTRIES: Record<string, CountryData> = {
+    FR: { flag: 'fr', headline: 'Livraison en France en 2–3 jours · Zéro douane', days: '2–3j' },
+    DE: { flag: 'de', headline: 'Lieferung nach Deutschland in 3–4 Tagen · Keine Zollgebühren', days: '3–4T' },
+    ES: { flag: 'es', headline: 'Entrega en España en 4–5 días · Sin aduanas · Almacén EU', days: '4–5d' },
+    IT: { flag: 'it', headline: 'Consegna in Italia in 4–5 giorni · Nessuna dogana · Magazzino EU', days: '4–5g' },
+    NL: { flag: 'nl', headline: 'Levering in Nederland in 2–3 dagen · Geen douane · EU-magazijn', days: '2–3d' },
+    BE: { flag: 'be', headline: 'Livraison en Belgique en 2–3 jours · Zéro douane · Stock EU', days: '2–3j' },
+    GB: { flag: 'gb', headline: 'Delivery to the UK in 3–5 days · No customs issues', days: '3–5d' },
+    PT: { flag: 'pt', headline: 'Entrega em Portugal em 4–5 dias · Sem alfândega · Armazém EU', days: '4–5d' },
+    SE: { flag: 'se', headline: 'Leverans till Sverige på 3–5 dagar · Inga tullar · EU-lager', days: '3–5d' },
+    NO: { flag: 'no', headline: 'Levering til Norge på 4–6 dager · EU-lager', days: '4–6d' },
+    DK: { flag: 'dk', headline: 'Levering til Danmark på 3–4 dage · Ingen told · EU-lager', days: '3–4d' },
+    FI: { flag: 'fi', headline: 'Toimitus Suomeen 3–5 päivässä · Ei tullimaksuja · EU-varasto', days: '3–5d' },
+    AT: { flag: 'at', headline: 'Lieferung nach Österreich in 3–4 Tagen · Keine Zollgebühren', days: '3–4T' },
+    CH: { flag: 'ch', headline: 'Livraison en Suisse en 3–4 jours · Depuis un entrepôt EU', days: '3–4j' },
+    PL: { flag: 'pl', headline: 'Dostawa do Polski w 3–5 dni · Brak ceł · Magazyn EU', days: '3–5d' },
+    CZ: { flag: 'cz', headline: 'Doručení do ČR za 3–5 dní · Bez cla · EU sklad', days: '3–5d' },
+    HU: { flag: 'hu', headline: 'Magyarországra 3–5 napon belül · Vámmentesen · EU raktár', days: '3–5n' },
+    RO: { flag: 'ro', headline: 'Livrare în România în 4–6 zile · Fără taxe vamale · Depozit EU', days: '4–6z' },
+    BG: { flag: 'bg', headline: 'Доставка до България за 5–7 дни · Без митни такси', days: '5–7д' },
+    GR: { flag: 'gr', headline: 'Παράδοση στην Ελλάδα σε 5–7 ημέρες · Χωρίς τελωνειακά', days: '5–7η' },
+    HR: { flag: 'hr', headline: 'Dostava u Hrvatsku za 4–6 dana · Bez carine · EU skladište', days: '4–6d' },
+    SK: { flag: 'sk', headline: 'Dodanie na Slovensko za 3–5 dní · Bez cla · EU sklad', days: '3–5d' },
+    SI: { flag: 'si', headline: 'Dostava v Slovenijo v 3–5 dneh · Brez carine · EU skladišče', days: '3–5d' },
+    EE: { flag: 'ee', headline: 'Tarnimine Eestisse 3–5 päevaga · Tollimaksuta · EL ladu', days: '3–5p' },
+    LV: { flag: 'lv', headline: 'Piegāde Latvijā 3–5 dienās · Bez muitas · ES noliktava', days: '3–5d' },
+    LT: { flag: 'lt', headline: 'Pristatymas į Lietuvą per 3–5 dienas · Be muitų · ES sandėlis', days: '3–5d' },
+    LU: { flag: 'lu', headline: 'Livraison au Luxembourg en 2–3 jours · Zéro douane · Stock EU', days: '2–3j' },
+    IE: { flag: 'ie', headline: 'Delivery to Ireland in 4–5 days · No customs · EU Warehouse', days: '4–5d' },
+    MT: { flag: 'mt', headline: 'Consegna a Malta in 5–7 giorni · Nessuna dogana · Magazzino EU', days: '5–7g' },
+    CY: { flag: 'cy', headline: 'Παράδοση στην Κύπρο σε 6–8 ημέρες · Αποθήκη EU', days: '6–8η' },
+    IS: { flag: 'is', headline: 'Afhending til Íslands á 5–7 dögum · EU vörugeymsla', days: '5–7d' },
+  };
+
+  function isDismissed(): boolean {
+    try {
+      const raw = localStorage.getItem(DISMISS_KEY);
+      if (!raw) return false;
+      return Date.now() - parseInt(raw) < 24 * 60 * 60 * 1000;
+    } catch { return false; }
+  }
+
+  function dismiss() {
+    try { localStorage.setItem(DISMISS_KEY, String(Date.now())); } catch {}
+    const popup = document.getElementById('geo-popup');
+    if (popup) {
+      popup.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+      popup.style.transform = 'translateY(100%)';
+      popup.style.opacity = '0';
+      setTimeout(() => { popup.style.display = 'none'; }, 320);
+    }
+  }
+
+  async function init() {
+    if (isDismissed()) return;
+
+    try {
+      const res = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(4000) });
+      const json = await res.json();
+      const code: string = (json.country_code || '').toUpperCase();
+      const data = COUNTRIES[code];
+      if (!data) return;
+
+      const popup     = document.getElementById('geo-popup') as HTMLElement;
+      const flagEl    = document.getElementById('gp-flag') as HTMLImageElement;
+      const headline  = document.getElementById('gp-headline') as HTMLElement;
+      const badges    = document.getElementById('gp-badges') as HTMLElement;
+      const closeBtn  = document.getElementById('gp-close') as HTMLButtonElement;
+
+      flagEl.src = `https://flagcdn.com/28x21/${data.flag}.png`;
+      flagEl.srcset = `https://flagcdn.com/56x42/${data.flag}.png 2x`;
+      flagEl.alt = code;
+      headline.textContent = data.headline;
+      badges.innerHTML = [
+        'EU Warehouse',
+        'No Customs',
+        'Tracked Delivery',
+        `CoA Available`,
+      ].map(b => `<span class="gp-badge">${b}</span>`).join('');
+
+      popup.style.display = 'block';
+      closeBtn.addEventListener('click', dismiss);
+
+      // Auto-dismiss after 12s
+      setTimeout(dismiss, 12000);
+    } catch {
+      // silent fail — don't show popup if geo detection fails
+    }
+  }
+
+  // Delay 1.5s before showing
+  setTimeout(init, 1500);
+</script>

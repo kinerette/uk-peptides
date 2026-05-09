@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import GeoPopup from '../components/GeoPopup.astro';
 
 interface Props {
   title: string;
@@ -93,6 +94,7 @@ const schemaArray = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
   </main>
 
   <Footer />
+  <GeoPopup />
 
   <!-- Sticky mobile CTA -->
   <div class="sticky-cta" id="stickyCta">
