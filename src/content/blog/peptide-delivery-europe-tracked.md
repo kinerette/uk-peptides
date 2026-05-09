@@ -3,6 +3,7 @@ title: "Research Peptide Delivery in Europe — Tracked, Customs-Free, 3–5 Day
 description: "European researchers expect fast, tracked, customs-free delivery. This guide explains how EU warehouse shipping works for research peptides and what to expect from your order."
 publishedAt: "2026-05-01"
 keyword: "peptide delivery europe"
+heroImage: "/images/blog/peptide-delivery-europe-tracked.jpg"
 author: "UK Peptides Research Team"
 ---
 

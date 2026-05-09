@@ -3,6 +3,7 @@ title: "UK Peptides — Livraison Europe : Ce Que Les Chercheurs Européens Doiv
 description: "Commander des peptides depuis le Royaume-Uni vers l'Europe expose les chercheurs à des risques douaniers réels. Voici pourquoi un entrepôt EU change tout pour la livraison en France, Belgique, Allemagne et aux Pays-Bas."
 publishedAt: "2026-05-09"
 keyword: "uk peptides livraison europe"
+heroImage: "/images/blog/uk-peptides-livraison-europe.jpg"
 author: "UK Peptides Research Team"
 ---
 
