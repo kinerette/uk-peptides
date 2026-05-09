@@ -62,7 +62,7 @@ export const products: Product[] = [
       shelfLife: '18 months (lyophilised, sealed vial)',
     },
     reconstitution: {
-      solvent: 'Bacteriostatic Water (0.9% benzyl alcohol)',
+      solvent: 'Bac Water (0.9% benzyl alcohol)',
       volume: '1–2 mL',
       concentration: '10 mg/mL at 1 mL, 5 mg/mL at 2 mL',
     },
@@ -102,7 +102,7 @@ export const products: Product[] = [
       shelfLife: '24 months (lyophilised)',
     },
     reconstitution: {
-      solvent: 'Bacteriostatic Water (0.9% benzyl alcohol)',
+      solvent: 'Bac Water (0.9% benzyl alcohol)',
       volume: '1–2 mL',
       concentration: '10 mg/mL at 1 mL',
     },
@@ -140,7 +140,7 @@ export const products: Product[] = [
       shelfLife: '24 months (lyophilised)',
     },
     reconstitution: {
-      solvent: 'Bacteriostatic Water (0.9% benzyl alcohol)',
+      solvent: 'Bac Water (0.9% benzyl alcohol)',
       volume: '1–2 mL',
       concentration: '10 mg/mL at 1 mL',
     },
@@ -235,7 +235,7 @@ export const products: Product[] = [
       shelfLife: '18 months (lyophilised)',
     },
     reconstitution: {
-      solvent: 'Bacteriostatic Water (0.9% benzyl alcohol)',
+      solvent: 'Bac Water (0.9% benzyl alcohol)',
       volume: '1–2 mL',
       concentration: '10 mg/mL at 1 mL',
     },
@@ -340,13 +340,13 @@ export const products: Product[] = [
       { id: 'bacwater-10ml', label: 'Bac Water 10 mL', quantity: '10 mL', priceEur: 8 },
     ],
     description:
-      'Bacteriostatic Water for Injection (BW) is sterile water containing 0.9% w/v benzyl alcohol as a bacteriostatic preservative. It is the standard solvent for reconstituting lyophilised research peptides, as the benzyl alcohol prevents microbial growth in multi-dose vials, extending shelf life post-reconstitution to approximately 28 days when stored at 2–8°C. Our bacteriostatic water meets laboratory-grade sterility standards and is supplied in sealed glass vials.',
+      'Bac Water (bacteriostatic water for injection) is sterile water containing 0.9% w/v benzyl alcohol. It is the standard solvent for reconstituting lyophilised research peptides — the benzyl alcohol prevents microbial growth in multi-dose vials, extending shelf life post-reconstitution to approximately 28 days when stored at 2–8°C. Supplied in sealed glass vials to research-grade sterility standards.',
     researchContext:
       'Standard laboratory solvent for peptide reconstitution per USP guidelines.',
     keyFindings: [
       '0.9% benzyl alcohol bacteriostatic preservative',
       'Extends reconstituted peptide stability to ~28 days at 2–8°C',
-      'Pharmaceutical-grade sterility in sealed glass vials',
+      'Research-grade sterility in sealed glass vials',
       'Compatible with all lyophilised peptides in our catalogue',
     ],
     storage: {
