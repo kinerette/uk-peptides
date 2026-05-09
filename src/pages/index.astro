@@ -111,11 +111,11 @@ const websiteSchema = {
         </div>
 
         <div class="hero-pay reveal">
-          <img src="/logos/visa.svg"             alt="Visa"       height="16" loading="eager" />
-          <img src="/logos/mastercard-color.svg" alt="Mastercard" height="20" loading="eager" />
-          <img src="/logos/apple-pay-color.svg"  alt="Apple Pay"  height="16" loading="eager" />
-          <img src="/logos/google-pay-color.svg" alt="Google Pay" height="16" loading="eager" />
-          <img src="/logos/sepa.svg"             alt="SEPA"       height="16" loading="eager" />
+          <img src="/logos/visa.svg"             alt="Visa"       width="38" height="22" loading="eager" />
+          <img src="/logos/mastercard-color.svg" alt="Mastercard" width="38" height="22" loading="eager" />
+          <img src="/logos/apple-pay-color.svg"  alt="Apple Pay"  width="52" height="22" loading="eager" />
+          <img src="/logos/google-pay-color.svg" alt="Google Pay" width="52" height="22" loading="eager" />
+          <img src="/logos/sepa.svg"             alt="SEPA"       width="38" height="22" loading="eager" />
         </div>
       </div>
     </div>
@@ -896,9 +896,10 @@ const websiteSchema = {
       display: flex;
       align-items: center;
       gap: 0.85rem;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      line-height: 0;
     }
-    .hero-pay img { height: 22px; width: auto; opacity: 0.85; }
+    .hero-pay img { height: 22px; width: auto; opacity: 0.85; display: block; }
 
 
     /* ── COMPARE SECTION ── */
