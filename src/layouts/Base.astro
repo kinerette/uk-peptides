@@ -72,19 +72,31 @@ const schemaArray = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
   <slot name="head" />
 </head>
 <body>
-  <!-- Research gate — bottom banner, non-blocking -->
-  <div id="researchGate" class="age-gate" role="dialog" aria-label="Research Use Confirmation">
-    <div class="age-gate__copy">
-      <strong class="age-gate__title">For Research Use Only</strong>
-      <span class="age-gate__sub">
-        All peptides on this site are research-grade reagents intended exclusively for laboratory and scientific use.
-        By clicking <em>I Confirm</em>, you confirm you are 18+ and accept our
-        <a href="/legal/terms">Terms of Use</a> and <a href="/legal/privacy">Privacy Policy</a>.
-      </span>
+  <!-- Research gate — modal overlay bloquant -->
+  <div id="researchGate" class="age-gate-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+    <div class="age-gate-card">
+      <div class="age-gate-card__header">
+        <h2 id="gateTitle">Restricted Access &mdash; Research Only</h2>
+      </div>
+      <div class="age-gate-card__body">
+        <p>This site presents <strong>research reagents intended exclusively for in vitro laboratory use</strong>. By accessing the content, you confirm the following:</p>
+        <ul>
+          <li>You are <strong>18 years of age or older</strong>.</li>
+          <li>You are a <strong>researcher, laboratory professional, or purchasing for scientific research purposes</strong>.</li>
+          <li>You understand that these products <strong>are not medicines</strong> and are not intended for human or animal consumption.</li>
+          <li>You accept the <a href="/legal/terms" target="_blank">Terms of Use</a> and <a href="/legal/privacy" target="_blank">Privacy Policy</a>.</li>
+        </ul>
+        <div class="age-gate-card__actions">
+          <button id="researchGateDecline" type="button" class="age-gate-card__btn age-gate-card__btn--decline">
+            No, leave
+          </button>
+          <button id="researchGateBtn" type="button" class="age-gate-card__btn age-gate-card__btn--accept">
+            Yes, I confirm
+          </button>
+        </div>
+        <p class="age-gate-card__footnote">Not for human use &middot; Research reagent only</p>
+      </div>
     </div>
-    <button id="researchGateBtn" type="button" class="age-gate__btn">
-      I Confirm — Research Use
-    </button>
   </div>
 
   <Header />
@@ -106,12 +118,13 @@ const schemaArray = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
   </div>
 
   <script is:inline>
-    // Research gate
+    // Research gate — modal overlay bloquant
     (function () {
       var KEY = 'ukpep_research_confirmed';
       var gate = document.getElementById('researchGate');
       var btn = document.getElementById('researchGateBtn');
-      if (!gate || !btn) return;
+      var decline = document.getElementById('researchGateDecline');
+      if (!gate) return;
 
       try {
         var params = new URLSearchParams(location.search);
@@ -122,10 +135,14 @@ const schemaArray = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
         gate.remove();
       } else {
         gate.style.display = 'flex';
-        btn.addEventListener('click', function () {
+        document.body.style.overflow = 'hidden';
+        btn && btn.addEventListener('click', function () {
           localStorage.setItem(KEY, '1');
-          gate.classList.add('age-gate--leaving');
-          setTimeout(function () { gate.remove(); }, 350);
+          gate.style.display = 'none';
+          document.body.style.overflow = '';
+        });
+        decline && decline.addEventListener('click', function () {
+          window.location.href = 'https://www.google.co.uk';
         });
       }
 
