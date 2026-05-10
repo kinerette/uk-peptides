@@ -3,6 +3,8 @@ import Base from '../../layouts/Base.astro';
 import BlogCard from '../../components/BlogCard.astro';
 import { getCollection } from 'astro:content';
 
+export const prerender = true;
+
 const posts = (await getCollection('blog'))
   .sort((a, b) => new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime());
 ---
