@@ -118,6 +118,27 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
           </select>
         </div>
 
+        <!-- Promo code -->
+        <div id="promo-wrap" style="margin-bottom:1.25rem;border-top:1px solid var(--border);padding-top:1.25rem;">
+          <button type="button" id="promo-toggle" style="font-size:0.82rem;color:var(--gold);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:0.3rem;padding:0;">
+            Have a promo code?
+            <svg id="promo-arrow" style="width:12px;height:12px;transition:transform 0.2s;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div id="promo-field" style="display:none;margin-top:0.6rem;display:none;gap:0.5rem;align-items:center;">
+            <input id="promo-input" type="text" placeholder="Enter code" maxlength="20"
+                   class="form-input" style="flex:1;text-transform:uppercase;letter-spacing:0.05em;" />
+            <button type="button" id="promo-apply" class="btn btn-primary" style="white-space:nowrap;padding:0.5rem 1rem;">
+              Apply
+            </button>
+          </div>
+          <div id="promo-ok" style="display:none;margin-top:0.4rem;font-size:0.82rem;color:#15803d;font-weight:600;">
+            ✓ REVIEW10 applied — 10% off
+          </div>
+          <div id="promo-err" style="display:none;margin-top:0.4rem;font-size:0.82rem;color:#b91c1c;">
+            Invalid code
+          </div>
+        </div>
+
         <!-- Trust reassurance -->
         <div class="form-trust-grid" style="margin-bottom:1.75rem;text-align:center;">
           {[
@@ -167,7 +188,48 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
         variantSelect.addEventListener('change', function() {
           var opt = variantSelect.options[variantSelect.selectedIndex];
           var price = opt ? opt.getAttribute('data-price') : null;
-          if (price) priceDisplay.textContent = '€' + price;
+          if (price) {
+            var discounted = appliedPromo ? (Math.round(parseFloat(price) * 0.9 * 100) / 100).toFixed(0) : price;
+            priceDisplay.textContent = '€' + discounted;
+          }
+        });
+      }
+
+      // Promo code
+      var appliedPromo = '';
+      var promoToggle = document.getElementById('promo-toggle');
+      var promoField  = document.getElementById('promo-field');
+      var promoArrow  = document.getElementById('promo-arrow');
+      var promoInput  = document.getElementById('promo-input');
+      var promoApply  = document.getElementById('promo-apply');
+      var promoOk     = document.getElementById('promo-ok');
+      var promoErr    = document.getElementById('promo-err');
+
+      if (promoToggle && promoField) {
+        promoToggle.addEventListener('click', function() {
+          promoField.style.display = promoField.style.display === 'none' ? 'flex' : 'none';
+          if (promoArrow) promoArrow.style.transform = promoField.style.display === 'flex' ? 'rotate(180deg)' : '';
+        });
+      }
+
+      if (promoApply) {
+        promoApply.addEventListener('click', function() {
+          var code = (promoInput ? promoInput.value : '').trim().toUpperCase();
+          if (code === 'REVIEW10') {
+            appliedPromo = 'REVIEW10';
+            if (promoOk) promoOk.style.display = 'block';
+            if (promoErr) promoErr.style.display = 'none';
+            // Update price display
+            if (variantSelect && priceDisplay) {
+              var opt = variantSelect.options[variantSelect.selectedIndex];
+              var price = opt ? parseFloat(opt.getAttribute('data-price') || '0') : 0;
+              priceDisplay.textContent = '€' + (Math.round(price * 0.9 * 100) / 100).toFixed(0);
+            }
+          } else {
+            appliedPromo = '';
+            if (promoOk) promoOk.style.display = 'none';
+            if (promoErr) promoErr.style.display = 'block';
+          }
         });
       }
 
@@ -189,6 +251,7 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
           city: document.getElementById('city').value,
           country: document.getElementById('country').value,
         };
+        if (appliedPromo) payload.promo = appliedPromo;
 
         try {
           var res = await fetch('/api/checkout', {
