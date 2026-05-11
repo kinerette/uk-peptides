@@ -21,7 +21,12 @@ interface CheckoutBody {
   postalCode?: string;
   city?: string;
   country?: string;
+  promo?: string;
 }
+
+const PROMO_CODES: Record<string, number> = {
+  REVIEW10: 0.10,
+};
 
 function newOrderId(): string {
   return 'ukp_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
@@ -71,17 +76,23 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const { product, ...variant } = variantWithProduct;
+  const promoCode = body.promo && PROMO_CODES[body.promo] !== undefined ? body.promo : null;
+  const discountRate = promoCode ? PROMO_CODES[promoCode] : 0;
+  const finalPriceEur = Math.round(variant.priceEur * (1 - discountRate) * 100) / 100;
+
   const orderId = newOrderId();
   const successUrl = `${SITE_URL}/order-confirmed?order=${orderId}`;
   const cancelUrl = `${SITE_URL}/checkout?variant=${variant.id}&cancelled=1`;
 
   try {
     const session = await createSession({
-      amountCents: Math.round(variant.priceEur * 100),
+      amountCents: Math.round(finalPriceEur * 100),
       currency: 'EUR',
       email: body.email.trim(),
       orderId,
-      productName: `${product.name} — ${variant.label}`,
+      productName: promoCode
+        ? `${product.name} — ${variant.label} (-${Math.round(discountRate * 100)}%)`
+        : `${product.name} — ${variant.label}`,
       webhookUrl: `${SITE_URL}/api/peptidepay-webhook`,
       successUrl,
       cancelUrl,
@@ -90,13 +101,14 @@ export const POST: APIRoute = async ({ request }) => {
         variant_id: variant.id,
         variant_label: variant.label,
         product_slug: product.slug,
+        customer_email: body.email.trim(),
         first_name: body.firstName ?? null,
         last_name: body.lastName ?? null,
         address: body.address ?? null,
         postal_code: body.postalCode ?? null,
         city: body.city ?? null,
         country: body.country ?? 'GB',
-        price_eur: variant.priceEur,
+        price_eur: finalPriceEur,
       },
     });
 
