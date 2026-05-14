@@ -4,7 +4,10 @@ import ProductCard from '../components/ProductCard.astro';
 import { featuredProducts, products } from '../lib/products';
 import { getCollection } from 'astro:content';
 
+// Fix 2: filter out non-English articles (e.g. uk-peptides-livraison-europe.md — FR article)
 const allPosts = (await getCollection('blog'))
+  .filter((p) => !(p.data as any).lang || (p.data as any).lang === 'en')
+  .filter((p) => p.slug !== 'uk-peptides-livraison-europe')
   .sort((a, b) => new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime());
 
 const featuredPost = allPosts[0];
@@ -107,7 +110,7 @@ const websiteSchema = {
 
         <div class="hero-social-proof reveal">
           <span class="hero-stars" aria-hidden="true">★★★★★</span>
-          <span class="hero-reviews">Trusted by 2,400+ researchers &nbsp;&middot;&nbsp; 4.9/5</span>
+          <span class="hero-reviews">Verified by independent labs &nbsp;&middot;&nbsp; CoA on request</span>
         </div>
 
         <div class="hero-pay reveal">
@@ -115,7 +118,6 @@ const websiteSchema = {
           <img src="/logos/mastercard-color.svg" alt="Mastercard" width="38" height="22" loading="eager" />
           <img src="/logos/apple-pay-color.svg"  alt="Apple Pay"  width="52" height="22" loading="eager" />
           <img src="/logos/google-pay-color.svg" alt="Google Pay" width="52" height="22" loading="eager" />
-          <img src="/logos/sepa.svg"             alt="SEPA"       width="38" height="22" loading="eager" />
         </div>
       </div>
     </div>

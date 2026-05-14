@@ -96,6 +96,8 @@ export const POST: APIRoute = async ({ request }) => {
       webhookUrl: `${SITE_URL}/api/peptidepay-webhook`,
       successUrl,
       cancelUrl,
+      // Locale hint: render the checkout in English for uk-peptides.eu customers.
+      locale: 'en',
       metadata: {
         site: 'uk-peptides.eu',
         variant_id: variant.id,

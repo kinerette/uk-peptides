@@ -1,0 +1,133 @@
+---
+/**
+ * COABadge — Fix 6 (2026-05-14)
+ * Displays a Certificate of Analysis badge on product pages.
+ * - If coa is provided: shows lab name, batch, date, and a link to the PDF/report.
+ * - If coa is null: shows "Available on request" fallback.
+ *
+ * To activate a COA for a product, update products.ts coa field:
+ *   coa: { url: 'https://janoshik.com/report/...', lab: 'Janoshik Analytical', batch: 'UK-001', date: '2026-04-01' }
+ */
+import type { COAInfo } from '../lib/products';
+
+interface Props {
+  coa: COAInfo | null;
+  productName: string;
+}
+
+const { coa, productName } = Astro.props;
+---
+
+{coa ? (
+  <div class="coa-badge coa-badge--verified" role="region" aria-label={`Certificate of Analysis for ${productName}`}>
+    <div class="coa-badge__header">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 11l3 3L22 4"/>
+        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+      </svg>
+      <span class="coa-badge__title">Certificate of Analysis</span>
+    </div>
+    <div class="coa-badge__body">
+      <div class="coa-badge__row">
+        <span class="coa-badge__label">Lab:</span>
+        <span class="coa-badge__value">{coa.lab}</span>
+      </div>
+      {coa.batch && (
+        <div class="coa-badge__row">
+          <span class="coa-badge__label">Batch:</span>
+          <span class="coa-badge__value">{coa.batch}</span>
+        </div>
+      )}
+      {coa.date && (
+        <div class="coa-badge__row">
+          <span class="coa-badge__label">Date:</span>
+          <span class="coa-badge__value">{new Date(coa.date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+        </div>
+      )}
+      <a href={coa.url} target="_blank" rel="noopener noreferrer" class="coa-badge__link">
+        View Full Report &rarr;
+      </a>
+    </div>
+  </div>
+) : (
+  <div class="coa-badge coa-badge--request" role="region" aria-label={`Certificate of Analysis for ${productName}`}>
+    <div class="coa-badge__header">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#92400E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="12" y1="12" x2="12" y2="16"/>
+        <line x1="12" y1="18" x2="12.01" y2="18"/>
+      </svg>
+      <span class="coa-badge__title">Certificate of Analysis</span>
+    </div>
+    <p class="coa-badge__request-text">
+      Available on request — email <a href="mailto:contact@uk-peptides.eu" class="coa-badge__email">contact@uk-peptides.eu</a> with your lot number.
+    </p>
+  </div>
+)}
+
+<style>
+  .coa-badge {
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    margin-top: 1rem;
+  }
+  .coa-badge--verified {
+    background: rgba(21, 128, 61, 0.06);
+    border: 1px solid rgba(21, 128, 61, 0.25);
+  }
+  .coa-badge--request {
+    background: rgba(202, 138, 4, 0.06);
+    border: 1px solid rgba(202, 138, 4, 0.25);
+  }
+  .coa-badge__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .coa-badge__title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--dark);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .coa-badge__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .coa-badge__row {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+  }
+  .coa-badge__label {
+    font-weight: 600;
+    color: var(--text-muted);
+    min-width: 48px;
+  }
+  .coa-badge__value {
+    color: var(--text);
+  }
+  .coa-badge__link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #15803D;
+    text-decoration: none;
+  }
+  .coa-badge__link:hover { text-decoration: underline; }
+  .coa-badge__request-text {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+  .coa-badge__email {
+    color: #92400E;
+    font-weight: 600;
+  }
+</style>

@@ -34,6 +34,12 @@ export interface CreateSessionInput {
   cancelUrl?: string;
   wallet?: string;
   metadata?: Record<string, unknown>;
+  /**
+   * BCP 47 primary-language tag for the hosted checkout UI.
+   * Overrides the customer's browser Accept-Language. Default: 'en'.
+   * @example 'en' for an English store.
+   */
+  locale?: string;
 }
 
 export interface Session {
@@ -70,6 +76,7 @@ export async function createSession(input: CreateSessionInput): Promise<Session>
     success_url: input.successUrl,
     cancel_url: input.cancelUrl,
     metadata: input.metadata,
+    ...(input.locale ? { locale: input.locale } : {}),
     smart: 1,
   };
 

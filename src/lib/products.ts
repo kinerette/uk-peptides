@@ -5,6 +5,17 @@ export interface ProductVariant {
   priceEur: number;
 }
 
+export interface COAInfo {
+  /** Direct URL to the COA PDF or lab report (Janoshik, Labvida, Novalab, etc.) */
+  url: string;
+  /** Lab that performed the analysis, e.g. "Janoshik Analytical" */
+  lab: string;
+  /** Batch/lot number referenced in the COA */
+  batch?: string;
+  /** Date of analysis, ISO format YYYY-MM-DD */
+  date?: string;
+}
+
 export interface Product {
   slug: string;
   name: string;
@@ -28,6 +39,12 @@ export interface Product {
   };
   relatedSlugs: string[];
   faqs?: { question: string; answer: string }[];
+  /**
+   * Fix 6 (2026-05-14): COA infrastructure.
+   * Set to a COAInfo object when a public lab report is available.
+   * null = available on request (shows "Available on request" badge).
+   */
+  coa: COAInfo | null;
 }
 
 export const products: Product[] = [
@@ -72,6 +89,7 @@ export const products: Product[] = [
       { question: 'How does retatrutide differ from semaglutide or tirzepatide?', answer: 'Semaglutide activates GLP-1 only. Tirzepatide activates GLP-1 and GIP. Retatrutide additionally activates the glucagon receptor, adding hepatic lipid oxidation and thermogenesis as a third mechanism — contributing to its superior efficacy signal in Phase II.' },
       { question: 'How should retatrutide be stored?', answer: 'Store lyophilised vials at -20°C. Once reconstituted with bacteriostatic water, store at 2–8°C and use within 28 days.' },
     ],
+    coa: null,
   },
   {
     slug: 'bpc-157',
@@ -110,6 +128,7 @@ export const products: Product[] = [
     faqs: [
       { question: 'What is BPC-157?', answer: 'BPC-157 is a 15-amino-acid peptide fragment derived from a gastric protective protein. It has been studied in over 100 peer-reviewed papers for its regenerative properties in tendon, muscle, and intestinal tissue repair models.' },
     ],
+    coa: null,
   },
   {
     slug: 'tb-500',
@@ -145,6 +164,7 @@ export const products: Product[] = [
       concentration: '10 mg/mL at 1 mL',
     },
     relatedSlugs: ['bpc-157', 'bacteriostatic-water'],
+    coa: null,
   },
   {
     slug: 'ghk-cu',
@@ -176,6 +196,7 @@ export const products: Product[] = [
       shelfLife: '24 months (sealed vial)',
     },
     relatedSlugs: ['ahk-cu', 'bpc-157'],
+    coa: null,
   },
   {
     slug: 'ahk-cu',
@@ -204,6 +225,7 @@ export const products: Product[] = [
       shelfLife: '24 months (sealed vial)',
     },
     relatedSlugs: ['ghk-cu'],
+    coa: null,
   },
   {
     slug: 'mots-c',
@@ -240,6 +262,7 @@ export const products: Product[] = [
       concentration: '10 mg/mL at 1 mL',
     },
     relatedSlugs: ['nad', 'retatrutide', 'bacteriostatic-water'],
+    coa: null,
   },
   {
     slug: 'nad',
@@ -271,6 +294,7 @@ export const products: Product[] = [
       shelfLife: '12 months (lyophilised, sealed)',
     },
     relatedSlugs: ['mots-c', 'selank'],
+    coa: null,
   },
   {
     slug: 'selank',
@@ -300,6 +324,7 @@ export const products: Product[] = [
       shelfLife: '24 months (lyophilised)',
     },
     relatedSlugs: ['semax', 'nad'],
+    coa: null,
   },
   {
     slug: 'semax',
@@ -329,6 +354,7 @@ export const products: Product[] = [
       shelfLife: '24 months (lyophilised)',
     },
     relatedSlugs: ['selank', 'nad'],
+    coa: null,
   },
   {
     slug: 'bacteriostatic-water',
@@ -355,6 +381,7 @@ export const products: Product[] = [
       shelfLife: '24 months (sealed vial)',
     },
     relatedSlugs: ['retatrutide', 'bpc-157', 'tb-500'],
+    coa: null,
   },
 ];
 

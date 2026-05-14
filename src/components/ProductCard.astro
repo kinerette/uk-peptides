@@ -1,5 +1,6 @@
 ---
 import type { Product } from '../lib/products';
+import { eurToGbp } from '../lib/constants';
 
 interface Props {
   product: Product;
@@ -8,6 +9,8 @@ interface Props {
 const { product } = Astro.props;
 const lowestPrice = Math.min(...product.variants.map((v) => v.priceEur));
 const highestPrice = Math.max(...product.variants.map((v) => v.priceEur));
+const lowestGbp = eurToGbp(lowestPrice);
+const highestGbp = eurToGbp(highestPrice);
 ---
 
 <article class="card" style="display:flex;flex-direction:column;">
@@ -54,9 +57,10 @@ const highestPrice = Math.max(...product.variants.map((v) => v.priceEur));
     <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.75rem;flex-wrap:wrap;gap:0.5rem;">
       <div>
         <span style="font-family:var(--font-head);font-weight:700;font-size:1.15rem;color:var(--dark);">
-          {lowestPrice === highestPrice ? `€${lowestPrice}` : `€${lowestPrice}–€${highestPrice}`}
+          {lowestPrice === highestPrice
+            ? `£${lowestGbp} / €${lowestPrice}`
+            : `£${lowestGbp}–£${highestGbp} / €${lowestPrice}–€${highestPrice}`}
         </span>
-        <span style="font-size:0.72rem;color:var(--text-faint);margin-left:0.25rem;">EUR</span>
       </div>
       <a href={`/products/${product.slug}`} class="btn btn-primary btn-sm">
         View Product

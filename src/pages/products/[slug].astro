@@ -1,7 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ProductCard from '../../components/ProductCard.astro';
+import COABadge from '../../components/COABadge.astro';
 import { products, getProductBySlug } from '../../lib/products';
+import { dualPrice } from '../../lib/constants';
 
 export async function getStaticPaths() {
   return products.map((p) => ({ params: { slug: p.slug } }));
@@ -119,7 +121,7 @@ const meta = seoMeta[product.slug] ?? {
                     <input type="radio" name="variant" value={v.id} checked={i === 0} style="accent-color:var(--accent);" />
                     <span style="font-weight:600;font-size:0.9rem;">{v.quantity}</span>
                   </span>
-                  <span style="font-family:var(--font-head);font-weight:700;color:var(--dark);">€{v.priceEur}</span>
+                  <span style="font-family:var(--font-head);font-weight:700;color:var(--dark);">{dualPrice(v.priceEur)}</span>
                 </label>
               ))}
             </div>
@@ -134,7 +136,7 @@ const meta = seoMeta[product.slug] ?? {
             </a>
 
             <p style="font-size:0.75rem;color:var(--text-faint);text-align:center;margin-top:0.75rem;">
-              Secure checkout via Peptide-Pay &middot; Visa, Mastercard, Apple Pay, SEPA
+              Secure checkout via Peptide-Pay &middot; Visa, Mastercard, Apple Pay, Google Pay, Crypto
             </p>
           </div>
 
@@ -151,6 +153,9 @@ const meta = seoMeta[product.slug] ?? {
               </div>
             ))}
           </div>
+
+          <!-- COA badge — Fix 6 -->
+          <COABadge coa={product.coa} productName={product.name} />
         </div>
       </div>
     </div>
