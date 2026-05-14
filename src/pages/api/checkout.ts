@@ -111,6 +111,9 @@ export const POST: APIRoute = async ({ request }) => {
         city: body.city ?? null,
         country: body.country ?? 'GB',
         price_eur: finalPriceEur,
+        // Fulfillment hints (home delivery only, no parcelshop widget)
+        delivery_method: 'home',
+        shipping_cost_cents: 0,
       },
     });
 
