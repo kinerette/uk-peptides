@@ -11,7 +11,12 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 const product = getProductBySlug(slug!);
-if (!product) return Astro.redirect('/products');
+// Unknown slug returns a real 404 instead of a 200 redirect to /products
+// (audit flagged duplicate-content: ipamorelin / ghrp-2 / hexarelin / cjc-1295
+// were served as /products HTML at 200, creating multiple URLs with same body)
+if (!product) {
+  return new Response(null, { status: 404, statusText: 'Not Found' });
+}
 
 const relatedProducts = product.relatedSlugs
   .map((s) => products.find((p) => p.slug === s))
