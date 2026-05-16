@@ -132,7 +132,7 @@ const schemaArray = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       } catch (e) {}
 
       if (localStorage.getItem(KEY) === '1') {
-        // Already confirmed — nothing to do; template stays in the DOM unused.
+        // Already confirmed — gate stays out, rest of the page boots normally.
         return;
       }
 
@@ -152,7 +152,11 @@ const schemaArray = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       decline && decline.addEventListener('click', function () {
         window.location.href = 'https://www.google.co.uk';
       });
+    })();
 
+    // Site UI bootstrap — runs unconditionally so post-gate visitors still
+    // get scroll-reveal, sticky CTA, mobile menu, and FAQ accordion.
+    (function () {
       // Mobile menu toggle
       var menuBtn = document.getElementById('menuBtn');
       var mobilePanel = document.getElementById('mobilePanel');
