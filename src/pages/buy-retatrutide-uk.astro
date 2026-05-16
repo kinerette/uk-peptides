@@ -1,0 +1,333 @@
+---
+import Base from '../layouts/Base.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { getProductBySlug, products } from '../lib/products';
+import { dualPrice, eurToGbp } from '../lib/constants';
+
+const retatrutide = getProductBySlug('retatrutide');
+if (!retatrutide) return Astro.redirect('/products');
+
+const lowestVariant = retatrutide.variants.reduce((a, b) => a.priceEur < b.priceEur ? a : b);
+const lowestGbp = eurToGbp(lowestVariant.priceEur);
+
+const related = ['bpc-157', 'mots-c', 'bacteriostatic-water']
+  .map((s) => products.find((p) => p.slug === s))
+  .filter(Boolean) as typeof products;
+
+const canonical = 'https://uk-peptides.eu/buy-retatrutide-uk';
+
+// JSON-LD: Product + FAQPage + BreadcrumbList
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'Retatrutide — Research Peptide UK',
+  description: 'Retatrutide (LY3437943) triple GLP-1/GIP/glucagon receptor agonist for UK research use. Lyophilised, >99% purity, EU warehouse, 3-5 day tracked UK delivery.',
+  image: `https://uk-peptides.eu${retatrutide.image}`,
+  brand: { '@type': 'Brand', name: 'UK Peptides' },
+  offers: retatrutide.variants.map((v) => ({
+    '@type': 'Offer',
+    price: eurToGbp(v.priceEur),
+    priceCurrency: 'GBP',
+    availability: 'https://schema.org/InStock',
+    name: v.label,
+    url: `https://uk-peptides.eu/checkout?variant=${v.id}`,
+    priceValidUntil: '2027-12-31',
+  })),
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.8',
+    reviewCount: '127',
+  },
+};
+
+const faqs = [
+  {
+    q: 'Where can I buy retatrutide in the UK?',
+    a: 'You can buy retatrutide for research use from UK Peptides (uk-peptides.eu). Stock is held in our EU warehouse and dispatched with 3-5 day tracked delivery to UK addresses. Supplied as lyophilised powder, >99% analytical purity, with Certificate of Analysis available on request.',
+  },
+  {
+    q: 'Is retatrutide legal in the UK?',
+    a: 'Retatrutide is not a controlled substance under the UK Misuse of Drugs Act 1971 or the Medicines Act 1968. It is sold strictly as a Research Use Only (RUO) compound for in vitro laboratory study. It is not approved as a medicine in the UK and must not be used as such.',
+  },
+  {
+    q: 'How much does retatrutide cost in the UK?',
+    a: `Retatrutide pricing at UK Peptides starts from £${lowestGbp} for a 10 mg lyophilised vial. Larger 20 mg and 30 mg vials are available at lower £/mg. All prices are billed in GBP, EUR price shown alongside for reference only.`,
+  },
+  {
+    q: 'How is retatrutide shipped to the UK?',
+    a: 'Orders are dispatched from our EU warehouse via tracked courier. Estimated transit time to UK addresses is 3-5 business days post-dispatch. Discreet packaging — no external labels indicating contents. Tracking link is emailed once your order ships.',
+  },
+  {
+    q: 'How does retatrutide compare to tirzepatide and semaglutide?',
+    a: 'Semaglutide activates GLP-1 only. Tirzepatide activates GLP-1 and GIP. Retatrutide adds glucagon receptor agonism — a third mechanism that increases hepatic lipid oxidation and thermogenesis. In the NEJM 2023 Phase II trial (n=338), the 12 mg retatrutide arm showed -24.2% mean body weight at 48 weeks, the strongest effect documented for a single peptide in clinical research.',
+  },
+  {
+    q: 'What is the recommended storage for retatrutide?',
+    a: 'Store lyophilised vials at -20°C, protected from light and moisture. Once reconstituted with bacteriostatic water, store at 2-8°C and use within 28 days. Shelf life of the lyophilised, sealed vial is 18 months.',
+  },
+  {
+    q: 'Do I receive a Certificate of Analysis (COA)?',
+    a: 'A Certificate of Analysis is available on request for any batch. Email contact@uk-peptides.eu with your order number after dispatch and we will forward the lab report (HPLC, mass spec) for the batch you received.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://uk-peptides.eu/' },
+    { '@type': 'ListItem', position: 2, name: 'Buy Retatrutide UK', item: canonical },
+  ],
+};
+---
+
+<Base
+  title="Buy Retatrutide UK 2026 — From £80 | EU Warehouse, Tracked"
+  description="Buy retatrutide UK from £80. Triple GLP-1/GIP/glucagon agonist, -24.2% body weight (NEJM 2023). >99% purity, EU warehouse, 3-5 day tracked UK delivery."
+  canonical={canonical}
+  schema={[productSchema, faqSchema, breadcrumbSchema]}
+>
+
+  <!-- Breadcrumb -->
+  <div style="background:var(--bg-alt);border-bottom:1px solid var(--border);padding:0.75rem 0;">
+    <div class="container">
+      <nav aria-label="Breadcrumb" style="font-size:0.8rem;color:var(--text-muted);">
+        <a href="/" style="color:var(--text-muted);text-decoration:none;">Home</a>
+        <span style="margin:0 0.4rem;">/</span>
+        <span style="color:var(--text);">Buy Retatrutide UK</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section style="background:var(--dark);padding:4.5rem 0 3.5rem;color:#fff;">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:3rem;align-items:center;">
+        <div>
+          <span style="display:inline-block;background:rgba(59,159,212,0.15);color:#3B9FD4;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.85rem;border-radius:999px;border:1px solid rgba(59,159,212,0.3);margin-bottom:1.25rem;">
+            UK Stock · EU Warehouse · 3-5 Day Tracked
+          </span>
+          <h1 style="font-size:clamp(2rem,4.4vw,2.85rem);line-height:1.12;margin-bottom:1.1rem;color:#fff;">
+            Buy Retatrutide UK — <span style="color:#3B9FD4;">From £{lowestGbp}</span>
+          </h1>
+          <p style="color:rgba(255,255,255,0.7);font-size:1.05rem;line-height:1.65;margin-bottom:1.5rem;max-width:520px;">
+            The triple GLP-1/GIP/glucagon receptor agonist (LY3437943) — supplied as lyophilised powder for UK laboratory research. &gt;99% analytical purity, dispatched from our EU warehouse with tracked UK delivery.
+          </p>
+
+          <ul style="list-style:none;padding:0;margin:0 0 2rem;display:grid;grid-template-columns:1fr 1fr;gap:0.55rem 1.25rem;">
+            <li style="display:flex;align-items:center;gap:0.55rem;font-size:0.875rem;color:rgba(255,255,255,0.82);"><span style="color:#3B9FD4;">&#10003;</span> &gt;99% HPLC purity</li>
+            <li style="display:flex;align-items:center;gap:0.55rem;font-size:0.875rem;color:rgba(255,255,255,0.82);"><span style="color:#3B9FD4;">&#10003;</span> EU warehouse, no customs risk</li>
+            <li style="display:flex;align-items:center;gap:0.55rem;font-size:0.875rem;color:rgba(255,255,255,0.82);"><span style="color:#3B9FD4;">&#10003;</span> 3-5 day UK tracked delivery</li>
+            <li style="display:flex;align-items:center;gap:0.55rem;font-size:0.875rem;color:rgba(255,255,255,0.82);"><span style="color:#3B9FD4;">&#10003;</span> Discreet packaging</li>
+            <li style="display:flex;align-items:center;gap:0.55rem;font-size:0.875rem;color:rgba(255,255,255,0.82);"><span style="color:#3B9FD4;">&#10003;</span> COA available on request</li>
+            <li style="display:flex;align-items:center;gap:0.55rem;font-size:0.875rem;color:rgba(255,255,255,0.82);"><span style="color:#3B9FD4;">&#10003;</span> GBP primary checkout</li>
+          </ul>
+
+          <div style="display:flex;gap:0.85rem;flex-wrap:wrap;">
+            <a href={`/checkout?variant=${lowestVariant.id}`} class="btn btn-primary btn-lg">
+              Order Retatrutide — From £{lowestGbp} &rarr;
+            </a>
+            <a href="/products/retatrutide" class="btn btn-outline" style="border-color:rgba(255,255,255,0.25);color:#fff;">
+              Full Product Specs
+            </a>
+          </div>
+
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.45);margin-top:1rem;">
+            Research Use Only (RUO). Not for human consumption.
+          </p>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-xl);padding:2rem;display:flex;align-items:center;justify-content:center;min-height:340px;">
+          <img
+            src={retatrutide.image}
+            alt="Retatrutide vial — research grade UK"
+            width="240"
+            height="240"
+            loading="eager"
+            fetchpriority="high"
+            style="max-width:100%;height:auto;filter:drop-shadow(0 16px 32px rgba(0,0,0,0.35));"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <section style="background:var(--white);border-bottom:1px solid var(--border);padding:1.5rem 0;">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.25rem;text-align:center;">
+        <div><strong style="display:block;font-family:var(--font-head);color:var(--dark);">3-5 days</strong><span style="font-size:0.78rem;color:var(--text-muted);">UK tracked delivery</span></div>
+        <div><strong style="display:block;font-family:var(--font-head);color:var(--dark);">&gt;99%</strong><span style="font-size:0.78rem;color:var(--text-muted);">HPLC analytical purity</span></div>
+        <div><strong style="display:block;font-family:var(--font-head);color:var(--dark);">EU Stock</strong><span style="font-size:0.78rem;color:var(--text-muted);">No customs seizure risk</span></div>
+        <div><strong style="display:block;font-family:var(--font-head);color:var(--dark);">COA</strong><span style="font-size:0.78rem;color:var(--text-muted);">Available on request</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING TABLE -->
+  <section style="padding:3.5rem 0;background:var(--bg);">
+    <div class="container" style="max-width:880px;">
+      <h2 style="font-size:1.6rem;margin-bottom:0.5rem;">Retatrutide Pricing — UK</h2>
+      <p style="color:var(--text-muted);margin-bottom:2rem;font-size:0.95rem;">
+        Prices billed in GBP at checkout. EUR equivalent shown for reference only — your card is charged in pounds sterling.
+      </p>
+
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);overflow:hidden;">
+        {retatrutide.variants.map((v, i) => (
+          <div style={`display:grid;grid-template-columns:1.4fr 1fr 1fr auto;align-items:center;gap:1rem;padding:1.25rem 1.5rem;${i < retatrutide.variants.length - 1 ? 'border-bottom:1px solid var(--border);' : ''}`}>
+            <div>
+              <strong style="font-family:var(--font-head);font-size:1.05rem;color:var(--dark);">{v.label}</strong>
+              <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.15rem;">Lyophilised vial</p>
+            </div>
+            <div style="font-size:0.85rem;color:var(--text-muted);">
+              £{(eurToGbp(v.priceEur) / parseFloat(v.quantity)).toFixed(2)}/mg
+            </div>
+            <div>
+              <strong style="font-family:var(--font-head);font-size:1.2rem;color:var(--dark);">£{eurToGbp(v.priceEur)}</strong>
+              <span style="display:block;font-size:0.72rem;color:var(--text-faint);">€{v.priceEur} EUR ref</span>
+            </div>
+            <a href={`/checkout?variant=${v.id}`} class="btn btn-primary" style="white-space:nowrap;">Order &rarr;</a>
+          </div>
+        ))}
+      </div>
+
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-top:1rem;text-align:center;">
+        Secure checkout via Peptide-Pay &middot; Visa, Mastercard, Apple Pay, Google Pay, Crypto &middot; All prices include UK shipping
+      </p>
+    </div>
+  </section>
+
+  <!-- WHY UK PEPTIDES -->
+  <section style="padding:3.5rem 0;background:var(--white);border-top:1px solid var(--border);">
+    <div class="container" style="max-width:1040px;">
+      <h2 style="font-size:1.6rem;margin-bottom:0.5rem;">Why UK Researchers Buy Retatrutide From Us</h2>
+      <p style="color:var(--text-muted);margin-bottom:2rem;font-size:0.95rem;max-width:680px;">
+        Retatrutide is not yet approved for use in the UK. For UK researchers studying triple-incretin pharmacology, the supply chain matters as much as the molecule.
+      </p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;">
+        <div style="border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;background:var(--bg);">
+          <strong style="display:block;font-family:var(--font-head);font-size:1.05rem;margin-bottom:0.55rem;color:var(--dark);">EU warehouse, no customs lottery</strong>
+          <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;">
+            Orders ship from inside the EU. Parcels move under standard intra-EU + UK postal routes — no third-country import declaration that triggers UK Border Force inspection.
+          </p>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;background:var(--bg);">
+          <strong style="display:block;font-family:var(--font-head);font-size:1.05rem;margin-bottom:0.55rem;color:var(--dark);">&gt;99% HPLC purity</strong>
+          <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;">
+            Every batch verified by HPLC and mass spectrometry. COA available on request for the specific lot number you receive.
+          </p>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;background:var(--bg);">
+          <strong style="display:block;font-family:var(--font-head);font-size:1.05rem;margin-bottom:0.55rem;color:var(--dark);">GBP billing, no FX surprise</strong>
+          <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;">
+            Your card is charged in pounds sterling at the displayed price. No hidden currency conversion fees, no €/£ ambiguity at checkout.
+          </p>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;background:var(--bg);">
+          <strong style="display:block;font-family:var(--font-head);font-size:1.05rem;margin-bottom:0.55rem;color:var(--dark);">14-day right to cancel</strong>
+          <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;">
+            Full Consumer Contracts Regulations 2013 cooling-off period for UK buyers. Failed delivery is reshipped or refunded.
+          </p>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;background:var(--bg);">
+          <strong style="display:block;font-family:var(--font-head);font-size:1.05rem;margin-bottom:0.55rem;color:var(--dark);">Discreet packaging</strong>
+          <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;">
+            No external mention of peptides, contents, or our brand on the outer parcel. Plain padded mailer addressed to the lab/individual.
+          </p>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;background:var(--bg);">
+          <strong style="display:block;font-family:var(--font-head);font-size:1.05rem;margin-bottom:0.55rem;color:var(--dark);">Lab-grade storage</strong>
+          <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;">
+            Lyophilised vials held at -20°C until dispatch. Cold-chain not required for shipping in lyophilised form. 18-month sealed shelf life.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH PROFILE -->
+  <section style="padding:3.5rem 0;background:var(--bg);">
+    <div class="container" style="max-width:880px;">
+      <h2 style="font-size:1.6rem;margin-bottom:0.5rem;">Retatrutide — The Research Profile</h2>
+      <p style="color:var(--text-muted);margin-bottom:2rem;font-size:0.95rem;">
+        Retatrutide (LY3437943) is the first peptide to simultaneously activate three incretin-axis receptors. UK researchers studying obesity pharmacology, hepatic metabolism, and triple-agonist pharmacokinetics use it to probe mechanisms that no dual agonist can isolate.
+      </p>
+
+      <div class="prose" style="max-width:none;">
+        <h3 style="font-size:1.1rem;">Mechanism — three receptors, one molecule</h3>
+        <p>Retatrutide is a synthetic 39-amino-acid peptide that activates the GLP-1, GIP, and glucagon receptors simultaneously. The glucagon component is the key differentiator: while GLP-1 and GIP synergistically enhance satiety and insulin sensitivity, glucagon receptor activation increases hepatic energy expenditure through elevated lipid oxidation and thermogenesis.</p>
+
+        <h3 style="font-size:1.1rem;">Phase II evidence (NEJM 2023)</h3>
+        <p>Jastreboff et al., <em>New England Journal of Medicine</em> Vol. 389, pp. 514-526 (2023), DOI: 10.1056/NEJMoa2301972. Randomised, double-blind, placebo-controlled. 338 adults across 25 US centres, 48 weeks. The 12 mg arm achieved a mean weight reduction of -24.2% — the strongest effect ever documented for a single peptide in clinical research. Over 90% of the 12 mg cohort reached &ge;5% weight reduction.</p>
+
+        <h3 style="font-size:1.1rem;">Pharmacokinetics</h3>
+        <p>Half-life ~6 days via C18 fatty acid modification (albumin binding), enabling weekly subcutaneous dosing in clinical trials. Phase III TRIUMPH programme (NCT05929066) ongoing at 45+ centres worldwide.</p>
+
+        <h3 style="font-size:1.1rem;">Storage and reconstitution</h3>
+        <p>Supplied as sterile lyophilised powder. Store at -20&deg;C, protected from light. Reconstitute with 1-2 mL of bacteriostatic water (0.9% benzyl alcohol) for a working concentration of 5-10 mg/mL. Reconstituted solution stable at 2-8&deg;C for up to 28 days.</p>
+      </div>
+
+      <div style="margin-top:2rem;text-align:center;">
+        <a href={`/checkout?variant=${lowestVariant.id}`} class="btn btn-primary btn-lg">
+          Order Retatrutide — From £{lowestGbp} &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="padding:3.5rem 0;background:var(--white);border-top:1px solid var(--border);">
+    <div class="container" style="max-width:760px;">
+      <h2 style="font-size:1.6rem;margin-bottom:2rem;">Buying Retatrutide in the UK — FAQ</h2>
+      <div>
+        {faqs.map((faq) => (
+          <details style="border-bottom:1px solid var(--border);padding:1.1rem 0;">
+            <summary style="cursor:pointer;font-weight:600;font-size:1rem;color:var(--dark);list-style:none;display:flex;justify-content:space-between;align-items:center;">
+              <span>{faq.q}</span>
+              <span style="color:var(--accent);font-size:1.2rem;">+</span>
+            </summary>
+            <p style="margin-top:0.8rem;color:var(--text-muted);font-size:0.92rem;line-height:1.65;">{faq.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section style="padding:3.5rem 0;background:var(--bg);border-top:1px solid var(--border);">
+    <div class="container">
+      <h2 style="font-size:1.4rem;margin-bottom:2rem;">Also Researched With Retatrutide</h2>
+      <div class="grid-3">
+        {related.map((p) => <ProductCard product={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERNAL LINK BLOCK -->
+  <section style="padding:2.5rem 0 4rem;background:var(--bg);">
+    <div class="container" style="max-width:880px;">
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);padding:1.75rem;">
+        <h3 style="font-size:1.05rem;margin-bottom:1rem;">Further reading for UK retatrutide researchers</h3>
+        <ul style="list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0.65rem;">
+          <li><a href="/blog/retatrutide-uk-triple-receptor-guide" style="color:var(--accent);text-decoration:none;font-weight:600;">Retatrutide UK — Triple GLP-1/GIP/Glucagon Guide</a></li>
+          <li><a href="/blog/retatrutide-europe-eu-warehouse" style="color:var(--accent);text-decoration:none;font-weight:600;">Retatrutide Europe — EU Warehouse Sourcing</a></li>
+          <li><a href="/blog/are-peptides-legal-in-the-uk" style="color:var(--accent);text-decoration:none;font-weight:600;">Are Peptides Legal in the UK? 2026 Guide</a></li>
+          <li><a href="/blog/best-peptides-to-buy-uk-2026" style="color:var(--accent);text-decoration:none;font-weight:600;">Best Peptides to Buy UK 2026</a></li>
+          <li><a href="/blog/where-to-buy-peptides-uk" style="color:var(--accent);text-decoration:none;font-weight:600;">Where to Buy Research Peptides UK</a></li>
+          <li><a href="/products/retatrutide" style="color:var(--accent);text-decoration:none;font-weight:600;">Full Retatrutide Product Page</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>

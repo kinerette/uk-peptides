@@ -1,6 +1,6 @@
 ---
-title: "EU Peptide Supplier vs UK: What European Researchers Choose in 2026"
-description: "Post-Brexit, European researchers face a clear choice: UK peptide suppliers with customs risk, or EU warehouse suppliers with guaranteed delivery. Here is how that choice plays out in practice."
+title: "EU Peptide Supplier vs UK Supplier — 2026 Comparison"
+description: "Post-Brexit, EU researchers choose between UK suppliers with customs risk and EU warehouse suppliers with guaranteed 3-5 day delivery. How it plays out."
 publishedAt: "2026-05-02"
 keyword: "peptides europe"
 heroImage: "/images/blog/eu-peptide-supplier-vs-uk.jpg"

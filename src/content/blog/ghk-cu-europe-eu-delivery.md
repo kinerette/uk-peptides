@@ -1,6 +1,6 @@
 ---
-title: "GHK-Cu in Europe — Copper Peptide Research from EU Stock"
-description: "GHK-Cu modulates over 4,000 human genes in research models. For European researchers, EU warehouse sourcing eliminates the customs friction and delivery uncertainty of UK imports."
+title: "GHK-Cu Europe — Copper Peptide Research, EU Stock"
+description: "GHK-Cu modulates 4,000+ human genes in research models. EU warehouse sourcing kills customs friction and delivery uncertainty — 3-5 day tracked."
 publishedAt: "2026-05-04"
 keyword: "ghk cu europe"
 heroImage: "/images/blog/ghk-cu-europe-eu-delivery.jpg"

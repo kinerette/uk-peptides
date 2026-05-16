@@ -1,6 +1,6 @@
 ---
-title: "Retatrutide UK: The Triple GLP-1/GIP/GCG Receptor Peptide Explained"
-description: "A comprehensive research guide to retatrutide — the triple GLP-1/GIP/glucagon agonist. The NEJM 2023 Phase II data, mechanism of action, comparison with other incretin peptides, and what UK researchers need to know."
+title: "Retatrutide UK — Triple GLP-1/GIP/Glucagon Guide 2026"
+description: "Retatrutide research guide: NEJM 2023 Phase II data (-24.2%), triple GLP-1/GIP/glucagon mechanism, comparison vs tirzepatide and semaglutide."
 publishedAt: "2026-03-15"
 keyword: "retatrutide uk"
 author: "UK Peptides Research Team"

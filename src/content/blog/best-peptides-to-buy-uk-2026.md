@@ -1,6 +1,6 @@
 ---
-title: "Best Peptides to Buy in the UK (2026 Researcher's Guide)"
-description: "A researcher's guide to the five most studied peptides available in the UK in 2026. What each compound does, who studies it, and the key published evidence."
+title: "Best Peptides to Buy UK 2026 — Researcher's Guide"
+description: "UK researcher's guide to the 5 most-studied peptides of 2026: retatrutide, BPC-157, TB-500, GHK-Cu, MOTS-c. Mechanisms, evidence base and sourcing."
 publishedAt: "2026-02-05"
 keyword: "best peptides uk"
 author: "UK Peptides Research Team"

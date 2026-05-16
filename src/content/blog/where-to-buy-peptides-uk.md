@@ -1,6 +1,6 @@
 ---
-title: "Where to Buy Research Peptides in the UK — Complete 2026 Guide"
-description: "A practical guide for UK researchers on choosing a peptide supplier. What to look for, what to avoid, and the quality markers that separate credible suppliers from the rest."
+title: "Where to Buy Research Peptides UK — 2026 Guide"
+description: "Practical guide for UK researchers on choosing a peptide supplier. What to look for, what to avoid, and quality markers that separate credible from scams."
 publishedAt: "2026-02-18"
 keyword: "where to buy peptides uk"
 author: "UK Peptides Research Team"

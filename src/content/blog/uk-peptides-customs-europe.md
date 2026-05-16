@@ -1,6 +1,6 @@
 ---
-title: "Ordering Peptides from the UK to Europe: Customs Risk, Seizures, and the EU Alternative"
-description: "European researchers ordering peptides from UK suppliers face real customs risk since Brexit. This guide explains what happens at the border and why EU warehouse sourcing has become the safer choice."
+title: "UK to Europe Peptide Customs — Risks & EU Alternative"
+description: "Ordering peptides from UK to Europe post-Brexit: real customs risk, seizure rates, border process, and why EU warehouse sourcing is now safer."
 publishedAt: "2026-05-05"
 keyword: "peptides europe customs"
 heroImage: "/images/blog/uk-peptides-customs-europe.jpg"

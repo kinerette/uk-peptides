@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import COABadge from '../../components/COABadge.astro';
 import { products, getProductBySlug } from '../../lib/products';
-import { dualPrice } from '../../lib/constants';
+import { dualPrice, eurToGbp } from '../../lib/constants';
 
 export async function getStaticPaths() {
   return products.map((p) => ({ params: { slug: p.slug } }));
@@ -31,32 +31,62 @@ const productSchema = {
   },
   offers: product.variants.map((v) => ({
     '@type': 'Offer',
-    price: v.priceEur,
-    priceCurrency: 'EUR',
+    price: eurToGbp(v.priceEur),
+    priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
     name: v.label,
     url: `https://uk-peptides.eu/checkout?variant=${v.id}`,
+    priceValidUntil: '2027-12-31',
   })),
 };
 
-// Per-product SEO
+// Per-product SEO — UK market, GBP primary (audit 2026-05-16)
 const seoMeta: Record<string, { title: string; description: string }> = {
   'retatrutide': {
-    title: 'Buy Retatrutide UK — Triple GLP-1/GIP/Glucagon Peptide | UK Peptides',
-    description: 'Buy retatrutide UK. Triple GLP-1/GIP/glucagon agonist. -24.2% body weight (NEJM 2023). >99% purity, EU warehouse, discreet UK delivery. From €94.',
+    title: 'Buy Retatrutide UK — Triple GLP-1/GIP/GCG | From £80',
+    description: 'Buy retatrutide UK from £80. Triple GLP-1/GIP/glucagon agonist, -24.2% (NEJM 2023). >99% purity, EU warehouse, 3-5 day tracked UK delivery.',
   },
   'bpc-157': {
-    title: 'BPC-157 UK — Research Peptide | UK Peptides',
-    description: 'Buy BPC-157 UK. Tissue repair peptide, 100+ peer-reviewed publications. >99% purity, EU warehouse, discreet shipping. From €50.',
+    title: 'Buy BPC-157 UK — Tissue Repair Peptide | From £43',
+    description: 'Buy BPC-157 UK from £43. Tissue repair peptide, 100+ peer-reviewed studies. >99% purity, EU warehouse, 3-5 day tracked UK delivery.',
   },
   'tb-500': {
-    title: 'TB-500 UK — Thymosin Beta-4 Fragment | UK Peptides',
-    description: 'Buy TB-500 UK. Thymosin Beta-4 fragment for muscle recovery and tissue regeneration research. >99% purity, EU warehouse. From €135.',
+    title: 'Buy TB-500 UK — Thymosin Beta-4 Fragment | From £115',
+    description: 'Buy TB-500 UK from £115. Thymosin Beta-4 fragment for muscle recovery and tissue research. >99% purity, EU warehouse, tracked UK delivery.',
+  },
+  'ghk-cu': {
+    title: 'Buy GHK-Cu UK — Copper Peptide, Collagen | From £34',
+    description: 'Buy GHK-Cu UK from £34. Copper tripeptide modulating 4,000+ genes — collagen, skin, hair. >99% purity, EU warehouse, tracked UK delivery.',
+  },
+  'ahk-cu': {
+    title: 'Buy AHK-Cu UK — Hair Follicle Copper Peptide | £30',
+    description: 'Buy AHK-Cu UK from £30. Copper tripeptide for hair follicle and dermal research. >99% purity, EU warehouse, 3-5 day tracked UK delivery.',
+  },
+  'mots-c': {
+    title: 'Buy MOTS-c UK — Mitochondrial AMPK Peptide | £111',
+    description: 'Buy MOTS-c UK from £111. Mitochondrial peptide activating AMPK for metabolic and longevity research. >99% purity, EU warehouse, tracked UK delivery.',
+  },
+  'nad': {
+    title: 'Buy NAD+ UK — Longevity Coenzyme, Sirtuin | £73',
+    description: 'Buy NAD+ UK from £73. Coenzyme for sirtuin activation, DNA repair and longevity research. >99% purity, EU warehouse, tracked UK delivery.',
+  },
+  'selank': {
+    title: 'Buy Selank UK — Nootropic GABAergic Peptide | £30',
+    description: 'Buy Selank UK from £30. Synthetic heptapeptide for anxiolytic and nootropic research, GABAergic mechanism. >99% purity, EU warehouse, tracked.',
+  },
+  'semax': {
+    title: 'Buy Semax UK — BDNF Neurotropic Peptide | £30',
+    description: 'Buy Semax UK from £30. ACTH-derived heptapeptide upregulating BDNF for cognition and neuroprotection research. >99% purity, EU warehouse, tracked.',
+  },
+  'bacteriostatic-water': {
+    title: 'Buy Bacteriostatic Water UK — 0.9% Benzyl Alcohol | £7',
+    description: 'Buy bacteriostatic water UK — £7 per 10 mL vial. 0.9% benzyl alcohol for peptide reconstitution. EU warehouse, 3-5 day tracked UK delivery.',
   },
 };
+const fallbackGbp = Math.round(lowestVariant.priceEur * 0.855);
 const meta = seoMeta[product.slug] ?? {
-  title: `${product.name} UK — Research Peptide | UK Peptides`,
-  description: `Buy ${product.name} UK. ${product.shortBenefit.slice(0, 120)}. >99% purity, EU warehouse, discreet shipping.`,
+  title: `Buy ${product.name} UK — Research Peptide | From £${fallbackGbp}`.slice(0, 60),
+  description: `Buy ${product.name} UK from £${fallbackGbp}. ${product.shortBenefit.slice(0, 70)}. >99% purity, EU warehouse, tracked UK delivery.`.slice(0, 155),
 };
 ---
 

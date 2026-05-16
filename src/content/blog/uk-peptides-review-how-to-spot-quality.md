@@ -1,6 +1,6 @@
 ---
-title: "UK Peptides Review: How to Spot Quality Research Peptides in 2026"
-description: "What separates genuine analytical-grade peptides from cheap alternatives. A practical guide to evaluating purity claims, COA analysis, and supplier credibility for UK researchers."
+title: "UK Peptides Review — How to Spot Quality in 2026"
+description: "How to separate genuine analytical-grade peptides from cheap fakes. Evaluating purity claims, COA analysis and supplier credibility for UK researchers."
 publishedAt: "2026-01-22"
 keyword: "uk peptides review"
 author: "UK Peptides Research Team"

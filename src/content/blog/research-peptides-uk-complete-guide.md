@@ -1,6 +1,6 @@
 ---
-title: "Research Peptides UK: Everything Researchers Need to Know"
-description: "A complete technical guide to research peptides for UK scientists. Categories, storage, reconstitution, handling, and the scientific basis for major compound classes."
+title: "Research Peptides UK — Complete Technical Guide 2026"
+description: "Complete technical guide to research peptides for UK scientists. Categories, storage, reconstitution, handling and the science behind each class."
 publishedAt: "2026-03-01"
 keyword: "research peptides uk"
 author: "UK Peptides Research Team"

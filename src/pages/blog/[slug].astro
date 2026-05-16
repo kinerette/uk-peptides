@@ -43,11 +43,12 @@ const articleSchema = {
 ---
 
 <Base
-  title={`${post.data.title} | UK Peptides`}
+  title={post.data.title}
   description={post.data.description}
   ogImage={post.data.heroImage}
   schema={articleSchema}
   pageType="article"
+  robots={(post.data as any).noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'}
 >
   <!-- Article header -->
   <section style="background:var(--dark);padding:4rem 0 3rem;">

@@ -1,6 +1,6 @@
 ---
-title: "Are Peptides Legal in the UK? (2026 Complete Guide)"
-description: "A comprehensive guide to the UK legal status of research peptides in 2026. What the law actually says, what is permitted, and what researchers need to know."
+title: "Are Peptides Legal in the UK? Complete 2026 Guide"
+description: "UK legal status of research peptides in 2026: Misuse of Drugs Act, Medicines Act, RUO supply, and what UK researchers need to know to stay compliant."
 publishedAt: "2026-01-15"
 keyword: "are peptides legal uk"
 author: "UK Peptides Research Team"

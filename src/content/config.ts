@@ -9,6 +9,10 @@ const blog = defineCollection({
     keyword: z.string().optional(),
     heroImage: z.string().optional(),
     author: z.string().default('UK Peptides Research Team'),
+    /** Set to true to emit a noindex robots meta tag for this post. */
+    noindex: z.boolean().optional(),
+    /** Language code (en, fr). Default en. */
+    lang: z.string().optional(),
   }),
 });
 

@@ -1,6 +1,6 @@
 ---
-title: "TB-500 in Europe — Thymosin Beta-4 Fragment, EU Stock, Fast Delivery"
-description: "TB-500 (thymosin beta-4 fragment) is widely studied for tissue repair and recovery. For European researchers, EU warehouse sourcing eliminates the customs delays and seizure risk associated with UK imports."
+title: "TB-500 Europe — Thymosin Beta-4 Fragment, EU Stock"
+description: "TB-500 (thymosin beta-4 fragment) is studied for tissue repair. EU warehouse sourcing kills customs delays and seizure risk — 3-5 day tracked."
 publishedAt: "2026-05-03"
 keyword: "tb 500 europe"
 heroImage: "/images/blog/tb-500-europe-eu-warehouse.jpg"
