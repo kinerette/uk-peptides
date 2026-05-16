@@ -4,7 +4,7 @@
       "source": "/(.*)",
       "has": [{ "type": "host", "value": "uk-peptides.eu" }],
       "destination": "https://www.uk-peptides.eu/$1",
-      "permanent": true
+      "statusCode": 301
     }
   ]
 }
