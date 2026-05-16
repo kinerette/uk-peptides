@@ -36,8 +36,8 @@ const productSchema = {
   },
   offers: product.variants.map((v) => ({
     '@type': 'Offer',
-    price: eurToGbp(v.priceEur),
-    priceCurrency: 'GBP',
+    price: v.priceEur,
+    priceCurrency: 'EUR',
     availability: 'https://schema.org/InStock',
     name: v.label,
     url: `https://uk-peptides.eu/checkout?variant=${v.id}`,

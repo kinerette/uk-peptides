@@ -14,14 +14,15 @@ export function eurToGbp(priceEur: number): number {
 }
 
 /**
- * Format a dual GBP/EUR price, GBP primary (this is the UK store; billing
- * happens in GBP), EUR shown in parentheses as an approximate reference.
+ * Format a dual EUR/GBP price, EUR primary (.eu domain → European audience),
+ * GBP shown in parentheses as an approximate reference for UK browsers.
  *
- *   "£80 (≈ €94)"
+ *   "€94 (≈ £80)"
  *
- * The parenthetical + ≈ wins over the previous "£80 / €94" slash format,
- * which read as two equally-billable prices and tanked conversion.
+ * User feedback 2026-05-16: ".eu site qui cible européens — pourquoi GBP
+ * primary ?". Inverted to EUR primary; conversion to GBP stays as a
+ * reference for visiting UK customers.
  */
 export function dualPrice(priceEur: number): string {
-  return `£${eurToGbp(priceEur)} (≈ €${priceEur})`;
+  return `€${priceEur} (≈ £${eurToGbp(priceEur)})`;
 }
