@@ -14,8 +14,14 @@ export function eurToGbp(priceEur: number): number {
 }
 
 /**
- * Format a dual EUR/GBP price string, e.g. "£80 / €94"
+ * Format a dual GBP/EUR price, GBP primary (this is the UK store; billing
+ * happens in GBP), EUR shown in parentheses as an approximate reference.
+ *
+ *   "£80 (≈ €94)"
+ *
+ * The parenthetical + ≈ wins over the previous "£80 / €94" slash format,
+ * which read as two equally-billable prices and tanked conversion.
  */
 export function dualPrice(priceEur: number): string {
-  return `£${eurToGbp(priceEur)} / €${priceEur}`;
+  return `£${eurToGbp(priceEur)} (≈ €${priceEur})`;
 }
