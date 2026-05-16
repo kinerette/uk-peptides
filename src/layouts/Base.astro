@@ -53,13 +53,9 @@ const schemaArray = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />
 
-  <!-- Fonts: Space Grotesk + Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
+  <!-- Fonts: Space Grotesk + Inter — self-hosted via @fontsource (was Google Fonts
+       CDN which triggered the Safari iOS 'Réduire les protections' privacy warning). -->
+  {/* Google Fonts preconnects removed intentionally — no more third-party font fetch. */}
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

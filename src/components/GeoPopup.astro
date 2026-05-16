@@ -186,8 +186,9 @@
       const badges    = document.getElementById('gp-badges') as HTMLElement;
       const closeBtn  = document.getElementById('gp-close') as HTMLButtonElement;
 
-      flagEl.src = `https://flagcdn.com/28x21/${data.flag}.png`;
-      flagEl.srcset = `https://flagcdn.com/56x42/${data.flag}.png 2x`;
+      // Use local flag SVG instead of flagcdn.com CDN (Safari privacy mode flagged it)
+      flagEl.src = `/flags/${data.flag}.svg`;
+      flagEl.srcset = '';
       flagEl.alt = code;
       headline.textContent = data.headline;
       badges.innerHTML = [
