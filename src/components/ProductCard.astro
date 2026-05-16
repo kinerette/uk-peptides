@@ -58,8 +58,8 @@ const highestGbp = eurToGbp(highestPrice);
       <div>
         <span style="font-family:var(--font-head);font-weight:700;font-size:1.15rem;color:var(--dark);">
           {lowestPrice === highestPrice
-            ? `£${lowestGbp} / €${lowestPrice}`
-            : `£${lowestGbp}–£${highestGbp} / €${lowestPrice}–€${highestPrice}`}
+            ? `£${lowestGbp} (≈ €${lowestPrice})`
+            : `£${lowestGbp}–£${highestGbp} (≈ €${lowestPrice}–€${highestPrice})`}
         </span>
       </div>
       <a href={`/products/${product.slug}`} class="btn btn-primary btn-sm">
