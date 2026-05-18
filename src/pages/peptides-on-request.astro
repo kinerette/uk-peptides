@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+
+const CONTACT_TELEGRAM = 'https://t.me/ox_fr';
+---
+
+<Base
+  title="+30 more research peptides — on request | UK Peptides"
+  description="Over 30 additional research peptides available on request beyond our public catalogue: Ipamorelin, CJC-1295, Tesamorelin, Epitalon, Thymosin Alpha-1, MGF, IGF-1 LR3, and more. Contact us via Telegram."
+>
+  <section style="background:var(--dark);padding:4rem 0 3rem;text-align:center;">
+    <div class="container">
+      <span class="section-label" style="color:#3B9FD4;">On request</span>
+      <h1 style="color:#fff;margin:0.5rem 0 1rem;font-size:2rem;line-height:1.15;">
+        +30 more research peptides<br />on request
+      </h1>
+      <p style="color:rgba(255,255,255,0.65);max-width:560px;margin:0 auto;font-size:0.95rem;">
+        Our public catalogue covers the most-requested peptides. Over <strong style="color:#fff;">30 additional references</strong> are available on request — same purity &gt;99%, same EU shipping.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--bg);">
+    <div class="container--narrow">
+      <div style="display:grid;grid-template-columns:280px 1fr;gap:2.5rem;align-items:center;max-width:760px;margin:0 auto;">
+        <img
+          src="/images/products/peptide-mystere.webp"
+          alt="+30 more peptides — on request"
+          style="width:100%;height:auto;object-fit:contain;"
+          loading="eager"
+        />
+        <div>
+          <h2 style="font-size:1.4rem;margin-bottom:1rem;line-height:1.25;">Contact us for the full list</h2>
+          <p style="font-size:0.95rem;color:var(--text-muted);margin-bottom:1.5rem;line-height:1.55;">
+            Reply within 15 min · Purity &gt;99% · EU warehouse, 3-5 day tracked shipping.
+          </p>
+          <a
+            href={CONTACT_TELEGRAM}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-primary"
+            style="display:inline-block;"
+          >
+            Contact us on Telegram
+          </a>
+          <a
+            href="/products"
+            class="btn"
+            style="display:inline-block;margin-left:0.5rem;background:transparent;border:1px solid var(--text-muted);color:var(--text-muted);"
+          >
+            Browse public catalogue
+          </a>
+        </div>
+      </div>
+
+      <div style="max-width:560px;margin:3rem auto 0;">
+        <h3 style="font-size:1.1rem;margin-bottom:1.5rem;text-align:center;">FAQ</h3>
+        <div style="margin-bottom:1.5rem;">
+          <h4 style="font-size:0.95rem;margin-bottom:0.4rem;">Why aren't these on the site?</h4>
+          <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.55;">
+            Lower demand than our flagship references. We order on request to guarantee fresh batches and avoid overstock.
+          </p>
+        </div>
+        <div style="margin-bottom:1.5rem;">
+          <h4 style="font-size:0.95rem;margin-bottom:0.4rem;">Are prices higher?</h4>
+          <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.55;">
+            No — same pricing as the public catalogue. Same suppliers, same grid.
+          </p>
+        </div>
+        <div style="margin-bottom:1.5rem;">
+          <h4 style="font-size:0.95rem;margin-bottom:0.4rem;">Are shipping times longer?</h4>
+          <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.55;">
+            Slightly: 5-7 business days instead of 3-5. If we have the reference in stock, same shipping speed as the catalogue.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

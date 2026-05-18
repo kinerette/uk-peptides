@@ -6,7 +6,7 @@ import { products, getProductBySlug } from '../../lib/products';
 import { dualPrice, eurToGbp } from '../../lib/constants';
 
 export async function getStaticPaths() {
-  return products.map((p) => ({ params: { slug: p.slug } }));
+  return products.filter((p) => !p.outOfCatalog).map((p) => ({ params: { slug: p.slug } }));
 }
 
 const { slug } = Astro.params;
@@ -16,6 +16,9 @@ const product = getProductBySlug(slug!);
 // were served as /products HTML at 200, creating multiple URLs with same body)
 if (!product) {
   return new Response(null, { status: 404, statusText: 'Not Found' });
+}
+if (product.outOfCatalog) {
+  return Astro.redirect('/peptides-on-request');
 }
 
 const relatedProducts = product.relatedSlugs

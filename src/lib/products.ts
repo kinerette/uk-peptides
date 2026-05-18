@@ -20,8 +20,10 @@ export interface Product {
   slug: string;
   name: string;
   shortBenefit: string;
-  category: 'Weight Management' | 'Recovery & Repair' | 'Cognition' | 'Longevity' | 'Skin & Hair' | 'Solvent';
+  category: 'Weight Management' | 'Recovery & Repair' | 'Cognition' | 'Longevity' | 'Skin & Hair' | 'Solvent' | 'On Request';
   featured?: boolean;
+  /** Mystery / out-of-catalog entry — skip pricing, route to /peptides-on-request. */
+  outOfCatalog?: boolean;
   image: string;
   variants: ProductVariant[];
   description: string;
@@ -381,6 +383,28 @@ export const products: Product[] = [
       shelfLife: '24 months (sealed vial)',
     },
     relatedSlugs: ['retatrutide', 'bpc-157', 'tb-500'],
+    coa: null,
+  },
+
+  /* ═══════════════════════════════════════════════════════
+     ON REQUEST — +30 more peptides (last in carousel)
+     ═══════════════════════════════════════════════════════ */
+  {
+    slug: 'peptide-mystery',
+    name: '+30 more peptides',
+    shortBenefit: 'Over 30 additional research peptides available on request',
+    category: 'On Request',
+    outOfCatalog: true,
+    image: '/images/products/peptide-mystere.webp',
+    variants: [
+      { id: 'peptide-mystery-on-request', label: 'On request', quantity: 'On request', priceEur: 0 },
+    ],
+    description:
+      'Over 30 additional research peptides are available on request (Ipamorelin, CJC-1295, Hexarelin, Tesamorelin, Epitalon, Thymosin Alpha-1, Kisspeptin, MGF, IGF-1 LR3, and more). Contact us via Telegram for the full list, pricing and availability.',
+    researchContext: '',
+    keyFindings: [],
+    storage: { temperature: '', conditions: '', shelfLife: '' },
+    relatedSlugs: [],
     coa: null,
   },
 ];
