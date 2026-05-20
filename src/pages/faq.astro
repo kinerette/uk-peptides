@@ -67,11 +67,25 @@ const faqs = [
     a: 'Lyophilised peptides stored at -20°C are typically stable for 18–36 months depending on the compound. Reconstituted solutions in Bac Water are stable for approximately 28 days at 2–8°C. See individual product pages for compound-specific storage and shelf life information.',
   },
 ];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.a,
+    },
+  })),
+};
 ---
 
 <Base
   title="Research Peptides UK FAQ — Legality, Storage, RUO Answers"
   description="FAQ on research peptides in the UK: legality, retatrutide, BPC-157, RUO status, storage, reconstitution, customs and tracked UK delivery."
+  schema={faqSchema}
 >
   <!-- Hero -->
   <section style="background:var(--dark);padding:4rem 0 3rem;text-align:center;">

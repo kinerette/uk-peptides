@@ -166,6 +166,40 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
           We accept Visa, Mastercard, Apple Pay, Google Pay, and crypto.
         </p>
       </form>
+
+      <!-- ── Revolut / PayPal fallback ── -->
+      <div style="margin-top:1.75rem;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;">
+        <p style="font-size:0.82rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.9rem;">
+          Prefer Revolut or PayPal?
+        </p>
+        <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;margin-bottom:1rem;">
+          Send us a message on Telegram with your order details (product, quantity, shipping address) and we will send you a Revolut or PayPal payment link directly.
+        </p>
+        <div style="display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;">
+          <a
+            href="https://t.me/ox_fr?text=Hello%2C%20I%20would%20like%20to%20order%20from%20UK%20Peptides%20and%20pay%20via%20Revolut%20or%20PayPal.%20Please%20send%20me%20a%20payment%20link."
+            target="_blank"
+            rel="noopener noreferrer"
+            style="display:inline-flex;align-items:center;gap:0.6rem;background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:0.6rem 1rem;text-decoration:none;color:var(--dark);font-size:0.875rem;font-weight:600;transition:background 0.15s;"
+          >
+            <img src="/logos/revolut.png" alt="Revolut" width="22" height="22" style="border-radius:4px;flex-shrink:0;" />
+            Pay with Revolut
+          </a>
+          <a
+            href="https://t.me/ox_fr?text=Hello%2C%20I%20would%20like%20to%20order%20from%20UK%20Peptides%20and%20pay%20via%20PayPal.%20Please%20send%20me%20a%20payment%20link."
+            target="_blank"
+            rel="noopener noreferrer"
+            style="display:inline-flex;align-items:center;gap:0.6rem;background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:0.6rem 1rem;text-decoration:none;color:var(--dark);font-size:0.875rem;font-weight:600;transition:background 0.15s;"
+          >
+            <img src="/logos/paypal.png" alt="PayPal" width="22" height="22" style="border-radius:4px;flex-shrink:0;" />
+            Pay with PayPal
+          </a>
+        </div>
+        <p style="font-size:0.75rem;color:var(--text-faint);margin-top:0.75rem;">
+          Telegram: <a href="https://t.me/ox_fr" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">t.me/ox_fr</a>
+        </p>
+      </div>
+
     </div>
   </section>
 
