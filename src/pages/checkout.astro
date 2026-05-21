@@ -166,12 +166,27 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
           We accept Visa, Mastercard, Apple Pay, Google Pay, and crypto.
         </p>
 
+        <!-- Co-primary: pay with Revolut / PayPal via Telegram -->
+        <a
+          href="https://t.me/ox_fr?text=Hello%2C%20I%27d%20like%20to%20pay%20with%20Revolut%20or%20PayPal%20for%20my%20UK%20Peptides%20order.%20Please%20send%20me%20a%20payment%20link."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="revpp-btn"
+          style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.15rem;width:100%;box-sizing:border-box;margin-top:0.85rem;background:#ffffff;color:#18181b;border:2px solid #d4d4d8;border-radius:12px;padding:14px 16px;text-decoration:none;transition:border-color 0.15s,color 0.15s;"
+        >
+          <span style="font-size:15px;font-weight:700;line-height:1.2;">Pay with Revolut or PayPal</span>
+          <span style="font-size:12px;color:#6b7280;font-weight:500;line-height:1.3;">Secure payment link via Telegram in 2 min</span>
+        </a>
+
       </form>
 
       <!-- ── Support / payment-help card (clean, professional) ── -->
       <div style="margin-top:1.75rem;background:#ffffff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.06);padding:20px;text-align:center;">
         <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981;flex-shrink:0;"></span>
+          <span class="support-dot" style="position:relative;display:inline-block;width:8px;height:8px;flex-shrink:0;">
+            <span class="support-dot__ping" style="position:absolute;inset:0;border-radius:50%;background:#10b981;"></span>
+            <span style="position:relative;display:block;width:8px;height:8px;border-radius:50%;background:#10b981;"></span>
+          </span>
           <span style="font-size:11px;color:#6b7280;">Customer support 7/7 &middot; reply within minutes</span>
         </div>
         <p style="font-size:14px;font-weight:600;color:#18181b;margin:0 0 14px;line-height:1.4;">
@@ -182,7 +197,7 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
           target="_blank"
           rel="noopener noreferrer"
           class="support-tg-btn"
-          style="display:flex;align-items:center;justify-content:center;gap:0.6rem;width:100%;box-sizing:border-box;background:#229ED9;color:#ffffff;font-size:16px;font-weight:700;text-decoration:none;border-radius:12px;padding:16px;transition:background 0.15s;"
+          style="display:flex;align-items:center;justify-content:center;gap:0.6rem;width:100%;box-sizing:border-box;background:var(--accent);color:#ffffff;font-size:16px;font-weight:700;text-decoration:none;border-radius:12px;padding:16px;transition:background 0.15s;"
         >
           <svg viewBox="0 0 24 24" width="22" height="22" fill="#ffffff" style="flex-shrink:0;" aria-hidden="true"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71l-4.14-3.05-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
           Message us on Telegram
@@ -301,7 +316,15 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
   </script>
 
   <style>
-    .support-tg-btn:hover { background: #1b8ec2 !important; }
+    .support-tg-btn:hover { background: var(--accent-hover) !important; }
+    .support-dot__ping {
+      animation: support-ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+    @keyframes support-ping {
+      0%   { transform: scale(1);   opacity: 0.65; }
+      75%, 100% { transform: scale(2.4); opacity: 0; }
+    }
+    .revpp-btn:hover { border-color: var(--accent) !important; color: var(--accent) !important; }
     .form-grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
