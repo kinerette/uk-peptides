@@ -156,7 +156,7 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
 
         <!-- Submit -->
         <button type="submit" id="submitBtn" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">
-          Pay Securely &rarr;
+          Pay &euro;{selectedVariant.priceEur} &rarr;
         </button>
 
         <div id="formError" style="display:none;margin-top:1rem;background:#fef2f2;border:1px solid #fecaca;border-radius:var(--radius-sm);padding:0.75rem 1rem;color:#b91c1c;font-size:0.875rem;"></div>
@@ -224,6 +224,21 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
 
       if (!form) return;
 
+      // Compute current total (respecting promo) as a display string, e.g. "€50"
+      function currentTotalStr() {
+        if (!variantSelect) return '';
+        var opt = variantSelect.options[variantSelect.selectedIndex];
+        var raw = opt ? parseFloat(opt.getAttribute('data-price') || '0') : 0;
+        var val = appliedPromo ? (Math.round(raw * 0.9 * 100) / 100) : raw;
+        return '€' + val.toFixed(0);
+      }
+
+      // Mirror the live total into the main pay button label.
+      function updatePayButton() {
+        if (!btn || btn.disabled) return;
+        btn.innerHTML = 'Pay ' + currentTotalStr() + ' →';
+      }
+
       // Update price display on variant change
       if (variantSelect && priceDisplay) {
         variantSelect.addEventListener('change', function() {
@@ -233,6 +248,7 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
             var discounted = appliedPromo ? (Math.round(parseFloat(price) * 0.9 * 100) / 100).toFixed(0) : price;
             priceDisplay.textContent = '€' + discounted;
           }
+          updatePayButton();
         });
       }
 
@@ -266,6 +282,7 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
               var price = opt ? parseFloat(opt.getAttribute('data-price') || '0') : 0;
               priceDisplay.textContent = '€' + (Math.round(price * 0.9 * 100) / 100).toFixed(0);
             }
+            updatePayButton();
           } else {
             appliedPromo = '';
             if (promoOk) promoOk.style.display = 'none';
@@ -273,6 +290,9 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
           }
         });
       }
+
+      // Sync button label with the initially-selected variant on load.
+      updatePayButton();
 
       form.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -309,7 +329,7 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
           errorEl.textContent = (err && err.message) || 'An unexpected error occurred. Please try again in a few moments.';
           errorEl.style.display = 'block';
           btn.disabled = false;
-          btn.textContent = 'Pay Securely →';
+          updatePayButton();
         }
       });
     })();
