@@ -26,7 +26,7 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
       </div>
 
       {cancelled && (
-        <div style="background:#fff9ed;border:1px solid #f59e0b;border-radius:var(--radius-sm);padding:0.9rem 1.25rem;margin-bottom:1.5rem;color:#92400e;font-size:0.9rem;">
+        <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:var(--radius-sm);padding:0.9rem 1.25rem;margin-bottom:1.5rem;color:#374151;font-size:0.9rem;">
           Payment cancelled. You can try again below &mdash; your selection has been kept.
         </div>
       )}
@@ -166,56 +166,29 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
           We accept Visa, Mastercard, Apple Pay, Google Pay, and crypto.
         </p>
 
-        <!-- ── Payment-help escape hatch (prominent, mobile-visible) ── -->
-        <div style="margin-top:1.5rem;background:#fff8e6;border:2px solid #f59e0b;border-radius:var(--radius-lg);padding:1.25rem;text-align:center;">
-          <p style="font-size:1.05rem;font-weight:800;color:#92400e;margin:0 0 0.3rem;line-height:1.35;">
-            Card not working? Stuck at payment?
-          </p>
-          <p style="font-size:0.9rem;color:#92400e;line-height:1.55;margin:0 0 1rem;">
-            Don't abandon your order &mdash; this is normal and easy to fix. Message us on Telegram and we'll send you a Revolut or PayPal payment link directly. Real human support, fast reply.
-          </p>
-          <a
-            href="https://t.me/ox_fr?text=Hello%2C%20I%27m%20stuck%20at%20payment%20on%20UK%20Peptides.%20Please%20send%20me%20a%20Revolut%20or%20PayPal%20payment%20link."
-            target="_blank"
-            rel="noopener noreferrer"
-            style="display:flex;align-items:center;justify-content:center;gap:0.6rem;width:100%;background:#229ED9;color:#fff;font-size:1.05rem;font-weight:700;text-decoration:none;border-radius:10px;padding:1.4rem 1.25rem;box-shadow:0 4px 14px rgba(34,158,217,0.35);"
-          >
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="#fff" style="flex-shrink:0;" aria-hidden="true"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71l-4.14-3.05-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
-            Message us on Telegram
-          </a>
-        </div>
       </form>
 
-      <!-- ── Revolut / PayPal fallback ── -->
-      <div style="margin-top:1.75rem;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;">
-        <p style="font-size:0.82rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.9rem;">
-          Prefer Revolut or PayPal?
-        </p>
-        <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;margin-bottom:1rem;">
-          Send us a message on Telegram with your order details (product, quantity, shipping address) and we will send you a Revolut or PayPal payment link directly.
-        </p>
-        <div style="display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;">
-          <a
-            href="https://t.me/ox_fr?text=Hello%2C%20I%20would%20like%20to%20order%20from%20UK%20Peptides%20and%20pay%20via%20Revolut%20or%20PayPal.%20Please%20send%20me%20a%20payment%20link."
-            target="_blank"
-            rel="noopener noreferrer"
-            style="display:inline-flex;align-items:center;gap:0.6rem;background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:0.6rem 1rem;text-decoration:none;color:var(--dark);font-size:0.875rem;font-weight:600;transition:background 0.15s;"
-          >
-            <img src="/logos/revolut.png" alt="Revolut" width="22" height="22" style="border-radius:4px;flex-shrink:0;" />
-            Pay with Revolut
-          </a>
-          <a
-            href="https://t.me/ox_fr?text=Hello%2C%20I%20would%20like%20to%20order%20from%20UK%20Peptides%20and%20pay%20via%20PayPal.%20Please%20send%20me%20a%20payment%20link."
-            target="_blank"
-            rel="noopener noreferrer"
-            style="display:inline-flex;align-items:center;gap:0.6rem;background:#f8f9fa;border:1px solid #e5e7eb;border-radius:8px;padding:0.6rem 1rem;text-decoration:none;color:var(--dark);font-size:0.875rem;font-weight:600;transition:background 0.15s;"
-          >
-            <img src="/logos/paypal.png" alt="PayPal" width="22" height="22" style="border-radius:4px;flex-shrink:0;" />
-            Pay with PayPal
-          </a>
+      <!-- ── Support / payment-help card (clean, professional) ── -->
+      <div style="margin-top:1.75rem;background:#ffffff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.06);padding:20px;text-align:center;">
+        <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981;flex-shrink:0;"></span>
+          <span style="font-size:11px;color:#6b7280;">Customer support 7/7 &middot; reply within minutes</span>
         </div>
-        <p style="font-size:0.75rem;color:var(--text-faint);margin-top:0.75rem;">
-          Telegram: <a href="https://t.me/ox_fr" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">t.me/ox_fr</a>
+        <p style="font-size:14px;font-weight:600;color:#18181b;margin:0 0 14px;line-height:1.4;">
+          A question, or stuck at payment?
+        </p>
+        <a
+          href="https://t.me/ox_fr?text=Hello%2C%20I%27m%20stuck%20at%20payment%20on%20UK%20Peptides.%20Please%20send%20me%20a%20Revolut%20or%20PayPal%20payment%20link."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="support-tg-btn"
+          style="display:flex;align-items:center;justify-content:center;gap:0.6rem;width:100%;box-sizing:border-box;background:#229ED9;color:#ffffff;font-size:16px;font-weight:700;text-decoration:none;border-radius:12px;padding:16px;transition:background 0.15s;"
+        >
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="#ffffff" style="flex-shrink:0;" aria-hidden="true"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71l-4.14-3.05-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+          Message us on Telegram
+        </a>
+        <p style="font-size:13px;color:#6b7280;line-height:1.55;margin:14px 0 0;">
+          Prefer Revolut or PayPal? Send us your order details on Telegram and we&rsquo;ll reply with a payment link.
         </p>
       </div>
 
@@ -328,6 +301,7 @@ const selectedProduct = products.find((p) => p.variants.some((v) => v.id === sel
   </script>
 
   <style>
+    .support-tg-btn:hover { background: #1b8ec2 !important; }
     .form-grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
