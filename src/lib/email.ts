@@ -7,7 +7,9 @@ const resend = new Resend(
   import.meta.env.RESEND_API_KEY ?? process.env.RESEND_API_KEY ?? '',
 );
 
-const FROM = 'UK Peptides <pedidos@peptide-pay.com>';
+// FROM = domaine propre (vérifié Resend). Avant : 'pedidos@peptide-pay.com'
+// (espagnol sur un site anglais !) → désalignement DMARC → spam Outlook.
+const FROM = 'UK Peptides <orders@uk-peptides.eu>';
 const TRUSTPILOT_URL = 'https://www.trustpilot.com/review/uk-peptides.eu';
 const SITE_URL = 'https://uk-peptides.eu';
 
