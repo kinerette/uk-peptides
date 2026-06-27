@@ -46,25 +46,40 @@ const productSchema = {
     url: `https://uk-peptides.eu/checkout?variant=${v.id}`,
     priceValidUntil: '2027-12-31',
   })),
+  // Freshness signal (audit 2026-06-27): explicit modified date for crawlers.
+  dateModified: '2026-06-27',
 };
 
-// Per-product SEO — UK market, GBP primary (audit 2026-05-16)
-const seoMeta: Record<string, { title: string; description: string }> = {
+// Slugs that have a dedicated "Buy {X} UK" money page. For these, the product
+// page is the SPECS page (avoids cannibalising the money page) and the money
+// page owns the transactional "buy {x} uk" query.
+const moneyPageSlugs = ['retatrutide', 'bpc-157', 'tb-500', 'ghk-cu'];
+const hasMoneyPage = moneyPageSlugs.includes(product.slug);
+const moneyPageHref = `/buy-${product.slug}-uk`;
+
+// Per-product SEO. EUR-primary pricing is the documented founder decision
+// (constants.ts, 2026-05-16) so titles avoid hardcoded GBP. Money-page slugs
+// use specs-oriented titles; the rest are transactional.
+const seoMeta: Record<string, { title: string; description: string; h1?: string }> = {
   'retatrutide': {
-    title: 'Buy Retatrutide UK — Triple GLP-1/GIP/GCG | From £80',
-    description: 'Buy retatrutide UK from £80. Triple GLP-1/GIP/glucagon agonist, -24.2% (NEJM 2023). >99% purity, EU warehouse, 3-5 day tracked UK delivery.',
+    title: 'Retatrutide UK Specs, Dosage and COA | LY3437943',
+    description: 'Retatrutide (LY3437943) specifications for UK research: triple GLP-1/GIP/glucagon mechanism, -24.2% (NEJM 2023), dosage, storage, COA. >99% purity.',
+    h1: 'Retatrutide Specifications and Research',
   },
   'bpc-157': {
-    title: 'Buy BPC-157 UK — Tissue Repair Peptide | From £43',
-    description: 'Buy BPC-157 UK from £43. Tissue repair peptide, 100+ peer-reviewed studies. >99% purity, EU warehouse, 3-5 day tracked UK delivery.',
+    title: 'BPC-157 UK Specs, Dosage and Storage | Tissue Repair',
+    description: 'BPC-157 specifications for UK research: 15-amino-acid tissue repair peptide, 100+ studies, dosage, reconstitution, storage and COA. >99% purity.',
+    h1: 'BPC-157 Specifications and Research',
   },
   'tb-500': {
-    title: 'Buy TB-500 UK — Thymosin Beta-4 Fragment | From £115',
-    description: 'Buy TB-500 UK from £115. Thymosin Beta-4 fragment for muscle recovery and tissue research. >99% purity, EU warehouse, tracked UK delivery.',
+    title: 'TB-500 UK Specs, Dosage and Storage | Thymosin Beta-4',
+    description: 'TB-500 specifications for UK research: thymosin beta-4 fragment for tissue regeneration, dosage, reconstitution, storage and COA. >99% purity.',
+    h1: 'TB-500 Specifications and Research',
   },
   'ghk-cu': {
-    title: 'Buy GHK-Cu UK — Copper Peptide, Collagen | From £34',
-    description: 'Buy GHK-Cu UK from £34. Copper tripeptide modulating 4,000+ genes — collagen, skin, hair. >99% purity, EU warehouse, tracked UK delivery.',
+    title: 'GHK-Cu UK Specs, Dosage and Storage | Copper Peptide',
+    description: 'GHK-Cu specifications for UK research: copper tripeptide modulating 4,000+ genes, dosage, storage and COA. >99% purity, EU warehouse.',
+    h1: 'GHK-Cu Specifications and Research',
   },
   'ahk-cu': {
     title: 'Buy AHK-Cu UK — Hair Follicle Copper Peptide | £30',
@@ -96,13 +111,61 @@ const meta = seoMeta[product.slug] ?? {
   title: `Buy ${product.name} UK — Research Peptide | From £${fallbackGbp}`.slice(0, 60),
   description: `Buy ${product.name} UK from £${fallbackGbp}. ${product.shortBenefit.slice(0, 70)}. >99% purity, EU warehouse, tracked UK delivery.`.slice(0, 155),
 };
+
+// H1: money-page slugs get a specs H1; all others get the transactional "Buy {X} UK".
+const h1 = seoMeta[product.slug]?.h1 ?? `Buy ${product.name} UK`;
+
+// Visible freshness signal.
+const lastUpdated = 'June 2026';
+
+// FAQ: combine any product-specific FAQs with a standard transactional set so
+// every product page carries a FAQ + FAQPage schema (audit: only 2/10 had it).
+const priceLabel = dualPrice(lowestVariant.priceEur);
+const storageAnswer = `Store at ${product.storage.temperature}. ${product.storage.conditions}. Shelf life is ${product.storage.shelfLife}.`;
+const standardFaqs = [
+  {
+    question: `Is ${product.name} legal to buy in the UK?`,
+    answer: `${product.name} is supplied strictly as a Research Use Only (RUO) reagent for in vitro laboratory study. It is not a controlled substance under the UK Misuse of Drugs Act 1971 and is not approved as a medicine. It must not be used for human or animal consumption.`,
+  },
+  {
+    question: `How much does ${product.name} cost in the UK?`,
+    answer: `${product.name} starts from ${priceLabel} for the ${lowestVariant.quantity} vial. Prices are shown in EUR with an approximate GBP reference; larger vials carry a lower price per mg. Tracked UK delivery is included.`,
+  },
+  {
+    question: `How is ${product.name} shipped to the UK?`,
+    answer: `Orders dispatch from our EU warehouse via tracked courier, with an estimated 3 to 5 business day transit to UK and EU addresses. Packaging is discreet, with no external mention of the contents.`,
+  },
+  {
+    question: `What are the storage requirements for ${product.name}?`,
+    answer: storageAnswer,
+  },
+  {
+    question: `Is a Certificate of Analysis available for ${product.name}?`,
+    answer: `A Certificate of Analysis is available on request for every batch. Email contact@uk-peptides.eu with your order number after dispatch and we will forward the lab report (HPLC and mass spec) for the lot you received.`,
+  },
+];
+const existingQs = new Set((product.faqs ?? []).map((f) => f.question.toLowerCase()));
+const faqs = [
+  ...(product.faqs ?? []),
+  ...standardFaqs.filter((f) => !existingQs.has(f.question.toLowerCase())),
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+  })),
+};
 ---
 
 <Base
   title={meta.title}
   description={meta.description}
   ogImage={product.image}
-  schema={productSchema}
+  schema={[productSchema, faqSchema]}
 >
   <!-- Breadcrumb -->
   <div style="background:var(--bg-alt);border-bottom:1px solid var(--border);padding:0.75rem 0;">
@@ -142,11 +205,23 @@ const meta = seoMeta[product.slug] ?? {
             <span class="badge badge-dark">EU Warehouse</span>
           </div>
 
-          <h1 style="font-size:2.25rem;margin-bottom:0.5rem;">{product.name}</h1>
+          <h1 style="font-size:2.25rem;margin-bottom:0.5rem;">{h1}</h1>
+
+          <p style="font-size:0.78rem;color:var(--text-faint);margin-bottom:0.75rem;">Updated {lastUpdated}</p>
+
+          <p style="font-size:1rem;line-height:1.6;margin-bottom:0.75rem;color:var(--text);">
+            <strong>Buy {product.name} for UK research from {priceLabel}.</strong> Supplied as research-grade material from our EU warehouse with &gt;99% analytical purity and 3 to 5 day tracked UK delivery.
+          </p>
 
           <p style="color:var(--text-muted);font-size:0.95rem;line-height:1.6;margin-bottom:1.5rem;">
             {product.shortBenefit}
           </p>
+
+          {hasMoneyPage && (
+            <a href={moneyPageHref} style="display:block;background:rgba(59,159,212,0.08);border:1px solid rgba(59,159,212,0.25);border-radius:var(--radius);padding:0.85rem 1rem;margin-bottom:1.25rem;color:var(--accent);font-weight:600;font-size:0.9rem;text-decoration:none;">
+              Looking to order? See the full Buy {product.name} UK page &rarr;
+            </a>
+          )}
 
           <!-- Variant selector + buy -->
           <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.5rem;">
@@ -245,13 +320,37 @@ const meta = seoMeta[product.slug] ?? {
     </div>
   </section>
 
+  <!-- Pricing & dosage table -->
+  <section style="padding:3rem 0;background:var(--bg-alt);border-top:1px solid var(--border);">
+    <div class="container" style="max-width:880px;">
+      <h2 style="font-size:1.4rem;margin-bottom:0.5rem;">{product.name} Pricing and Dosage</h2>
+      <p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:0.92rem;">
+        Prices in EUR with an approximate GBP reference. EU warehouse stock, 3 to 5 day tracked UK delivery included.
+      </p>
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);overflow:hidden;">
+        {product.variants.map((v, i) => (
+          <div style={`display:grid;grid-template-columns:1.4fr 1fr auto;align-items:center;gap:1rem;padding:1.1rem 1.5rem;${i < product.variants.length - 1 ? 'border-bottom:1px solid var(--border);' : ''}`}>
+            <div>
+              <strong style="font-family:var(--font-head);font-size:1.05rem;color:var(--dark);">{v.label}</strong>
+              <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.15rem;">{v.quantity} vial</p>
+            </div>
+            <div>
+              <strong style="font-family:var(--font-head);font-size:1.1rem;color:var(--dark);">{dualPrice(v.priceEur)}</strong>
+            </div>
+            <a href={`/checkout?variant=${v.id}`} class="btn btn-primary" style="white-space:nowrap;">Order &rarr;</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- FAQs -->
-  {product.faqs && product.faqs.length > 0 && (
-    <section style="padding:3rem 0;background:var(--bg-alt);border-top:1px solid var(--border);">
+  {faqs.length > 0 && (
+    <section style="padding:3rem 0;background:var(--bg);border-top:1px solid var(--border);">
       <div class="container" style="max-width:760px;">
         <h2 style="font-size:1.4rem;margin-bottom:2rem;">Frequently Asked Questions</h2>
         <div>
-          {product.faqs.map((faq) => (
+          {faqs.map((faq) => (
             <div class="faq-item">
               <button class="faq-question" aria-expanded="false">
                 {faq.question}

@@ -2,76 +2,64 @@
 import Base from '../layouts/Base.astro';
 import ProductCard from '../components/ProductCard.astro';
 import { getProductBySlug, products } from '../lib/products';
-import { dualPrice, eurToGbp } from '../lib/constants';
+import { dualPrice } from '../lib/constants';
 
-const retatrutide = getProductBySlug('retatrutide');
-if (!retatrutide) return Astro.redirect('/products');
+const product = getProductBySlug('bpc-157');
+if (!product) return Astro.redirect('/products');
 
-const lowestVariant = retatrutide.variants.reduce((a, b) => a.priceEur < b.priceEur ? a : b);
-const lowestGbp = eurToGbp(lowestVariant.priceEur);
+const lowestVariant = product.variants.reduce((a, b) => a.priceEur < b.priceEur ? a : b);
+const priceLabel = dualPrice(lowestVariant.priceEur);
+const lastUpdated = 'June 2026';
 
-const related = ['bpc-157', 'mots-c', 'bacteriostatic-water']
+const related = ['tb-500', 'bacteriostatic-water', 'retatrutide']
   .map((s) => products.find((p) => p.slug === s))
   .filter(Boolean) as typeof products;
 
-const canonical = 'https://uk-peptides.eu/buy-retatrutide-uk';
+const canonical = 'https://uk-peptides.eu/buy-bpc-157-uk';
 
-// JSON-LD: Product + FAQPage + BreadcrumbList
 const productSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
-  name: 'Retatrutide — Research Peptide UK',
-  description: 'Retatrutide (LY3437943) triple GLP-1/GIP/glucagon receptor agonist for UK research use. Lyophilised, >99% purity, EU warehouse, 3-5 day tracked UK delivery.',
-  image: `https://uk-peptides.eu${retatrutide.image}`,
+  name: 'BPC-157 — Research Peptide UK',
+  description: 'BPC-157 tissue repair peptide for UK research use. Lyophilised, >99% purity, EU warehouse, 3-5 day tracked UK delivery.',
+  image: `https://uk-peptides.eu${product.image}`,
   brand: { '@type': 'Brand', name: 'UK Peptides' },
-  offers: retatrutide.variants.map((v) => ({
+  offers: product.variants.map((v) => ({
     '@type': 'Offer',
-    price: eurToGbp(v.priceEur),
-    priceCurrency: 'GBP',
+    price: v.priceEur,
+    priceCurrency: 'EUR',
     availability: 'https://schema.org/InStock',
     name: v.label,
     url: `https://uk-peptides.eu/checkout?variant=${v.id}`,
     priceValidUntil: '2027-12-31',
   })),
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    reviewCount: '127',
-  },
-  // Freshness signal (audit 2026-06-27): explicit modified date for crawlers.
   dateModified: '2026-06-27',
 };
 
-const lastUpdated = 'June 2026';
-
 const faqs = [
   {
-    q: 'Where can I buy retatrutide in the UK?',
-    a: 'You can buy retatrutide for research use from UK Peptides (uk-peptides.eu). Stock is held in our EU warehouse and dispatched with 3-5 day tracked delivery to UK addresses. Supplied as lyophilised powder, >99% analytical purity, with Certificate of Analysis available on request.',
+    q: 'Where can I buy BPC-157 in the UK?',
+    a: 'You can buy BPC-157 for research use from UK Peptides (uk-peptides.eu). Stock is held in our EU warehouse and dispatched with 3-5 day tracked delivery to UK addresses. Supplied as lyophilised powder, >99% analytical purity, with Certificate of Analysis available on request.',
   },
   {
-    q: 'Is retatrutide legal in the UK?',
-    a: 'Retatrutide is not a controlled substance under the UK Misuse of Drugs Act 1971 or the Medicines Act 1968. It is sold strictly as a Research Use Only (RUO) compound for in vitro laboratory study. It is not approved as a medicine in the UK and must not be used as such.',
+    q: 'Is BPC-157 legal in the UK?',
+    a: 'BPC-157 is not a controlled substance under the UK Misuse of Drugs Act 1971. It is sold strictly as a Research Use Only (RUO) reagent for in vitro laboratory study. It is not approved as a medicine in the UK and must not be used for human or animal consumption.',
   },
   {
-    q: 'How much does retatrutide cost in the UK?',
-    a: `Retatrutide pricing at UK Peptides starts from £${lowestGbp} for a 10 mg lyophilised vial. Larger 20 mg and 30 mg vials are available at lower £/mg. All prices are billed in GBP, EUR price shown alongside for reference only.`,
+    q: 'How much does BPC-157 cost in the UK?',
+    a: `BPC-157 pricing at UK Peptides starts from ${priceLabel} for a ${lowestVariant.quantity} lyophilised vial. Larger vials carry a lower price per mg. Prices are shown in EUR with an approximate GBP reference, with tracked UK delivery included.`,
   },
   {
-    q: 'How is retatrutide shipped to the UK?',
-    a: 'Orders are dispatched from our EU warehouse via tracked courier. Estimated transit time to UK addresses is 3-5 business days post-dispatch. Discreet packaging — no external labels indicating contents. Tracking link is emailed once your order ships.',
+    q: 'How is BPC-157 shipped to the UK?',
+    a: 'Orders are dispatched from our EU warehouse via tracked courier. Estimated transit time to UK addresses is 3-5 business days post-dispatch. Discreet packaging with no external mention of contents. A tracking link is emailed once your order ships.',
   },
   {
-    q: 'How does retatrutide compare to tirzepatide and semaglutide?',
-    a: 'Semaglutide activates GLP-1 only. Tirzepatide activates GLP-1 and GIP. Retatrutide adds glucagon receptor agonism — a third mechanism that increases hepatic lipid oxidation and thermogenesis. In the NEJM 2023 Phase II trial (n=338), the 12 mg retatrutide arm showed -24.2% mean body weight at 48 weeks, the strongest effect documented for a single peptide in clinical research.',
-  },
-  {
-    q: 'What is the recommended storage for retatrutide?',
-    a: 'Store lyophilised vials at -20°C, protected from light and moisture. Once reconstituted with bacteriostatic water, store at 2-8°C and use within 28 days. Shelf life of the lyophilised, sealed vial is 18 months.',
+    q: 'How should BPC-157 be stored?',
+    a: 'Store lyophilised vials at -20°C, protected from light and moisture. Once reconstituted with bacteriostatic water, store at 2-8°C and use within 28 days. Lyophilised shelf life is 24 months in a sealed vial.',
   },
   {
     q: 'Do I receive a Certificate of Analysis (COA)?',
-    a: 'A Certificate of Analysis is available on request for any batch. Email contact@uk-peptides.eu with your order number after dispatch and we will forward the lab report (HPLC, mass spec) for the batch you received.',
+    a: 'A Certificate of Analysis is available on request for any batch. Email contact@uk-peptides.eu with your order number after dispatch and we will forward the lab report (HPLC, mass spec) for the lot you received.',
   },
 ];
 
@@ -90,14 +78,14 @@ const breadcrumbSchema = {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://uk-peptides.eu/' },
-    { '@type': 'ListItem', position: 2, name: 'Buy Retatrutide UK', item: canonical },
+    { '@type': 'ListItem', position: 2, name: 'Buy BPC-157 UK', item: canonical },
   ],
 };
 ---
 
 <Base
-  title="Buy Retatrutide UK 2026 — From £80 | EU Warehouse, Tracked"
-  description="Buy retatrutide UK from £80. Triple GLP-1/GIP/glucagon agonist, -24.2% body weight (NEJM 2023). >99% purity, EU warehouse, 3-5 day tracked UK delivery."
+  title="Buy BPC-157 UK 2026 — EU Warehouse, Tracked Delivery"
+  description="Buy BPC-157 UK for research. Tissue repair peptide, 100+ peer-reviewed studies. >99% purity, EU warehouse, 3-5 day tracked UK delivery, COA on request."
   canonical={canonical}
   schema={[productSchema, faqSchema, breadcrumbSchema]}
 >
@@ -108,7 +96,7 @@ const breadcrumbSchema = {
       <nav aria-label="Breadcrumb" style="font-size:0.8rem;color:var(--text-muted);">
         <a href="/" style="color:var(--text-muted);text-decoration:none;">Home</a>
         <span style="margin:0 0.4rem;">/</span>
-        <span style="color:var(--text);">Buy Retatrutide UK</span>
+        <span style="color:var(--text);">Buy BPC-157 UK</span>
       </nav>
     </div>
   </div>
@@ -122,10 +110,13 @@ const breadcrumbSchema = {
             UK Stock · EU Warehouse · 3-5 Day Tracked
           </span>
           <h1 style="font-size:clamp(2rem,4.4vw,2.85rem);line-height:1.12;margin-bottom:1.1rem;color:#fff;">
-            Buy Retatrutide UK — <span style="color:#3B9FD4;">From £{lowestGbp}</span>
+            Buy BPC-157 UK — <span style="color:#3B9FD4;">From {priceLabel}</span>
           </h1>
-          <p style="color:rgba(255,255,255,0.7);font-size:1.05rem;line-height:1.65;margin-bottom:1.5rem;max-width:520px;">
-            The triple GLP-1/GIP/glucagon receptor agonist (LY3437943) — supplied as lyophilised powder for UK laboratory research. &gt;99% analytical purity, dispatched from our EU warehouse with tracked UK delivery.
+          <p style="color:rgba(255,255,255,0.7);font-size:1.05rem;line-height:1.65;margin-bottom:0.5rem;max-width:520px;">
+            <strong style="color:#fff;">BPC-157 is a 15-amino-acid tissue repair peptide with 100+ peer-reviewed publications.</strong>
+          </p>
+          <p style="color:rgba(255,255,255,0.7);font-size:1rem;line-height:1.65;margin-bottom:1.5rem;max-width:520px;">
+            Supplied as lyophilised powder for UK laboratory research. &gt;99% analytical purity, dispatched from our EU warehouse with tracked UK delivery and no third-country customs declaration.
           </p>
 
           <ul style="list-style:none;padding:0;margin:0 0 2rem;display:grid;grid-template-columns:1fr 1fr;gap:0.55rem 1.25rem;">
@@ -134,14 +125,14 @@ const breadcrumbSchema = {
             <li style="display:flex;align-items:center;gap:0.55rem;font-size:0.875rem;color:rgba(255,255,255,0.82);"><span style="color:#3B9FD4;">&#10003;</span> 3-5 day UK tracked delivery</li>
             <li style="display:flex;align-items:center;gap:0.55rem;font-size:0.875rem;color:rgba(255,255,255,0.82);"><span style="color:#3B9FD4;">&#10003;</span> Discreet packaging</li>
             <li style="display:flex;align-items:center;gap:0.55rem;font-size:0.875rem;color:rgba(255,255,255,0.82);"><span style="color:#3B9FD4;">&#10003;</span> COA available on request</li>
-            <li style="display:flex;align-items:center;gap:0.55rem;font-size:0.875rem;color:rgba(255,255,255,0.82);"><span style="color:#3B9FD4;">&#10003;</span> GBP primary checkout</li>
+            <li style="display:flex;align-items:center;gap:0.55rem;font-size:0.875rem;color:rgba(255,255,255,0.82);"><span style="color:#3B9FD4;">&#10003;</span> 100+ published studies</li>
           </ul>
 
           <div style="display:flex;gap:0.85rem;flex-wrap:wrap;">
             <a href={`/checkout?variant=${lowestVariant.id}`} class="btn btn-primary btn-lg">
-              Order Retatrutide — From £{lowestGbp} &rarr;
+              Order BPC-157 — From {priceLabel} &rarr;
             </a>
-            <a href="/products/retatrutide" class="btn btn-outline" style="border-color:rgba(255,255,255,0.25);color:#fff;">
+            <a href="/products/bpc-157" class="btn btn-outline" style="border-color:rgba(255,255,255,0.25);color:#fff;">
               Full Product Specs
             </a>
           </div>
@@ -153,8 +144,8 @@ const breadcrumbSchema = {
 
         <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-xl);padding:2rem;display:flex;align-items:center;justify-content:center;min-height:340px;">
           <img
-            src={retatrutide.image}
-            alt="Retatrutide vial — research grade UK"
+            src={product.image}
+            alt="BPC-157 vial — research grade UK"
             width="240"
             height="240"
             loading="eager"
@@ -181,24 +172,20 @@ const breadcrumbSchema = {
   <!-- PRICING TABLE -->
   <section style="padding:3.5rem 0;background:var(--bg);">
     <div class="container" style="max-width:880px;">
-      <h2 style="font-size:1.6rem;margin-bottom:0.5rem;">Retatrutide Pricing — UK</h2>
+      <h2 style="font-size:1.6rem;margin-bottom:0.5rem;">BPC-157 Pricing — UK</h2>
       <p style="color:var(--text-muted);margin-bottom:2rem;font-size:0.95rem;">
-        Prices billed in GBP at checkout. EUR equivalent shown for reference only — your card is charged in pounds sterling.
+        Prices shown in EUR with an approximate GBP reference. EU warehouse stock, tracked UK delivery included.
       </p>
 
       <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);overflow:hidden;">
-        {retatrutide.variants.map((v, i) => (
-          <div style={`display:grid;grid-template-columns:1.4fr 1fr 1fr auto;align-items:center;gap:1rem;padding:1.25rem 1.5rem;${i < retatrutide.variants.length - 1 ? 'border-bottom:1px solid var(--border);' : ''}`}>
+        {product.variants.map((v, i) => (
+          <div style={`display:grid;grid-template-columns:1.4fr 1fr auto;align-items:center;gap:1rem;padding:1.25rem 1.5rem;${i < product.variants.length - 1 ? 'border-bottom:1px solid var(--border);' : ''}`}>
             <div>
               <strong style="font-family:var(--font-head);font-size:1.05rem;color:var(--dark);">{v.label}</strong>
-              <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.15rem;">Lyophilised vial</p>
-            </div>
-            <div style="font-size:0.85rem;color:var(--text-muted);">
-              £{(eurToGbp(v.priceEur) / parseFloat(v.quantity)).toFixed(2)}/mg
+              <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.15rem;">{v.quantity} lyophilised vial</p>
             </div>
             <div>
-              <strong style="font-family:var(--font-head);font-size:1.2rem;color:var(--dark);">£{eurToGbp(v.priceEur)}</strong>
-              <span style="display:block;font-size:0.72rem;color:var(--text-faint);">€{v.priceEur} EUR ref</span>
+              <strong style="font-family:var(--font-head);font-size:1.15rem;color:var(--dark);">{dualPrice(v.priceEur)}</strong>
             </div>
             <a href={`/checkout?variant=${v.id}`} class="btn btn-primary" style="white-space:nowrap;">Order &rarr;</a>
           </div>
@@ -214,16 +201,16 @@ const breadcrumbSchema = {
   <!-- WHY UK PEPTIDES -->
   <section style="padding:3.5rem 0;background:var(--white);border-top:1px solid var(--border);">
     <div class="container" style="max-width:1040px;">
-      <h2 style="font-size:1.6rem;margin-bottom:0.5rem;">Why UK Researchers Buy Retatrutide From Us</h2>
+      <h2 style="font-size:1.6rem;margin-bottom:0.5rem;">Why UK Researchers Buy BPC-157 From Us</h2>
       <p style="color:var(--text-muted);margin-bottom:2rem;font-size:0.95rem;max-width:680px;">
-        Retatrutide is not yet approved for use in the UK. For UK researchers studying triple-incretin pharmacology, the supply chain matters as much as the molecule.
+        For UK and EU researchers studying tissue repair pharmacology, the supply chain matters as much as the compound. EU warehouse stock removes the post-Brexit customs lottery on inbound research chemicals.
       </p>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;">
         <div style="border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;background:var(--bg);">
           <strong style="display:block;font-family:var(--font-head);font-size:1.05rem;margin-bottom:0.55rem;color:var(--dark);">EU warehouse, no customs lottery</strong>
           <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;">
-            Orders ship from inside the EU. Parcels move under standard intra-EU + UK postal routes — no third-country import declaration that triggers UK Border Force inspection.
+            Orders ship from inside the EU under standard postal routes, with no third-country import declaration that triggers a UK Border Force inspection.
           </p>
         </div>
         <div style="border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;background:var(--bg);">
@@ -233,9 +220,9 @@ const breadcrumbSchema = {
           </p>
         </div>
         <div style="border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;background:var(--bg);">
-          <strong style="display:block;font-family:var(--font-head);font-size:1.05rem;margin-bottom:0.55rem;color:var(--dark);">GBP billing, no FX surprise</strong>
+          <strong style="display:block;font-family:var(--font-head);font-size:1.05rem;margin-bottom:0.55rem;color:var(--dark);">Lyophilised stability</strong>
           <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;">
-            Your card is charged in pounds sterling at the displayed price. No hidden currency conversion fees, no €/£ ambiguity at checkout.
+            Supplied as lyophilised powder held at -20°C until dispatch, with a 24-month sealed shelf life. No cold chain needed for shipping.
           </p>
         </div>
         <div style="border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;background:var(--bg);">
@@ -247,13 +234,13 @@ const breadcrumbSchema = {
         <div style="border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;background:var(--bg);">
           <strong style="display:block;font-family:var(--font-head);font-size:1.05rem;margin-bottom:0.55rem;color:var(--dark);">Discreet packaging</strong>
           <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;">
-            No external mention of peptides, contents, or our brand on the outer parcel. Plain padded mailer addressed to the lab/individual.
+            No external mention of peptides, contents, or our brand on the outer parcel. Plain padded mailer addressed to the lab or individual.
           </p>
         </div>
         <div style="border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;background:var(--bg);">
-          <strong style="display:block;font-family:var(--font-head);font-size:1.05rem;margin-bottom:0.55rem;color:var(--dark);">Lab-grade storage</strong>
+          <strong style="display:block;font-family:var(--font-head);font-size:1.05rem;margin-bottom:0.55rem;color:var(--dark);">100+ published studies</strong>
           <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;">
-            Lyophilised vials held at -20°C until dispatch. Cold-chain not required for shipping in lyophilised form. 18-month sealed shelf life.
+            BPC-157 is among the most-cited repair peptides in the literature, with three decades of research from the University of Zagreb and beyond.
           </p>
         </div>
       </div>
@@ -263,28 +250,22 @@ const breadcrumbSchema = {
   <!-- RESEARCH PROFILE -->
   <section style="padding:3.5rem 0;background:var(--bg);">
     <div class="container" style="max-width:880px;">
-      <h2 style="font-size:1.6rem;margin-bottom:0.5rem;">Retatrutide — The Research Profile</h2>
-      <p style="color:var(--text-muted);margin-bottom:2rem;font-size:0.95rem;">
-        Retatrutide (LY3437943) is the first peptide to simultaneously activate three incretin-axis receptors. UK researchers studying obesity pharmacology, hepatic metabolism, and triple-agonist pharmacokinetics use it to probe mechanisms that no dual agonist can isolate.
-      </p>
-
+      <h2 style="font-size:1.6rem;margin-bottom:0.5rem;">BPC-157 — The Research Profile</h2>
       <div class="prose" style="max-width:none;">
-        <h3 style="font-size:1.1rem;">Mechanism — three receptors, one molecule</h3>
-        <p>Retatrutide is a synthetic 39-amino-acid peptide that activates the GLP-1, GIP, and glucagon receptors simultaneously. The glucagon component is the key differentiator: while GLP-1 and GIP synergistically enhance satiety and insulin sensitivity, glucagon receptor activation increases hepatic energy expenditure through elevated lipid oxidation and thermogenesis.</p>
-
-        <h3 style="font-size:1.1rem;">Phase II evidence (NEJM 2023)</h3>
-        <p>Jastreboff et al., <em>New England Journal of Medicine</em> Vol. 389, pp. 514-526 (2023), DOI: 10.1056/NEJMoa2301972. Randomised, double-blind, placebo-controlled. 338 adults across 25 US centres, 48 weeks. The 12 mg arm achieved a mean weight reduction of -24.2% — the strongest effect ever documented for a single peptide in clinical research. Over 90% of the 12 mg cohort reached &ge;5% weight reduction.</p>
-
-        <h3 style="font-size:1.1rem;">Pharmacokinetics</h3>
-        <p>Half-life ~6 days via C18 fatty acid modification (albumin binding), enabling weekly subcutaneous dosing in clinical trials. Phase III TRIUMPH programme (NCT05929066) ongoing at 45+ centres worldwide.</p>
-
-        <h3 style="font-size:1.1rem;">Storage and reconstitution</h3>
-        <p>Supplied as sterile lyophilised powder. Store at -20&deg;C, protected from light. Reconstitute with 1-2 mL of bacteriostatic water (0.9% benzyl alcohol) for a working concentration of 5-10 mg/mL. Reconstituted solution stable at 2-8&deg;C for up to 28 days.</p>
+        <p>{product.description}</p>
+        <h3 style="font-size:1.1rem;">Key research findings</h3>
+        <ul>
+          {product.keyFindings.map((f) => <li>{f}</li>)}
+        </ul>
+        {product.reconstitution && (
+          <p><strong>Reconstitution:</strong> {product.reconstitution.solvent}, {product.reconstitution.volume}, working concentration {product.reconstitution.concentration}.</p>
+        )}
+        <p style="font-size:0.85rem;color:var(--text-muted);">{product.researchContext}</p>
       </div>
 
       <div style="margin-top:2rem;text-align:center;">
         <a href={`/checkout?variant=${lowestVariant.id}`} class="btn btn-primary btn-lg">
-          Order Retatrutide — From £{lowestGbp} &rarr;
+          Order BPC-157 — From {priceLabel} &rarr;
         </a>
       </div>
     </div>
@@ -293,7 +274,7 @@ const breadcrumbSchema = {
   <!-- FAQ -->
   <section style="padding:3.5rem 0;background:var(--white);border-top:1px solid var(--border);">
     <div class="container" style="max-width:760px;">
-      <h2 style="font-size:1.6rem;margin-bottom:2rem;">Buying Retatrutide in the UK — FAQ</h2>
+      <h2 style="font-size:1.6rem;margin-bottom:2rem;">Buying BPC-157 in the UK — FAQ</h2>
       <div>
         {faqs.map((faq) => (
           <details style="border-bottom:1px solid var(--border);padding:1.1rem 0;">
@@ -311,7 +292,7 @@ const breadcrumbSchema = {
   <!-- RELATED -->
   <section style="padding:3.5rem 0;background:var(--bg);border-top:1px solid var(--border);">
     <div class="container">
-      <h2 style="font-size:1.4rem;margin-bottom:2rem;">Also Researched With Retatrutide</h2>
+      <h2 style="font-size:1.4rem;margin-bottom:2rem;">Also Researched With BPC-157</h2>
       <div class="grid-3">
         {related.map((p) => <ProductCard product={p} />)}
       </div>
@@ -322,14 +303,14 @@ const breadcrumbSchema = {
   <section style="padding:2.5rem 0 4rem;background:var(--bg);">
     <div class="container" style="max-width:880px;">
       <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);padding:1.75rem;">
-        <h3 style="font-size:1.05rem;margin-bottom:1rem;">Further reading for UK retatrutide researchers</h3>
+        <h3 style="font-size:1.05rem;margin-bottom:1rem;">Further reading for UK BPC-157 researchers</h3>
         <ul style="list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0.65rem;">
-          <li><a href="/blog/retatrutide-uk-triple-receptor-guide" style="color:var(--accent);text-decoration:none;font-weight:600;">Retatrutide UK — Triple GLP-1/GIP/Glucagon Guide</a></li>
-          <li><a href="/blog/retatrutide-europe-eu-warehouse" style="color:var(--accent);text-decoration:none;font-weight:600;">Retatrutide Europe — EU Warehouse Sourcing</a></li>
-          <li><a href="/blog/are-peptides-legal-in-the-uk" style="color:var(--accent);text-decoration:none;font-weight:600;">Are Peptides Legal in the UK? 2026 Guide</a></li>
+          <li><a href="/blog/bpc-157-europe-eu-delivery" style="color:var(--accent);text-decoration:none;font-weight:600;">BPC-157 Europe — EU Warehouse Delivery</a></li>
           <li><a href="/blog/best-peptides-to-buy-uk-2026" style="color:var(--accent);text-decoration:none;font-weight:600;">Best Peptides to Buy UK 2026</a></li>
           <li><a href="/blog/where-to-buy-peptides-uk" style="color:var(--accent);text-decoration:none;font-weight:600;">Where to Buy Research Peptides UK</a></li>
-          <li><a href="/products/retatrutide" style="color:var(--accent);text-decoration:none;font-weight:600;">Full Retatrutide Product Page</a></li>
+          <li><a href="/blog/research-peptides-uk-complete-guide" style="color:var(--accent);text-decoration:none;font-weight:600;">Research Peptides UK — Technical Guide</a></li>
+          <li><a href="/products/bpc-157" style="color:var(--accent);text-decoration:none;font-weight:600;">Full BPC-157 Product Page</a></li>
+          <li><a href="/products" style="color:var(--accent);text-decoration:none;font-weight:600;">All Research Peptides</a></li>
         </ul>
       </div>
     </div>
