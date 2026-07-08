@@ -185,7 +185,7 @@ function buildEmailHtml(d: OrderConfirmationData): string {
     <td align="center" style="background:${brand};border-radius:0 0 6px 6px;padding:26px 40px;">
       <p style="color:rgba(255,255,255,0.65);font-size:13px;margin:0 0 8px;">
         Questions? <a href="mailto:contact@uk-peptides.eu" style="color:${accent};text-decoration:none;font-weight:600;">contact@uk-peptides.eu</a>
-        &nbsp;&middot;&nbsp; <a href="https://t.me/ox_fr" style="color:${accent};text-decoration:none;font-weight:600;">Telegram @ox_fr</a>
+        &nbsp;&middot;&nbsp; <a href="https://t.me/alicia_pep" style="color:${accent};text-decoration:none;font-weight:600;">Telegram @alicia_pep</a>
       </p>
       <p style="color:rgba(255,255,255,0.3);font-size:11px;margin:0;line-height:1.7;">
         UK Peptides &mdash; Products exclusively for scientific research purposes.
