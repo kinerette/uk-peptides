@@ -29,7 +29,7 @@ const PROMO_CODES: Record<string, number> = {
 };
 
 function newOrderId(): string {
-  return 'ukp_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+  return 'ukp_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 }
 
 export const POST: APIRoute = async ({ request }) => {
